@@ -20,18 +20,18 @@
 iz_int,18,30,0	script	iz_int#intro_start	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
-	navigateto("iz_int", 52, 30, NAV_NONE, 1); // Nome do mapa individual n„o obrigatÛrio
+	navigateto("iz_int", 52, 30, NAV_NONE, 1); // Individual map name not required
 	if (getd(".start" + strnpcinfo(1)) == 0) {
 		setd ".start" + strnpcinfo(1), 1;
 		initnpctimer;
-		mapannounce strnpcinfo(4), "[Dica] VocÍ pode mover para o ponto desejado clicando no ch„o com o bot„o esquerdo do mouse.", bc_map,0xFF0000;
+		mapannounce strnpcinfo(4), "[Dica] Voc√™ pode ir para o ponto desejado clicando no ch√£o com o bot√£o esquerdo do mouse.", bc_map,0x00FFFF;
 	}
 	end;
 OnTimer9000:
-	mapannounce strnpcinfo(4), "[Dica] Mantendo pressionado o bot„o direito do mouse, arraste para girar a tela.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[Dica] Enquanto mant√©m pressionado o bot√£o direito do mouse, voc√™ poder√° girar a tela.", bc_map,0x00FFFF;
 	end;
 OnTimer18000:
-	mapannounce strnpcinfo(4), "[Dica] VocÍ pode sair pelo port„o azul.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[Tip] Voc√™ poder√° se teleportar para outra √°rea atraves do portal azul a frente.", bc_map,0x00FFFF;
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer21000:
@@ -41,7 +41,7 @@ OnTimer24000:
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
-	mapannounce strnpcinfo(4), "[Dica] Saia desta ·rea para continuar.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[Tip] Deixe essa √°rea para continuar.", bc_map,0x00FFFF;
 	stopnpctimer;
 	setd ".start" + strnpcinfo(1), 0;
 	end;
@@ -72,9 +72,9 @@ iz_int,56,32,3	script	Espadachim Ferido#intro_npc01_iz_int	4_TOWER_01,5,5,{
 
 OnTouch:
 	if (@intro_npc01 == 0) {
-		npctalk "Urgh... por favor... me ajude...", "", bc_self;
+		npctalk "Urgh... Por favor... Ajude-me...", "", bc_self;
 		sleep2 500;
-		npctalk "Para falar comigo, clique no meu corpo.", "", bc_self;
+		npctalk "Para falar comigo.. clique no meu corpo..", "", bc_self;
 	}
 	else {// debug
 		classchange HIDDEN_WARP_NPC, "", bc_self;
@@ -94,33 +94,32 @@ iz_int04,56,32,3	duplicate(Espadachim Ferido#intro_npc01_iz_int)	Espadachim Feri
 iz_int,56,32,3	script	Espadachim Ferido#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Ferido]";
-		mes "Nossa, muito obrigado!";
-		mes "Eu n„o sei como isto aconteceu com nosso navio";
-		mes "Devemos ir ver o capit„o.";
+		mes "Uau! Muito obrigado!";
+		mes "Eu n√£o sei como isso aconteceu com nossa navio";
+		mes "mas devemos ir ver o capit√£o.";
 		next;
 		mes "[Ferido]";
-		mes "... aah, acho que estou muito machucado para ir.";
-		mes "VocÍ ter· de ir sem mim.";
+		mes "...Ohh, parece que meu corpo est√° muito machucado.";
+		mes "Talvez voc√™ possa ir sem mim?";
 		setquest 21001;
 		next;
 		cutin "tutorial02",4;
-		mes "^4d4dff!- InformaÁ„o -!^000000";
-		mes "NPC Quest Recebida.";
+		mes "^4d4dff!- Informa√ß√£o -!^000000";
+		mes "Voc√™ recebeu uma quest do Espadachim Ferido.";
 	}
 	else {
 		mes "[Ferido]";
-		mes "Felizmente a agua n„o entrou em nosso navio.";
-		mes "Ficarei aqui, vocÍ deve ir ver o capit„o.";
+		mes "Felizmente a √°gua n√£o entrou no navio.";
+		mes "Vou esperar aqui, voc√™ deve ir ver o capit√£o.";
 		next;
 		mes "[Ferido]";
-		mes "Estou bem, estou bem...";
-		mes "N„o se preocupe comigo, n„o morrerei.";
-		mes "Agora vocÍ deve ir ver o capit„o.";
+		mes "Estou bem! Estou bem!";
+		mes "N√£o se preocupe comigo, voc√™ deveria mesmo ir ao capit√£o!";
 		next;
-		mes "^4d4dff!- InformaÁ„o -!^000000";
+		mes "^4d4dff!- Informa√ß√£o -!^000000";
 	}
-	mes "^4d4dffAtalho para Quest È Alt + U^000000";
-	mes "VocÍ pode verificar o andamento de sua Quest a qualquer momento.";
+	mes "^4d4dffO atalho para acessar a janela de quests s√£o as teclas ALT + U^000000";
+	mes "Voc√™ pode verificar o status da sua miss√£o a qualquer momento.";
 	close2;
 	cutin "",255;
 	end;
@@ -134,41 +133,42 @@ iz_int02,56,32,3	duplicate(Espadachim Ferido#intro_npc02_iz_int)	Espadachim Feri
 iz_int03,56,32,3	duplicate(Espadachim Ferido#intro_npc02_iz_int)	Espadachim Ferido#intro_npc02_iz_int03	HIDDEN_WARP_NPC
 iz_int04,56,32,3	duplicate(Espadachim Ferido#intro_npc02_iz_int)	Espadachim Ferido#intro_npc02_iz_int04	HIDDEN_WARP_NPC
 
-// - Capit„o Carocc (Ship)
+// - Capit√£o Carocc (Navio)
 // -----------------------------------------------------------------------------
-int_land,78,103,5	script	Capit„o Carocc#intro_npc03	4_M_REINDEER,{
+int_land,78,103,5	script	Capit√£o Carocc#intro_npc03	4_M_REINDEER,{
 	switch( isbegin_quest(21008) ) {
 	case 0:
-		mes "[Capit„o Carocc]";
-		mes "Ainda h· tripulantes a bordo?";
-		mes "Pelo menos est· seguro.";
-		mes "VocÍ est· bem?";
+		mes "[Capit√£o Carocc]";
+		mes "Ainda h√° pessoas nas cabines?!";
+		mes "Pelo menos voc√™ est√° seguro.";
+		mes "Voc√™ est√° bem?";
 		next;
-		if (select("Estou bem, mas outros precisam de ajuda", "Acho que eu sou o ˙ltimo.") == 1) {
-			mes "[Capit„o Carocc]";
-			mes "Tem mais tripulantes a bordo? Mandarei uma equipe de resgate imediatamente.";
-			mes "Obrigado por me avisar.";
+		if (select("Sim, mas outros precisam de ajuda.","Acho que sou o √∫ltimo?") == 1) {
+			mes "[Capit√£o Carocc]";
+			mes "Restam mais pessoas?";
+			mes "Vou enviar uma equipe de resgate para eles.";
+			mes "Obrigado pelo seu relat√≥rio.";
 		} else {
-			mes "[Capit„o Carocc]";
-			mes "”timo.";
-			mes "A tempestade chegou do nada, n„o imaginava que nos atingiria t„o forte.";
+			mes "[Capit√£o Carocc]";
+			mes "Tudo bem.";
+			mes "A tempestade veio inesperadamente, mas eu nunca pensei que fosse nos atingir t√£o forte.";
 		}
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Alguns feridos, porÈm todos bem.";
+		mes "[Capit√£o Carocc]";
+		mes "Pelo menos a maioria das pessoas est√£o em seguran√ßa.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Olhe para as ·rvores, ^4d4dffsiga para o Sudoeste^000000, ir· ver encontrar outro navio.";
-		mes "Aquele navio ir· lev·-lo para ^4d4dffIzlude^000000, nosso destino original.";
+		mes "[Capit√£o Carocc]";
+		mes "Est√° vendo aquelas √°rvores l√°, ^4d4dffsiga-as para o sudoeste^000000 para encontrar um novo navio.";
+		mes "O navio o levar√° para ^4d4dffIzlude^000000, nosso destino final.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Ah! Aprovietando, os ^4d4dffPorings^000000 desta ilha derrubam v·rios materiais que poderÌamos utilizar em reparos.";
+		mes "[Capit√£o Carocc]";
+		mes "Ah! Falando nisso, aqueles ^4d4dffPorings^000000 nesta ilha, eles soltam v√°rios materiais que poder√≠amos usar para reparos.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "^4d4dffMate os porings e traga-me 2 pedaÁos de madeira.^000000.";
+		mes "[Capit√£o Carocc]";
+		mes "^4d4dffMate os Porings, pegue 2 Peda√ßos de Madeira e leve para a tripula√ß√£o no sul^000000.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "… uma tarefa difÌcil, mas vocÍ parece ser bastante forte.";
+		mes "[Capit√£o Carocc]";
+		mes "√â uma tarefa dif√≠cil, mas voc√™ parece forte o suficiente.";
 		specialeffect2 EF_HEAL2;
 		heal 9999,0;
 		skilleffect 34,0;
@@ -177,64 +177,63 @@ int_land,78,103,5	script	Capit„o Carocc#intro_npc03	4_M_REINDEER,{
 		sc_start SC_INCREASEAGI,240000,10;
 		if (isbegin_quest(21001) == 1) {
 			completequest 21001;
-			getexp 600,600;
+			getexp 300,300;
 		}
 		setquest 21008;
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Falando nisto, vocÍ deve se equipar.";
-		mes "VocÍ deve ter uma ^4d4dffFaca e uma Armadura^000000 j· equipados.";
+		mes "[Capit√£o Carocc]";
+		mes "Falando em Porings, voc√™ deve equipar seus itens.";
+		mes "Voc√™ deveria ter uma ^4d4dffarma e uma armadura^000000 equipadas.";
 		next;
 		cutin "tutorial03",4;
-		mes "!- InformaÁ„o -!";
-		mes "^4d4dffVocÍ pode equipar ou usar um item simplesmente clicando duas vezes nele.";
-		mes "A janela de itens pode ser aberta utilizando o atalho Alt + E.^000000";
+		mes "!- Informa√ß√£o -!";
+		mes "^4d4dffVoc√™ pode equipar equipamentos ou usar itens clicando duas vezes neles.";
+		mes "A janela de itens pode ser aberta pressionando Alt + E ou usando o bot√£o de menu.^000000";
 		next;
-		mes "!- InformaÁ„o -!";
-		mes "^4d4dffA janela de equipamentos pode ser aberta utilizando o atalho Alt + Q.";
-		mes "Clique duas vezes, ou arraste-o e solte para equipar ou desequipar.^000000";
+		mes "!- Informa√ß√£o -!";
+		mes "^4d4dffItens equipados podem ser vistos pressionando Alt + Q.";
+		mes "Clique duas vezes ou arraste e solte para equip√°-los ou desequip√°-los.^000000";
 		next;
 		cutin "",255;
-		mes "[Capit„o Carlock]";
-		mes "VocÍ j· verificou seus equipamentos?";
-		mes "A distribuiÁ„o ^4d4dffPontos de Habilidades^000000 deve ser feita.";
+		mes "[Capit√£o Carlock]";
+		mes "Voc√™ checou todo o seu equipamento?";
+		mes "Voc√™ deve distribuir seus ^4d4dffpontos de atributos^000000.";
 		next;
-		mes "[Capit„o Carlock]";
-		mes "Para batalhar tranquilamente vocÍ deve distribuir as habilidades corretamente";
-		mes "Se vocÍ quiser aumentar sua forÁa ^4d4dffprecisa aumentar Str^000000.";
-		mes "Se vocÍ quiser aumentar seu hit ^4d4dffprecisa aumentar Dex^000000.";
+		mes "[Capit√£o Carlock]";
+		mes "Para uma batalha tranquila, voc√™ deve distribuir seus pontos de atributos corretamente.";
+		mes "^4d4dffSe voc√™ quiser aumentar sua for√ßa, precisa aumentar o Str^000000. ^4d4dffSe voc√™ quiser aumentar seu acerto, voc√™ deve aumentar a Dex^000000.";
 		break;
 	case 1:
-		mes "[Capit„o Carocc]";
+		mes "[Capit√£o Carocc]";
 		specialeffect2 EF_HEAL2;
 		heal 9999, 0;
 		skilleffect 34,0;
 		sc_start SC_BLESSING,240000,10;
 		skilleffect 29,0;
 		sc_start SC_INCREASEAGI,240000,10;
-		mes "O ^4d4dffnavio est· ancorado a Sudoeste^000000 e ir· lev·-lo para Izlude.";
-		mes "N„o se esqueÁa de ^4d4dffpegar alguns PedaÁos de Madeira^000000 para o nosso navio.";
+		mes "^4d4dffO navio^000000 est√° ancorado no sudoeste. Vai levar voc√™ para Izlude.";
+		mes "N√£o esque√ßa de ^4d4dffcoletar peda√ßos de madeira^000000 para os reparos do navio.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "N„o se esqueÁa de distribuir seus ^4d4dffPontos de Habilidades.^000000.";
+		mes "[Capit√£o Carocc]";
+		mes "N√£o se esque√ßa de aumentar seus ^4d4dffatributos^000000.";
 		break;
 	case 2:
-		mes "[Capit„o Carocc]";
-		mes "Tudo pronto para navegar atÈ Izlude.";
-		mes "O navio est· ‡ Sudoeste da ilha.";
+		mes "[Capit√£o Carocc]";
+		mes "udo est√° pronto para navegar at√© Izlude.";
+		mes "O navio est√° localizado na parte sudoeste da ilha.";
 		close;
 	}
 	next;
-	mes "!- InformaÁ„o -!";
-	mes "^4d4dffVocÍ ganha pontos de Atributos para cada nÌvel de Base que subir^000000.";
-	mes "A janela de atributos pode ser aberta utilizando o atalho ^4d4dffAlt + A^000000.";
+	mes "! - Informa√ß√£o -!";
+	mes "^4d4dffVoc√™ recebe um b√¥nus de estat√≠sticas para cada n√≠vel que aumentar.";
+	mes "A janela de status pode ser aberta e fechada com o atalhot Alt + A^000000.";
 	next;
-	mes "!- InformaÁ„o -!";
-	mes "^4d4dffUtilize corretamente os Atributos, distribua-os da melhor forma.^000000.";
+	mes "! - Informa√ß√£o -!";
+	mes "^4d4dffDist√≠bua seus pontos de atributos corretamente para a batalha^000000.";
 	next;
-	mes "[Capit„o Carocc]";
-	mes "Mate Porings e leve madeira para a tripulaÁ„o.";
-	mes "Boa sorte!";
+	mes "[Capit√£o Carocc]";
+	mes "Mate Porings e traga a Madeira para a tripula√ß√£o.";
+	mes "Boa Sorte!";
 	close;
 
 OnInit:
@@ -242,10 +241,10 @@ OnInit:
 	end;
 }
 
-int_land01,78,103,5	duplicate(Capit„o Carocc#intro_npc03)	Capit„o Carocc#intro_npc03_01	4_M_REINDEER
-int_land02,78,103,5	duplicate(Capit„o Carocc#intro_npc03)	Capit„o Carocc#intro_npc03_02	4_M_REINDEER
-int_land03,78,103,5	duplicate(Capit„o Carocc#intro_npc03)	Capit„o Carocc#intro_npc03_03	4_M_REINDEER
-int_land04,78,103,5	duplicate(Capit„o Carocc#intro_npc03)	Capit„o Carocc#intro_npc03_04	4_M_REINDEER
+int_land01,78,103,5	duplicate(Capit√£o Carocc#intro_npc03)	Capit√£o Carocc#intro_npc03_01	4_M_REINDEER
+int_land02,78,103,5	duplicate(Capit√£o Carocc#intro_npc03)	Capit√£o Carocc#intro_npc03_02	4_M_REINDEER
+int_land03,78,103,5	duplicate(Capit√£o Carocc#intro_npc03)	Capit√£o Carocc#intro_npc03_03	4_M_REINDEER
+int_land04,78,103,5	duplicate(Capit√£o Carocc#intro_npc03)	Capit√£o Carocc#intro_npc03_04	4_M_REINDEER
 
 //== Lumin (int_land) ==========================================
 int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
@@ -256,43 +255,44 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 		mes "..?";
 		next;
 		cutin "fly_trock.bmp",2;
-		mes "[Capit„o Carocc]";
+		mes "[Capit√£o Carocc]";
 		mes "Teve um bom sonho?";
-		mes "Em breve chegaremos a Izlude. Pode conversar com outras pessoas.";
+		mes "Em breve chegaremos a Izlude. E voc√™ pode conversar com outras pessoas como voc√™ acabou de falar comigo.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Aquele cara alÌ pedeu a memÛria, ent„o dei um nome a ele.";
+		mes "[Capit√£o Carocc]";
+		mes "Acho que aquele cara ali perdeu a mem√≥ria. Dei a ele um novo nome.";
 		mes "Lumin.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Muitos jovens visitam o ^4d4dffReino de Rune-Midgartsm^000000 para perseguir seus sonhos.";
-		mes "Izlude È a cidade SatÈlite de Prontera, a capital do Reino de Rune-Midgarts.";
+		mes "[Capit√£o Carocc]";
+		mes "Muitos jovens visitam o ^4d4dffReino de Rune-Midgard^000000 para seguir com seus sonhos.";
+		mes "Izlude √© uma cidade sat√©lite de Prontera, a capital do Reino de Rune-Midgard.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Izlude sempre recebe jovens aventureiros como vocÍ, que acabaram de iniciar sua jornada pelo mundo.";
+		mes "[Capit√£o Carocc]";
+		mes "Izlude sempre acolhe jovens aventureiros como voc√™, que acabaram de iniciar sua jornada pelo mundo.";
+		mes "Voc√™ √© um deles, √© claro.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Eu gostaria de contar mais histÛrias, mas È hora de se preparar para a chegada.";
-		mes "H· uma academia em Izlude para recÈm-chegados como vocÍ.";
+		mes "[Capit√£o Carocc]";
+		mes "Eu gostaria de contar mais hist√≥rias, mas √© hora de me preparar para a chegada.";
+		mes "Existe uma academia em Izlude para iniciantes como voc√™.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Deixe-me dar mais detalhes depois. Vejo vocÍ novamente no convÈs do porto.";
+		mes "[Capit√£o Carocc]";
+		mes "Darei mais detalhes mais tarde. Vejo voc√™ no conv√©s do porto.";
 		next;
-		mes "[Capit„o Carocc]";
-		mes "Para sair deste navio, vocÍ deve entrar no ^4d4dffPortal Brilhante^000000 bem alÌ.";
-		mes "Todo transporte È feito atravÈs de portais.";
+		mes "[Capit√£o Carocc]";
+		mes "Para sair deste navio, voc√™ deve passar pelo ^4d4dffPortal Azul^000000 a frente.";
+		mes "Todo o transporte √© feito atrav√©s dos portais.";
 		setquest 7471;
 		completequest 7471;
 		next;
 		cutin "nov_lumin01.bmp", 0;
 		mes "[Lumin]";
-		mes "Isso!!.";
+		mes "Sim.";
 		next;
 		classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
 		cutin "fly_trock.bmp",2;
-		mes "[Capit„o Carocc]";
-		mes "Ohh...";
-		mes "Que reaÁ„o mais fofa.";
+		mes "[Capit√£o Carocc]";
+		mes "Oh garoto.";
+		mes "Que rea√ß√£o fofa.";
 		close2;
 		cutin "",255;
 		end;
@@ -301,27 +301,27 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	mes "[Lumin]";
 	mes ".....";
 	next;
-	select("Devo me Apresentar?", "Meu nome È ~!");
+	select("Devo me apresentar?", "Meu nome √© ~!");
 	mes "[" + strcharinfo(0) + "]";
-	mes "Me chamo " + strcharinfo(0) + "!";
+	mes "I am " + strcharinfo(0) + "!";
 	next;
 	mes "[Lu]";
 	mes ".....";
 	next;
 	mes "[Lu]";
 	mes ".....";
-	mes "....…..";
+	mes "....Assim?";
 	next;
 	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
-	mes "- Lu apenas se afastou com um olha cÌnico no rosto...";
+	mes "- Lu acabou de sair com um olhar c√≠nico no rosto.";
 	next;
 	cutin "fly_trock.bmp",2;
-	mes "[Captain Carocc]";
-	mes "Parece que... ele tem uma personalidade tÌmida.";
-	mes "Quando vocÍ chegar em Izlude, vocÍ ir· vÍ-lo novamente.";
+	mes "[Capit√£o Carocc]";
+	mes "Parece que... ele tem uma personalidade t√≠mida.";
+	mes "Quando voc√™ estiver em Izlude, voc√™ vai rev√™-lo.";
 	next;
-	mes "[Capit„o Carocc]";
-	mes "De agora em diante guiarei o navio pela ilha";
+	mes "[Capit√£o Carocc]";
+	mes "A partir de agora eu vou estar navegando no navio pela ilha.";
 	mes "Vamos, vamos?";
 	close2;
 	cutin "",255;
@@ -340,42 +340,42 @@ int_land,58,69,5	script	Marinheiro#intro_npc04	4W_SAILOR,{
 	if (isbegin_quest(21008) == 1) {
 		if (countitem(6008) < 2) {
 			mes "[Marinheiro]";
-			mes "Esses Porings roubaram meus materiais para consertar o navio. VocÍ pode me ajudar a recuper·-los?";
-			mes "H· muitos Porings nesta ilha.";
+			mes "Esses Porings roubaram meus materiais para consertar o navio. Voc√™ pode me ajudar a recuper√°-los?";
+			mes "Existem muitos Porings nesta ilha.";
 			next;
 			mes "[Marinheiro]";
-			mes "Eu realmente apreciaria se vocÍ me ajudasse.";
-			mes "Eu n„o tenho permiss„o para pisar nesta ilha.";
-			mes "… por isso que peÁo sua ajuda ~";
+			mes "Eu realmente preciso que voc√™ me ajude.";
+			mes "N√£o tenho permiss√£o para p√¥r os p√©s nesta ilha.";
+			mes "√â por isso que pe√ßo sua ajuda~";
 			close;
 		}
 		mes "[Marinheiro]";
-		mes "Inacredit·vel, perfeito! Alguma chance de vocÍ querer se juntar ‡ minha equipe?";
-		mes "Chega de falar!!";
-		mes "Vamos, estamos prontos para zarpar!";
+		mes "Inacredit√°vel, perfeito! Alguma chance de voc√™ se juntar √† minha equipe?";
+		mes "Chega de conversa!!";
+		mes "Vamos l√°, estamos prontos para zarpar!";
 		mes "Muito obrigado!";
 		next;
 		mes "[Marinheiro]";
-		mes "Se vocÍ quiser navegar conosco atÈ Izlude, pule a bordo!";
+		mes "Se voc√™ quiser navegar conosco para Izlude, pule a bordo!";
 		delitem 6008,2;
-		getexp 100,100;
-		getitem 611,5;
 		completequest 21008;
 		next;
 		mes "[Marinheiro]";
-		mes "Ah, leve estas ^4d4dffLupas^000000.";
-		mes "Quando vocÍ caÁar monstros, vocÍ pode encontrar itens ^4d4dffn„o identificados^000000.";
+		mes "Ah, e pegue essas ^4d4dffLupas^000000.";
+		mes "Quando estiver ca√ßando monstros, voc√™ ir√° encontrar ^4d4dffitens n√£o indentificados^000000.";
+		getexp 100,100;
+		getitem 611,5;
 		next;
 		mes "[Marinheiro]";
-		mes "Usando a Lupa vocÍ poder· identificar o item.";
+		mes "Usar uma Lupa identificar√° o item.";
 		next;
 		mes "[Marinheiro]";
-		mes "Talvez vocÍ j· tenha alguns itens n„o identificados de suas lutas com os Porings?";
+		mes "Talvez voc√™ j√° tenha alguns itens n√£o identificados de suas batalhas com esses Porings?";
 		close;
 	}
 	mes "[Marinheiro]";
-	mes "O navio est· indo para Izlude em breve~!";
-	mes "Eu vou deixar vocÍ saber quando nÛs partirmos~!";
+	mes "O navio est√° indo para Izlude em breve~!";
+	mes "Qaundo formos zarpar voc√™ ficar√° sabendo ok~!";
 	close;
 
 OnInit:
@@ -388,296 +388,298 @@ int_land02,58,69,5	duplicate(Marinheiro#intro_npc04)	Marinheiro#intro_npc04_02	4
 int_land03,58,69,5	duplicate(Marinheiro#intro_npc04)	Marinheiro#intro_npc04_03	4W_SAILOR
 int_land04,58,69,5	duplicate(Marinheiro#intro_npc04)	Marinheiro#intro_npc04_04	4W_SAILOR
 
-// - Capit„o Carocc
+// - Capit√£o Carocc
 // -----------------------------------------------------------------------------
-izlude,198,213,3	script	Capit„o Carocc#iz	4_M_REINDEER,5,5,{
+izlude,198,213,3	script	Capit√£o Carocc#iz	4_M_REINDEER,5,5,{
 	cutin "fly_trock.bmp", 2;
 	if (Class == Job_Novice && BaseLevel < 15) {
 		if (isbegin_quest(4269) == 2) {
 			if (isbegin_quest(7471) == 2 || isbegin_quest(7472) > 0) {
 				mes "[Carocc]";
-				mes "Ah, "+strcharinfo(0)+"!";
-				mes "Por que vocÍ est· aqui no cais?";
-				mes "Eu acho que vocÍ est· indo bem na academia.";
+				mes "Oh, "+strcharinfo(0)+"!";
+				mes "Why are you here at the wharf?";
+				mes "I guess you are doing well at the academy.";
 				next;
 				mes "[Carocc]";
-				mes "Eu vou estar atracando e consertando o navio aqui por um tempo.";
-				mes "E retomarei meu caminho de antes.";
+				mes "I'm going to be docking and reparing the ship here for a while.";
+				mes "I will be taking the same route I tried before.";
 			} else {
 				mes "[Carocc]";
-				mes "Hmm? VocÍ deve ser aluno da Academia?";
-				mes "VocÍ estava no meu navio?";
-				mes "Hmm eu n„o consigo lembrar.";
+				mes "Hmm? You must be a student of the Criatura Academy?";
+				mes "Were you on my ship?";
+				mes "Hmm I can't remember.";
 				next;
 				mes "[Carocc]";
-				mes "Bem, tudo est· bem.";
-				mes "Eu deveria ser f·cil com vocÍ porque diz ser estudante da Academia?";
-				mes "Eu ainda sou o capit„o do navio, independente disto.";
+				mes "Well, anything is fine.";
+				mes "Shall I go easy on you since you said you were a student of the Academy?";
+				mes "I am still the Capit√£o of the ship, regardless.";
 			}
 			next;
 			mes "[Carocc]";
-			mes "Eu planejo zarpar assim que os reparos estiverem completos.";
-			mes "A rota ser· aberta com ^4d4dffFarol Pharos^000000 atÈ l·...";
+			mes "I plan on taking off as soon as the repairs are complete.";
+			mes "The route will open with ^4d4dffPharos Lighthouse^000000 by then.";
 		} else {
 			if (isbegin_quest(7471) == 2) {
 				if (!isbegin_quest(7472)) {
 					mes "[Carocc]";
-					mes "Aqui È Izlude.";
-					mes "A melhor cidade para dar asas aos seus sonhos.";
+					mes "This is Izlude.";
+					mes "The best city for you to take wings to your dreams.";
 					next;
 					mes "[Carocc]";
-					mes "Embora eu n„o tenha nenhum sentimento especial por vocÍ,";
-					mes "eu vi muitos jovens como vocÍ, enquanto operava o navio.";
+					mes "Although I don't have any particular feelings for you,";
+					mes "I've seen a lot of young people like you, while operating the ship.";
 					next;
 					mes "[Carocc]";
-					mes "Houve aqueles que entre eles tiveram sucesso e falharam, voltaram depois de serem incapazes de se ajustar.";
-					mes "Eu quero que vocÍ tenha um bom comeÁo com este lugar.";
+					mes "There were those among them who succeeded and failed and went back after being unable to adjust.";
+					mes "I want you to have a successful start with this place.";
 					next;
 					mes "[Carocc]";
-					mes "VocÍ sabia disso?";
-					mes "Izlude tem um novo instituto para jovens aventureiros como vocÍ!";
+					mes "Did you know this?";
+					mes "Izlude has a new Institute for budding adventurers like you!";
 					next;
-					select("A Academia? SÈrio?");
+					select("You mean the Academy?");
 					mes "[Carocc]";
-					mes "Sim! Chamamos de ^4d4dffRoyal Criatura Academia^000000.";
-					mes "Fundada por antigos de Rune Midgard para ajudar novos aventureiros.";
-					next;
-					mes "[Carocc]";
-					mes "Um amigo meu trabalha l·, vou falar de vocÍ para ele.";
-					mes "Ele poderia tornar as coisas mais f·ceis para vocÍ.";
+					mes "Yes! It's called the ^4d4dffRoyal Criatura Academy^000000.";
+					mes "Founded by the Rune Midgard lineage to help out new adventurers.";
 					next;
 					mes "[Carocc]";
-					mes "Ele geralmente fala com novos aventureiros perto da entrada da academia.";
-					mes "Encontre-o l·.";
+					mes "A friend of mine works there, so I'll give you the introduction to him.";
+					mes "He could make a lot of things easier for you.";
+					next;
+					mes "[Carocc]";
+					mes "He usually talks to new adventurers near the entrance of the academy.";
+					mes "Go and meet him there.";
 					next;
 					if (!isbegin_quest(7473)) {
 						mes "[Carocc]";
-						mes "O nome dele È ^4d4dffHun^000000";
-						mes "Vou marcar sua localizaÁ„o no mapa.";
+						mes "His name is ^4d4dffHun^000000";
+						mes "I will mark his spot on the map so go to see him.";
 						setquest 7472;
 						viewpoint 1,122,207,0,0x4d4dff;
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "O ^4d4dffMini mapa pode ser visto no canto superior direito da tela.";
-						mes "VocÍ pode aumentar o zoom com +, diminuir o zoom com -. O waypoint do NPC ser· marcado nele.^000000";
+						mes "!- Informa√ß√£o -!";
+						mes "The ^4d4dffMini map can be seen on the right top of the screen.";
+						mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
 						next;
 						cutin "tutorial02.bmp", 4;
-						mes "!- InformaÁ„o -!";
-						mes "Recebi uma miss„o do ^4d4dffCapit„o Carocc.";
-						mes "O conte˙do da miss„o pode ser verificado na janela da miss„o.";
+						mes "!- Informa√ß√£o -!";
+						mes "Received a Quest from ^4d4dffCapit√£o Carocc.";
+						mes "The quest content can be checked from the quest window.";
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "A janela da miss„o pode ser aberta utilizando o atalho ^4d4dffAlt + u^000000.";
+						mes "!- Informa√ß√£o -!";
+						mes "Quest window can be opened by pressing ^4d4dffAlt + u^000000 keys together.";
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "Se precisar de mais ajuda com o mapa, pressione <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> aqui.";
-						mes "Isso mesmo, a parte que diz 'Hun'.";
+						mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
+						mes "Yes, the part that says 'Hun'.";
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "^4d4dffO Ìcone durante a conversa <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> È um link com cordenadas para navegaÁ„o..";
+						mes "!- Informa√ß√£o -!";
+						mes "^4d4dffThe icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means a link to navigation directions.";
 						cutin "navi01.bmp", 4;
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "Se vocÍ pressionar info depois de selecionar uma tarefa nos objetivos,^4d4dff,";
-						mes "uma seta apontando para o local do objetivo ser· exibida junto com a ajuda de navegaÁ„o.";
+						mes "!- Informa√ß√£o -!";
+						mes "If you press info after selecting a task in the objectives^4d4dff,";
+						mes "an arrow pointing to the location of the objective will pop up along with the navigation help.";
 						cutin "navi02.bmp", 4;
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "De qualquer forma, meu amigo ajudar· vocÍ a se registrar na academia";
-						mes "Espero que isso possa ajud·-lo em seu futuro.";
+						mes "Anyway, my friend will help you register with the academy";
+						mes "I hope it can help you for your future.";
 						close;
 					} else {
-						select("Eu sei de quem vocÍ est· falando.");
+						select("I know who you're talking about.");
 						mes "[Carocc]";
-						mes "Ent„o fico despreocupado.";
-						mes "Ele te apresentar· a academia.";
+						mes "Then there's no worry.";
+						mes "He'll introduce you to the academy.";
 						next;
 						mes "[Carocc]";
-						mes "Est· bem. Eu vou te mostrar a direÁ„o. VocÍ tenta de novo.";
-						mes "A propÛsito, eu te disse o nome dele? O nome dele È ^4d4dffHun^000000";
+						mes "OK. I will show you the direction. You try it again.";
+						mes "By the way, did I tell you his name? His name is ^4d4dffHun^000000";
 						viewpoint 1,122,207,1,0x4d4dff;
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "^4d4dff Mini mapa pode ser visto no canto superior direito da tela.";
-						mes "VocÍ pode aumentar o zoom com +, diminuir o zoom com -. O waypoint do NPC ser· marcado nele.^000000";
+						mes "!- Informa√ß√£o -!";
+						mes "^4d4dff Mini map can be seen on the right top of the screen.";
+						mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
 						next;
 						mes "[Carocc]";
-						mes "Se vocÍ precisar de mais ajuda com o mapa, clique <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> aqui.";
-						mes "Isso mesmo, a parte que diz [Hun].";
+						mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
+						mes "Yes, the part that says [Hun].";
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "^4d4dff o Ìcone durante a conversa <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> È um link com coordenadas para navegaÁ„o";
+						mes "!- Informa√ß√£o -!";
+						mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
+						mes "a link to navigation directions.";
 						cutin "navi01.bmp", 4;
 						next;
-						mes "!- InformaÁ„o -!";
-						mes "Se vocÍ pressionar info depois de selecionar uma tarefa nos objetivos,^4d4dff,";
-						mes "uma seta apontando para o local do objetivo ser· exibida junto com a ajuda de navegaÁ„o.";
+						mes "!- Informa√ß√£o -!";
+						mes "If you press info after selecting a task in the objectives^4d4dff,";
+						mes "an arrow pointing to the location of the objective will pop up along with navigation help";
 						cutin "navi02.bmp", 4;
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "De qualquer forma, meu amigo ajudar· vocÍ a se registrar na academia";
-						mes "Espero que isso possa ajud·-lo em seu futuro.";
+						mes "Anyway, my friend will help you register with the academy";
+						mes "I hope it will help you out in your journey";
 						close;
 					}
 				} else if (isbegin_quest(7472) == 1) {
 					mes "[Carocc]";
-					mes "Se vocÍ quiser, vocÍ pode avanÁar para o mundo imediatamente.";
-					mes "No entanto, recomendo que vocÍ visite primeiro a Academia.";
+					mes "If you want, you can step forward to the world right away.";
+					mes "However, I recommend you visit the Academy first.";
 					next;
 					mes "[Carocc]";
-					mes "O mundo È um lugar solit·rio para ficar sozinho.";
-					mes "A Academia tem pessoas que podem virar companheiros para vida inteira.";
+					mes "The world is a lonely place to be alone.";
+					mes "The Academy has people you can make as lifetime companions.";
 					next;
 					mes "[Carocc]";
-					mes "Meu amigo Hun est· perto da entrada da academia.";
-					mes "Se vocÍ n„o sabe o caminho que eu vou mostrar para vocÍ novamente.";
+					mes "My friend Hun will be around the academy entrance.";
+					mes "If you don't know the way I'll point it out to you again.";
 					viewpoint 1,122,207,0,0x4d4dff;
 					next;
 					mes "[Carocc]";
-					mes "Se vocÍ precisar de mais ajuda com o mapa, pressione <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> aqui";
-					mes "Sim, a parte que diz '' Hun ''.";
+					mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
+					mes "Yes, the part that says ''Hun''.";
 					next;
-					mes "!- InformaÁ„o -!";
-					mes "^4D4DFFO Ìcone durante a conversa <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> significa";
-					mes "um link para direÁıes de navegaÁ„o.";
+					mes "!- Informa√ß√£o -!";
+					mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
+					mes "a link to navigation directions.";
 					cutin "navi01.bmp", 4;
 					next;
-					mes "!- InformaÁ„o -!";
-					mes "Se vocÍ pressionar info depois de selecionar uma tarefa nos objetivos ^4D4DFF,";
-					mes "uma seta apontando para a localizaÁ„o do objetivo aparecer· junto com a ajuda de navegaÁ„o.";
+					mes "!- Informa√ß√£o -!";
+					mes "If you press info after selecting a task in the objectives^4d4dff,";
+					mes "an arrow pointing to the location of the objective will pop up along with navigation help.";
 					cutin "navi02.bmp", 4;
 					next;
 					cutin "", 255;
 					mes "[Carocc]";
-					mes "De qualquer forma, meu amigo ajudar· vocÍ a se registrar na academia.";
-					mes "Espero que isso ajude vocÍ em sua jornada.";
+					mes "Anyway, my friend will help you register with the academy.";
+					mes "I hope it will help you out in your journey.";
 					close;
 				} else {
 					mes "[Carocc]";
 					mes "Oh, " + strcharinfo(0) + "!";
-					mes "Ainda est· sendo diligente?";
-					mes "Eu tenho estado ocupado tambÈm.";
-					mes "Eu estava consertando o navio.";
+					mes "Still being dilligent?";
+					mes "I've been busy, also.";
+					mes "I was reparing the ship.";
 					next;
 					mes "[Carocc]";
-					mes "Eu planejo zarpar assim que os reparos estiverem completos.";
-					mes "A rota ser· aberta com ^4d4dffFarol Pharos^000000 atÈ l·...";
-					mes "Estou ansioso por isto.";
+					mes "I'll be taking off as soon as the repairs are complete.";
+					mes "At that time, the sailing route to ^4d4dffPharos lighthouse ^000000will be opened.";
+					mes "Be excited for it.";
 				}
 			} else {
 				if (!isbegin_quest(7472)) {
 					mes "[Carocc]";
-					mes "Arroy!";
-					mes "Primeira vez em Izlude?";
+					mes "Hello?";
+					mes "Is it your first time on Izlude?";
 					next;
-					switch(select("Arroy?", "Deixe-me entrar no navio!", "Eu n„o sei o que fazer.")) {
+					switch(select("Hello?", "Let me get on the ship!", "I don't know what to do.")) {
 					case 1:
 						mes "[Carocc]";
-						mes "VocÍ parece forte e capaz!";
-						mes "Eu gosto de pessoas capazes como vocÍ!";
-						mes "Sempre seja saud·vel e forte como vocÍ È agora.";
+						mes "You look strong and able!";
+						mes "I like able people like you!";
+						mes "Always be healthy and strong as you are now.";
 						break;
 					case 2:
 						mes "[Carocc]";
-						mes "Eu costumo viajar para ^4d4dffFarol Pharos^000000.";
-						mes "Mas estou descansando devido a alguns problemas.";
+						mes "I usually travel to ^4d4dffPharos Lighthouse^000000.";
+						mes "But I'm resting up due to some problems.";
 						next;
 						mes "[Carocc]";
-						mes "Se È Alberta ou Byalan Island, fale com o marinheiro.";
+						mes "If it's Alberta or Byalan Island, talk to the next sailor.";
 						break;
 					case 3:
 						mes "[Carocc]";
-						mes "Hmm... J· que n„o sabe o que fazer";
-						mes "Aproveitando que est· em Izlude, Porque n„o visita a ^4d4dffAcademia Criatura^000000?";
+						mes "Hmm? You said you didn't know what to do.";
+						mes "Since you're at Izlude, why don't you visit ^4d4dffCriatura Academy^000000?";
 						next;
 						mes "[Carocc]";
 						mes "Izlude has the Institute for budding adventurers like you";
-						mes "Um amigo meu trabalha l·, ent„o eu vou de vocÍ para ele.";
+						mes "A friend of mine works there, so I'll give you the introduction to him.";
 						next;
 						mes "[Carocc]";
-						mes "Ele geralmente fala de novas aventuras perto da entrada de uma academia.";
-						mes "V· e encontre-o pessoalmente.";
+						mes "He ususally talks to new adventurers near the entrance of an academy.";
+						mes "Go and meet him personally.";
 						next;
 						if (!isbegin_quest(7473)) {
 							mes "[Carocc]";
-							mes "O nome dele È ^4d4dffHun^000000";
-							mes "Vou marcar sua localizaÁ„o no mapa, ent„o v· vÍ-lo.";
+							mes "His name is ^4d4dffHun^000000";
+							mes "I will mark his location on the map so go to see him.";
 							setquest 7472;
 							viewpoint 1,122,207,0,0x4d4dff;
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "^4D4DFFOMini mapa pode ser visto no canto superior direito da tela.";
-							mes "VocÍ pode aumentar o zoom com +, diminuir o zoom com -. O ponto do caminho do NPC ser· marcado nele.^000000";
+							mes "!- Informa√ß√£o -!";
+							mes "^4d4dff Mini map can be seen on the right top of the screen.";
+							mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "Recebi uma miss„o de ^4D4DFFCapit„o Carocc.";
-							mes "O conte˙do da sua Miss„o pode ser monitorado na janela de informaÁıes da Quest.";
+							mes "!- Informa√ß√£o -!";
+							mes "Received a Quest from ^4d4dffCapit√£o Carocc.";
+							mes "Contents of your Quest can be monitored on the Quest Informa√ß√£o window.";
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "A janela da Miss„o pode ser aberta pressionando a tecla ^4D4DFFAlt + u^000000.";
+							mes "!- Informa√ß√£o -!";
+							mes "Quest window can be opened by pressing the ^4d4dffAlt + u^000000 key.";
 							next;
 							mes "[Carocc]";
-							mes "Se vocÍ precisar de mais ajuda com o mapa, pressione <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> aqui";
-							mes "Sim, a parte que diz [Hun].";
+							mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
+							mes "Yes, the part that says [Hun].";
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "^4D4DFFO Ìcone durante a conversa <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> significa";
-							mes "um link para direÁıes de navegaÁ„o.";
+							mes "!- Informa√ß√£o -!";
+							mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
+							mes "a link to navigation directions.";
 							cutin "navi01.bmp", 4;
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "Se vocÍ pressionar info depois de selecionar uma tarefa nos objetivos ^4D4DFF,";
-							mes "uma seta apontando para a localizaÁ„o do objetivo aparecer· junto com a ajuda de navegaÁ„o";
+							mes "!- Informa√ß√£o -!";
+							mes "If you press info after selecting a task in the objectives^4d4dff,";
+							mes "an arrow pointing to the location of the objective will pop up along with navigation help";
 							cutin "navi02.bmp", 4;
 							next;
 							cutin "", 255;
 							mes "[Carocc]";
-							mes "De qualquer forma, meu amigo ajudar· vocÍ a se registrar na academia";
-							mes "Espero que isso ajude em sua jornada";
+							mes "Anyway, my friend will help you register with the academy";
+							mes "I hope it will help you out in your journey";
 							close;
 						} else {
-							select("Eu sei de quem vocÍ est· falando.");
+							select("I know who you're talking about.");
 							mes "[Carocc]";
-							mes "Ent„o fico despreocupado.";
-							mes "Ele te apresentar· a academia.";
+							mes "Then there's no worry.";
+							mes "He'll introduce you to the academy.";
 							next;
 							mes "[Carocc]";
-							mes "Est· bem. Eu vou te mostrar a direÁ„o. VocÍ tenta de novo.";
-							mes "A propÛsito, eu te disse o nome dele? O nome dele È ^4d4dffHun^000000";
+							mes "OK. I will show you the direction. You try it again.";
+							mes "By the way, did I tell you his name? His name is ^4d4dffHun^000000";
 							viewpoint 1,122,207,1,0x4d4dff;
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "^4d4dff Mini mapa pode ser visto no canto superior direito da tela.";
-							mes "VocÍ pode aumentar o zoom com +, diminuir o zoom com -. O waypoint do NPC ser· marcado nele.^000000";
+							mes "!- Informa√ß√£o -!";
+							mes "^4d4dff Mini map can be seen on the right top of the screen.";
+							mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
 							next;
 							mes "[Carocc]";
-							mes "Se vocÍ precisar de mais ajuda com o mapa, clique <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> aqui.";
-							mes "Isso mesmo, a parte que diz [Hun].";
+							mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
+							mes "Yes, the part that says [Hun].";
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "^4d4dff o Ìcone durante a conversa <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> È um link com cordenadas para navegaÁ„o";
+							mes "!- Informa√ß√£o -!";
+							mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
+							mes "a link to navigation directions.";
 							cutin "navi01.bmp", 4;
 							next;
-							mes "!- InformaÁ„o -!";
-							mes "Se vocÍ pressionar info depois de selecionar uma tarefa nos objetivos,^4d4dff,";
-							mes "uma seta apontando para o local do objetivo ser· exibida junto com a ajuda de navegaÁ„o.";
+							mes "!- Informa√ß√£o -!";
+							mes "If you press info after selecting a task in the objectives^4d4dff,";
+							mes "an arrow pointing to the location of the objective will pop up along with navigation help";
 							cutin "navi02.bmp", 4;
 							next;
 							cutin "", 255;
 							mes "[Carocc]";
-							mes "De qualquer forma, meu amigo ajudar· vocÍ a se registrar na academia";
-							mes "Espero que isso possa ajud·-lo em seu futuro.";
+							mes "Anyway, my friend will help you register with the academy";
+							mes "I hope it will help you out in your journey";
 							close;
 						}
 					}
 				} else if (isbegin_quest(7472) == 1) {
 					mes "[Carocc]";
-					mes "Ah, È vocÍ.";
-					mes "Esse cara tambÈm decidiu se registrar na Academia Criatura.";
-					mes "Isso pode ser um bom destino para vocÍ. Espero que vocÍ e ele possam ser bons amigos.";
+					mes "Ah, it's you.";
+					mes "This guy has also decided to register at Criatura Academy.";
+					mes "This might be a good destiny for you. Hope you and him can be good friends.";
 					next;
 					cutin "nov_lumin01.bmp", 0;
 					mes "[Lumin]";
@@ -685,38 +687,40 @@ izlude,198,213,3	script	Capit„o Carocc#iz	4_M_REINDEER,5,5,{
 					next;
 					cutin "", 255;
 					mes "[Carocc]";
-					mes "Se vocÍ quiser, vocÍ pode avanÁar para o mundo imediatamente.";
-					mes "No entanto, recomendo que vocÍ visite primeiro a Academia.";
+					mes "If you want, you can step forward to the world right away.";
+					mes "However, I recommend you visit the Academy first.";
 					next;
 					mes "[Carocc]";
-					mes "O mundo È um lugar solit·rio para ficar sozinho.";
-					mes "A Academia tem pessoas que vocÍ poderia transformar em companheiros de vida.";
+					mes "The world is a lonely place to be alone.";
+					mes "The Academy has people you could make into lifetime companions.";
 					next;
 					mes "[Carocc]";
-					mes "Meu amigo <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> est· em torno da entrada da academia.";
-					mes "Se vocÍ n„o sabe o caminho eu vou mostrar para vocÍ novamente.";
+					mes "My friend <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> will be around the academy entrance.";
+					mes "If you don't know the way I'll point it out to you again.";
 					viewpoint 1,122,207,1,0x4d4dff;
 					next;
 					mes "[Carocc]";
-					mes "Ent„o, boa sorte!";
+					mes "then, Good luck!";
 					close;
 				} else {
 					mes "[Carocc]";
-					mes "Oh, nos encontramos novamente. VocÍ por acaso precisa de um navio?";
-					mes "Eu costumo viajar para o porto em Paros. Se vocÍ precisar ir atÈ Paros depois, venha me ver.";
+					mes "Oh, We meet again.";
+					mes "Do you by any chance need a ship?";
+					mes "I usually travel to the port in Paros.";
+					mes "If you need to go to Paros later, come see me.";
 				}
 			}
 		}
 	} else {
 		if (isbegin_quest(7471) == 2 || isbegin_quest(7472) > 0) {
 			mes "[Carocc]";
-			mes "Faz algum tempo!";
-			mes "Olhando para a sua express„o, vocÍ deve estar bem.";
+			mes "It's been a while!";
+			mes "Looking at your expression, you must be doing well.";
 			next;
-			switch(select("Me leve ao Farol Faros", "Para Alberta", "Conversar")) {
+			switch(select("Take me to Pharos Lighthouse", "To Alberta", "Talk")) {
 			case 1:
 				mes "[Carocc]";
-				mes "VocÍ quer ir para Farol Faros na costa sul de Morroc?";
+				mes "Do you want to go to Pharos Lighthouse on the southern coast of Morocc?";
 				mes "The fee is 2800 zeny. I have a crew that needs payment so this fee is non-negotiable.";
 				next;
 				if (select("To Pharos Lighthouse!", "Cancel") == 1) {
@@ -798,10 +802,10 @@ OnTouch:
 	end;
 }
 
-izlude_a,198,213,3	duplicate(Captain Carocc#iz)	Captain Carocc#iz_a	4_M_REINDEER,5,5
-izlude_b,198,213,3	duplicate(Captain Carocc#iz)	Captain Carocc#iz_b	4_M_REINDEER,5,5
-izlude_c,198,213,3	duplicate(Captain Carocc#iz)	Captain Carocc#iz_c	4_M_REINDEER,5,5
-izlude_d,198,213,3	duplicate(Captain Carocc#iz)	Captain Carocc#iz_d	4_M_REINDEER,5,5
+izlude_a,198,213,3	duplicate(Capit√£o Carocc#iz)	Capit√£o Carocc#iz_a	4_M_REINDEER,5,5
+izlude_b,198,213,3	duplicate(Capit√£o Carocc#iz)	Capit√£o Carocc#iz_b	4_M_REINDEER,5,5
+izlude_c,198,213,3	duplicate(Capit√£o Carocc#iz)	Capit√£o Carocc#iz_c	4_M_REINDEER,5,5
+izlude_d,198,213,3	duplicate(Capit√£o Carocc#iz)	Capit√£o Carocc#iz_d	4_M_REINDEER,5,5
 
 // - Criatura Academy Staff
 // - Teaches the player about the Inventory.
@@ -839,11 +843,11 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			mes "or drag it onto^4d4dff the equipment window and use it^000000";
 			next;
 			cutin "tutorial03.bmp", 4;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "^4d4dffItems can be used or equipped with simply double-clicking.";
 			mes "Item window can be opened with shortcut key Alt+E";
 			next;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "^4d4dff Equipped items can be checked with Alt+ Q";
 			mes "Items can also be dragged onto the location where you wish to equip it.";
 			next;
@@ -853,10 +857,10 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			mes "You can check the detailed info on the item.";
 			next;
 			cutin "tutorial04.bmp", 4;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "^4d4dffRight-clicking on the item icon^4d4dff  brings up detailed info on the item.";
 			next;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "^4d4dffWhen you select other players, you can trade, party up with them with the community window that pops up.";
 			next;
 			cutin "", 255;
@@ -891,10 +895,10 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 				mes "You can check the detailed info on the item.";
 				next;
 				cutin "tutorial04.bmp", 3;
-				mes "!- Information -!";
+				mes "!- Informa√ß√£o -!";
 				mes "Right clicking on the item icon ^4d4dffbrings up the detailed info on the item";
 				next;
-				mes "!- Information -!";
+				mes "!- Informa√ß√£o -!";
 				mes "When you select on other players^4d4dff you can trade, party up with them with the community window that pops up.";
 				next;
 				cutin "", 255;
@@ -959,13 +963,13 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							mes "Anybody can enroll, so take advantage of it.";
 							next;
-							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-							mes "[Information Staff]";
+							emotion ET_SURPRISE, getnpcid(0, "Informa√ß√£o Staff#"+strnpcinfo(2));
+							mes "[Informa√ß√£o Staff]";
 							mes "Sorry to interrupt.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
 							next;
-							mes "[Information Staff]";
-							mes "Hun's information has limits";
+							mes "[Informa√ß√£o Staff]";
+							mes "Hun's Informa√ß√£o has limits";
 							close;
 						case 2:
 							mes "[Hun]";
@@ -981,13 +985,13 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "If there are more adventurers like you, the future will be brighter.";
 							mes "Hahahaha.";
 							next;
-							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-							mes "[Information Staff]";
+							emotion ET_SURPRISE, getnpcid(0, "Informa√ß√£o Staff#"+strnpcinfo(2));
+							mes "[Informa√ß√£o Staff]";
 							mes "Sorry to interrupt.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
 							next;
-							mes "[Information Staff]";
-							mes "Hun's information has limits";
+							mes "[Informa√ß√£o Staff]";
+							mes "Hun's Informa√ß√£o has limits";
 							close;
 						case 3:
 							mes "[Hun]";
@@ -1000,14 +1004,14 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							mes "What is well, is well- isn't it?";
 							next;
-							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-							mes "[Information Staff]";
+							emotion ET_SURPRISE, getnpcid(0, "Informa√ß√£o Staff#"+strnpcinfo(2));
+							mes "[Informa√ß√£o Staff]";
 							mes "You are correct.";
 							mes "Preperation is the key.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
 							next;
-							mes "[Information Staff]";
-							mes "Hun's information has limits.";
+							mes "[Informa√ß√£o Staff]";
+							mes "Hun's Informa√ß√£o has limits.";
 							close;
 						}
 					}
@@ -1035,13 +1039,13 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						mes "Anybody can enroll, so take advantage of it.";
 						next;
-						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-						mes "[Information Staff]";
+						emotion ET_SURPRISE, getnpcid(0, "Informa√ß√£o Staff#"+strnpcinfo(2));
+						mes "[Informa√ß√£o Staff]";
 						mes "Sorry to interrupt.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
 						next;
-						mes "[Information Staff]";
-						mes "Hun's information has limits";
+						mes "[Informa√ß√£o Staff]";
+						mes "Hun's Informa√ß√£o has limits";
 						close;
 					case 2:
 						mes "[Hun]";
@@ -1057,13 +1061,13 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "If there are more adventurers like you, the future will be brighter.";
 						mes "Hahahaha.";
 						next;
-						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-						mes "[Information Staff]";
+						emotion ET_SURPRISE, getnpcid(0, "Informa√ß√£o Staff#"+strnpcinfo(2));
+						mes "[Informa√ß√£o Staff]";
 						mes "Sorry to interrupt.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
 						next;
-						mes "[Information Staff]";
-						mes "Hun's information has limits";
+						mes "[Informa√ß√£o Staff]";
+						mes "Hun's Informa√ß√£o has limits";
 						close;
 					case 3:
 						mes "[Hun]";
@@ -1076,14 +1080,14 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						mes "What is well, is well- isn't it?";
 						next;
-						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
-						mes "[Information Staff]";
+						emotion ET_SURPRISE, getnpcid(0, "Informa√ß√£o Staff#"+strnpcinfo(2));
+						mes "[Informa√ß√£o Staff]";
 						mes "You are correct.";
 						mes "Preperation is the key.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
 						next;
-						mes "[Information Staff]";
-						mes "Hun's information has limits.";
+						mes "[Informa√ß√£o Staff]";
+						mes "Hun's Informa√ß√£o has limits.";
 						close;
 					}
 				} else {
@@ -1123,10 +1127,10 @@ izlude_b,122,207,3	duplicate(Criatura Academy Staff#0)	Criatura Academy Staff#b	
 izlude_c,122,207,3	duplicate(Criatura Academy Staff#0)	Criatura Academy Staff#c	4_M_KHKYEL,3,3
 izlude_d,122,207,3	duplicate(Criatura Academy Staff#0)	Criatura Academy Staff#d	4_M_KHKYEL,3,3
 
-// - Information Staff
+// - Informa√ß√£o Staff
 // - Teaches the player about the Mini-Map through a quick quest.
 // -----------------------------------------------------------------------------
-izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
+izlude,120,207,4	script	Informa√ß√£o Staff#0	8W_SOLDIER,{
 	if (!checkweight(1304,3)) {
 		mes "Quest cannot be continued due to the invenory being full.";
 		mes "Please try it again after re-organizing your items.";
@@ -1134,34 +1138,34 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 	}
 
 	if (BaseLevel < 15 && !isbegin_quest(7474)) {
-		mes "[Information Staff]";
+		mes "[Informa√ß√£o Staff]";
 		mes "Hi, how are you?";
 		mes "I am in charge of navigation directions for Izlude's key locations";
 		mes "I wish to propose a simple game along with the navigation, would that be ok?";
 		next;
 		if (select("Sure, let's play!", "I already know them all.") == 1) {
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "First of all, how to check the mini-map.";
 			mes "You can check your location through the mini-map at the top right of the screen";
 			next;
-			mes "[Information Staff]";
-			mes "If you receive information on a town or a city, a waypoint ^4d4dff+^000000 can be marked on the map.";
+			mes "[Informa√ß√£o Staff]";
+			mes "If you receive Informa√ß√£o on a town or a city, a waypoint ^4d4dff+^000000 can be marked on the map.";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Press ^4d4dff[Ctrl] and [ ~ ] on your keyboard and you can see the world map^000000.";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Through the ^4d4dffworld map you can check the location of you, your party members and the level of monsters in the area.^000000";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "This is useful info to remember.";
 			mes "Now then, should we play a simple game?";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "I will ^4d4dffmark three specific locations on the mini-map.^000000";
 			mes "Please ^4d4dffvisit those locations ^000000using the waypoints as reference.";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Think of it as a treasure hunt and go.";
 			mes "I've hidden some useful items there.";
 			viewpoint 1,179,75,1,0xCCFFFF;
@@ -1169,19 +1173,19 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			viewpoint 1,207,167,3,0xFFEB46;
 			setquest 7474;
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Vist me again after going by all three locations.";
 			mes "I will check up on it.";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Ah, there' somebody who started out right before you!";
 			mes "If you don't hurry that person will take all the items!";
 			mes "So, run!";
 			npcskill "AL_INCAGI", 10, 10, 10;
 			close;
 		}
-		mes "[Information Staff]";
-		mes "Do you need information on all the locations of Izlude?";
+		mes "[Informa√ß√£o Staff]";
+		mes "Do you need Informa√ß√£o on all the locations of Izlude?";
 		mes "By clicking on the introduced ^B9062F[base camp name]^000000, I will offer you guidance so follow the ^B9062FRed Arrows^000000.";
 		next;
 		while(1) {
@@ -1190,7 +1194,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				while (1) {
 					switch(select("[ Criatura Academy ]", "[ Wharf ]", "[ Airship (International) ]", "[ Arena ]", "[ Shop ]", "[ Swordman Guild ]", "[ Enchant Association ]", "[ Blacksmith's Workshop ]", "Go back to the previous menu")) {
 					case 1:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "If you are the first time adventurer,";
 						mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
 						mes "can offer a lot of info and help.";
@@ -1199,19 +1203,19 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 2:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
 						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
 						mes "you can go.";
 						next;
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
 						continue;
 					case 3:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
 						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
@@ -1220,7 +1224,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 4:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "The <NAVI>[Arena]<INFO>izlude,213,161,</INFO></NAVI> located in the east";
 						mes "is for testing your battle ability.";
 						mes "It's an excellent place.";
@@ -1230,7 +1234,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 5:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Shop]<INFO>izlude,110,182,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1239,7 +1243,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 6:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "<NAVI>[Swordman guild]<INFO>izlude,51,172,</INFO></NAVI> is the place to manage the job transfer to a swordman.";
 						mes "I will mark the location of the swordman guild on the mini map.";
 						mes "Do you need additional directions?";
@@ -1247,7 +1251,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 7:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Enchant Association]<INFO>izlude,97,125,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1256,7 +1260,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 8:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Blacksmith's Workshop]<INFO>izlude,153,126,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1274,7 +1278,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				while (1) {
 					switch(select("[ Eden Group Teleporter ]", "[ Kafra Employee ]", "[ Mesmerizer ]", "[ Wedding Secretary ]", "[ Mercenary Guild Official ]", "[ Taming Merchant ]", "Go back to the previous menu")) {
 					case 1:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "For now, I will mark the location of the";
 						mes "<NAVI>[Eden Group Teleporter]<INFO>izlude,131,148,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1283,7 +1287,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 2:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Kafra Employee]<INFO>izlude,128,148,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1292,7 +1296,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 3:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Mesmerizer]<INFO>izlude,124,127,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1301,7 +1305,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 4:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "If you want to visit ^8B4513Jawaii^000000 - the resort place for a couple,";
 						mes "talk to the <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
 						mes "Just ask the question about it.";
@@ -1310,7 +1314,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 5:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "If you need to know about the Mercenary Guild, go west and speak to the";
 						mes "<NAVI>[Mercenary Guild Official]<INFO>izlude,47,170,</INFO></NAVI>.";
 						mes "Do you need additional directions?";
@@ -1318,7 +1322,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 6:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Taming Merchant]<INFO>izlude,118,163,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1333,7 +1337,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				}
 				break;
 			case 3:
-				mes "[Information Staff]";
+				mes "[Informa√ß√£o Staff]";
 				mes "I will erase the marks.";
 				mes "Do you need additional directions?";
 				viewpoint 2, 197, 205, 1, 0xFF0000;
@@ -1352,7 +1356,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				next;
 				break;
 			case 4:
-				mes "[Information Staff]";
+				mes "[Informa√ß√£o Staff]";
 				mes "Have a wonderful adventure.";
 				mes "Good bye~~!";
 				close;
@@ -1360,7 +1364,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 		}
 	} else if (isbegin_quest(7474) == 1) {
 		if ((isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477)) > 2) {
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "What's with the long face?";
 			mes "It looks like you found all the locations I marked.";
 			next;
@@ -1380,7 +1384,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			if (select("I don't need your sympathy.", "!!!!!") == 1) {
 				mes "[Lumin]";
 				mes "Is that so?";
-				mes "Captain always told me to help the poor people.";
+				mes "Capit√£o always told me to help the poor people.";
 				mes "But you get rid of my chance to help.";
 				cutin "nov_lumin02.bmp", 2;
 				next;
@@ -1398,12 +1402,12 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				next;
 			}
 			cutin "", 255;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Ahhh, you two calm down.";
 			mes "Lumin took them all.";
 			mes ""+ strcharinfo(0) + " I will give you one set separately.";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Think of the reason, it was my fault to leave one person's but sent both of you.";
 			next;
 			cutin "nov_lumin03.bmp", 2;
@@ -1413,11 +1417,11 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			mes "See you again, my friend.";
 			next;
 			cutin "", 255;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Aren't you two friends?";
 			mes "You guys both seemed friendly enough right?";
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Well, this is my present for you.";
 			mes "Hope it will be useful.";
 			completequest 7474;
@@ -1429,11 +1433,11 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			getitem 12324,10;// N_Butterfly_Wing
 			getitem 569,20;// Novice_Potion
 			next;
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "Have a wonderful journey.";
 			close;
 		} else {
-			mes "[Information Staff]";
+			mes "[Informa√ß√£o Staff]";
 			mes "You have not found the treasure I hid.";
 			mes "Here are the locations again.";
 			mes "Hurry up!";
@@ -1443,11 +1447,11 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			close;
 		}
 	} else {
-		mes "[Information Staff]";
+		mes "[Informa√ß√£o Staff]";
 		mes "This is Izlude - the satellite city of Prontera.";
 		mes "Do you need directions?";
 		next;
-		mes "[Information Staff]";
+		mes "[Informa√ß√£o Staff]";
 		mes "If you click on the ^B9062F[area name]^000000, I can ^B9062Fnavigate^000000 a path for you to follow.";
 		next;
 		while(1) {
@@ -1456,7 +1460,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				while (1) {
 					switch(select("[ Criatura Academy ]:[ Wharf ]:[ Airship (International) ]:[ Arena ]:[ Shop ]:[ Swordman Guild ]:[ Enchant Association ]:[ Blacksmith's Workshop ]:Go back to the previous menu")) {
 					case 1:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "If you are the first time adventurer,";
 						mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
 						mes "can offer a lot of info and help.";
@@ -1465,19 +1469,19 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 2:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
 						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
 						mes "you can go.";
 						next;
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
 						continue;
 					case 3:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
 						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
@@ -1486,7 +1490,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 4:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "The <NAVI>[Arena]<INFO>izlude,213,161,</INFO></NAVI> located in the east";
 						mes "is for testing your battle ability.";
 						mes "It's an excellent place.";
@@ -1496,7 +1500,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 5:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Shop]<INFO>izlude,110,182,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1505,7 +1509,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 6:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "<NAVI>[Swordman guild]<INFO>izlude,51,172,</INFO></NAVI> is the place to manage the job transfer to a swordman.";
 						mes "I will mark the location of the swordman guild on the mini map.";
 						mes "Do you need additional directions?";
@@ -1513,7 +1517,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 7:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Enchant Association]<INFO>izlude,97,125,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1522,7 +1526,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 8:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Blacksmith's Workshop]<INFO>izlude,153,126,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1540,7 +1544,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				while (1) {
 					switch(select("[ Eden Group Teleporter ]:[ Kafra Employee ]:[ Mesmerizer ]:[ Wedding Secretary ]:[ Mercenary Guild Official ]:[ Taming Merchant ]:Go back to the previous menu")) {
 					case 1:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "For now, I will mark the location of the";
 						mes "<NAVI>[Eden Group Teleporter]<INFO>izlude,131,148,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1549,7 +1553,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 2:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Kafra Employee]<INFO>izlude,128,148,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1558,7 +1562,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 3:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Mesmerizer]<INFO>izlude,124,127,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1567,7 +1571,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 4:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "If you want to visit ^8B4513Jawaii^000000 - the resort place for a couple,";
 						mes "talk to the <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
 						mes "Just ask the question about it.";
@@ -1576,7 +1580,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 5:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "If you need to know about the Mercenary Guild, go west and speak to the";
 						mes "<NAVI>[Mercenary Guild Official]<INFO>izlude,47,170,</INFO></NAVI>.";
 						mes "Do you need additional directions?";
@@ -1584,7 +1588,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						continue;
 					case 6:
-						mes "[Information Staff]";
+						mes "[Informa√ß√£o Staff]";
 						mes "I will mark the location of the";
 						mes "<NAVI>[Taming Merchant]<INFO>izlude,118,163,</INFO></NAVI>";
 						mes "on the mini map.";
@@ -1599,7 +1603,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				}
 				break;
 			case 3:
-				mes "[Information Staff]";
+				mes "[Informa√ß√£o Staff]";
 				mes "I will erase the marks.";
 				mes "Do you need additional directions?";
 				viewpoint 2, 197, 205, 1, 0xFF0000;
@@ -1618,7 +1622,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				next;
 				break;
 			case 4:
-				mes "[Information Staff]";
+				mes "[Informa√ß√£o Staff]";
 				mes "Have a wonderful adventure.";
 				mes "Good bye~~!";
 				close;
@@ -1632,10 +1636,10 @@ OnInit:
 	end;
 }
 
-izlude_a,120,207,4	duplicate(Information Staff#0)	Information Staff#a	8W_SOLDIER
-izlude_b,120,207,4	duplicate(Information Staff#0)	Information Staff#b	8W_SOLDIER
-izlude_c,120,207,4	duplicate(Information Staff#0)	Information Staff#c	8W_SOLDIER
-izlude_d,120,207,4	duplicate(Information Staff#0)	Information Staff#d	8W_SOLDIER
+izlude_a,120,207,4	duplicate(Informa√ß√£o Staff#0)	Informa√ß√£o Staff#a	8W_SOLDIER
+izlude_b,120,207,4	duplicate(Informa√ß√£o Staff#0)	Informa√ß√£o Staff#b	8W_SOLDIER
+izlude_c,120,207,4	duplicate(Informa√ß√£o Staff#0)	Informa√ß√£o Staff#c	8W_SOLDIER
+izlude_d,120,207,4	duplicate(Informa√ß√£o Staff#0)	Informa√ß√£o Staff#d	8W_SOLDIER
 
 // - Airship Sign
 // -----------------------------------------------------------------------------
@@ -1643,7 +1647,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 	.@total = isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477);
 	if (isbegin_quest(7474)) {
 		if (!isbegin_quest(7475)) {
-			mes "==== Airship Information====";
+			mes "==== Airship Informa√ß√£o====";
 			mes "Izlude - Juno - Rachel";
 			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 			next;
@@ -1662,7 +1666,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 				mes "I guess because they're from Creamy monsters...";
 				next;
 				mes "[Lumin]";
-				mes "As the captain said, seeing is believing. The world is full of mysteries.";
+				mes "As the Capit√£o said, seeing is believing. The world is full of mysteries.";
 				next;
 				cutin "", 255;
 				mes "Seems like Lumin beat you again.";
@@ -1698,7 +1702,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 					setquest 7475;
 					viewpoint 2,179,75,1,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff...I have to report the result to the Informa√ß√£o Staff...^000000.";
 					close;
 				}
 				mes "[Lumin]";
@@ -1716,7 +1720,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report the result to the Information staff...^000000.";
+				mes "^4d4dff...I have to report the result to the Informa√ß√£o staff...^000000.";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
 				close;
@@ -1748,13 +1752,13 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 				close;
 			}
 		} else {
-			mes "==== Airship Information ====";
+			mes "==== Airship Informa√ß√£o ====";
 			mes "Izlude - Juno - Rachel";
 			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 			close;
 		}
 	} else {
-		mes "==== Airship Information ====";
+		mes "==== Airship Informa√ß√£o ====";
 		mes "Izlude - Juno - Rachel";
 		mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 		close;
@@ -1836,7 +1840,7 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 					setquest 7476;
 					viewpoint 2,207,167,3,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff...I have to report the result to the Informa√ß√£o Staff...^000000.";
 					close;
 				}
 				mes "[Lumin]";
@@ -1854,7 +1858,7 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report of the result to Information staff...^000000.";
+				mes "^4d4dff...I have to report of the result to Informa√ß√£o staff...^000000.";
 				setquest 7476;
 				viewpoint 2,207,167,3,0xFF0000;
 				close;
@@ -1923,7 +1927,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 	.@total = isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477);
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7477)) {
-			mes "==== Information ====";
+			mes "==== Informa√ß√£o ====";
 			mes "Prontera Field.";
 			mes "The city of Prontera is located to the north.";
 			next;
@@ -1984,7 +1988,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 					setquest 7477;
 					viewpoint 2,45,94,2,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff...I have to report the result to the Informa√ß√£o Staff...^000000.";
 					close;
 				}
 				mes "[Lumin]";
@@ -2002,7 +2006,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report of the result to Information staff...^000000.";
+				mes "^4d4dff...I have to report of the result to Informa√ß√£o staff...^000000.";
 				setquest 7477;
 				viewpoint 2,45,94,2,0xFF0000;
 				close;
@@ -2032,13 +2036,13 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 				close;
 			}
 		} else {
-			mes "==== Information ====";
+			mes "==== Informa√ß√£o ====";
 			mes "Prontera Field.";
 			mes "The city of Prontera is located to the north.";
 			close;
 		}
 	} else {
-		mes "==== Information ====";
+		mes "==== Informa√ß√£o ====";
 		mes "Prontera Field.";
 		mes "The city of Prontera is located to the north.";
 		close;
@@ -2141,16 +2145,16 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 			mes "Needed skills or items can be immediately used after registering on the corresponding slots.";
 			next;
 			cutin "tutorial05.bmp", 4;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "You can register needed items or skills at ^4d4dffshortcut slots by dragging the icons.";
 			next;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "^4d4dff The registered items and equipment at^4d4dff the slots can be immediately used or armed by pressing the reponding F1 - F9 keys.";
 			next;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "By setting the ^4d4dffshortcut keys as you want, you can use the responding shortcut key.";
 			next;
-			mes "!- Information -!";
+			mes "!- Informa√ß√£o -!";
 			mes "^4d4dffyou may register the frequently using items and skills, and use them at your convenience.";
 			cutin "", 255;
 			next;
@@ -2329,7 +2333,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 			if (isbegin_quest(7472) > 0 || isbegin_quest(7474) > 1) {
 				mes "[Lumin]";
 				mes "Did you lose your memory?";
-				mes "If the captain hears about it, he'll cry.";
+				mes "If the Capit√£o hears about it, he'll cry.";
 				mes "It is still ok as long as I remember you.";
 				cutin "nov_lumin02.bmp", 2;
 				next;
@@ -3444,7 +3448,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 		if (!isbegin_quest(1237)) {
 			mes "[Shop Helper Leonie]";
 			mes "How are you doing with your basic studies?";
-			mes "You need to learn about the shop information.";
+			mes "You need to learn about the shop Informa√ß√£o.";
 			next;
 			if (select("I'm doing fine myself!", "Ok I'll listen!") == 1) {
 				mes "[Shop Helper Leonie]";
@@ -4635,7 +4639,7 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 		mes "[Battle Instructor Subino]";
 		mes "You didn't register with the ^ff0000Criatura Academy^000000 yet?";
 		mes "It requires a simple procedure so go and register.";
-		mes "You can register at the ^ff0000information center of academy^000000.";
+		mes "You can register at the ^ff0000Informa√ß√£o center of academy^000000.";
 		close;
 	} else {
 		mes "[Battle Instructor Subino]";
@@ -5302,14 +5306,14 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 		next;
 		mes "[Kafra Guide Trainer]";
 		mes "For those who are using the Kafra service for the first time.";
-		mes "Kafra service offers thorough information rundown~!";
+		mes "Kafra service offers thorough Informa√ß√£o rundown~!";
 		while(1) {
 			next;
 			mes "[Kafra Guide Trainer]";
 			mes "Tell us what you would like to know";
 			mes "about the Kafra service~!";
 			next;
-			switch(select("Saving", "Storage Service", "Teleport Service", "Use of Pushcart Service", "Check Other Information", "Cancel")) {
+			switch(select("Saving", "Storage Service", "Teleport Service", "Use of Pushcart Service", "Check Other Informa√ß√£o", "Cancel")) {
 			case 1:
 				mes "[Kafra Guide Trainer]";
 				mes "Save service is for when you ^8B4513die in battle^000000 or use an item like ^8B4513Butterfly Wings^000000, you will be sent back to your Save Location.";
@@ -8090,7 +8094,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 		switch(select("Assignment A ("+.@gque_01$+")", "Assignment B ("+.@gque_02$+")", "Assignment C ("+.@gque_03$+")", "Assignment D ("+.@gque_04$+")", "Cancel")) {
 		case 1:
 			if (!.@gun_quest_01) {
-				mes "This is the <Assignment A> information.";
+				mes "This is the <Assignment A> Informa√ß√£o.";
 				mes "Client: Children";
 				mes "On the outskirts of the village is a very bad Hornet, because of this, the children cannot play outside. Please get rid of 10 Hornets.";
 				next;
@@ -8111,7 +8115,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 			break;
 		case 2:
 			if (!.@gun_quest_02) {
-				mes "This is the <Assignment B> information.";
+				mes "This is the <Assignment B> Informa√ß√£o.";
 				mes "Client: Resident H";
 				mes "Recently, Roda Frogs have been keeping me awake at night. Get rid of 10 Roda Frogs so I can get a good nights rest.";
 				next;
@@ -8132,7 +8136,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 			break;
 		case 3:
 			if (!.@gun_quest_03) {
-				mes "This is the <Assignment C> information.";
+				mes "This is the <Assignment C> Informa√ß√£o.";
 				mes "Client: Cute Pet Research Student";
 				mes "I want a cute pet of my own to walk around with. Can you help me catch 10 Savage Babes?";
 				next;
@@ -8153,7 +8157,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 			break;
 		case 4:
 			if (!.@gun_quest_04) {
-				mes "This is the <Assignment D> information.";
+				mes "This is the <Assignment D> Informa√ß√£o.";
 				mes "Client: Volunteer Bards";
 				mes "I heard some Rockers were having a singing contest, but I got lost, can you help me catch 10 Rockers? One day Rockers will disappear from the world!";
 				next;
@@ -9917,7 +9921,7 @@ iz_ac02,50,169,3	script	Salim Hamid#ac	1_M_MERCHANT,{
 		mes "Anyway, due to this reason, it is now being used for the trainees' practice of skills. Please check the prices for Garlet and Zargon.";
 		next;
 		mes "[Salim Hamid]";
-		mes "But! You should come back wit the information about ^4d4fffthe discounted prices equipped with the merchant's manual and applied with the discount rate^000000.";
+		mes "But! You should come back wit the Informa√ß√£o about ^4d4fffthe discounted prices equipped with the merchant's manual and applied with the discount rate^000000.";
 		next;
 		cutin "aca_salim01",2;
 		mes "[Salim Hamid]";
@@ -10159,7 +10163,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 			mes "[Mayssel]";
 			mes "Hello " + strcharinfo(0) + "";
 			mes "I am Mayssel  the section chief of the Veins section of the Assassin Guild.";
-			mes "I came here to give you some information about the Thief class.";
+			mes "I came here to give you some Informa√ß√£o about the Thief class.";
 			next;
 			mes "[Mayssel]";
 			mes "Do you want to know about the Thief class?";
@@ -10286,7 +10290,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 				end;
 			} else {
 				mes "[Mayssel]";
-				mes "Verkhasel and Vicente will give you various information related to the higher class jobs.";
+				mes "Verkhasel and Vicente will give you various Informa√ß√£o related to the higher class jobs.";
 				mes "So, come back to me after listening to them.";
 				cutin "gc_mayssel01.bmp", 1;
 				next;
@@ -10581,7 +10585,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 			mes "Attending the class, first you may be a student of Criatura Academy.";
 			next;
 			mes "[Mayssel]";
-			mes "However, if you want the information about the thief job itself, I will let you know.";
+			mes "However, if you want the Informa√ß√£o about the thief job itself, I will let you know.";
 			next;
 			switch(select("About the useful stats for a Thief", "About Thief's primary skills", "Not curious about it.")) {
 			case 1:
@@ -10685,7 +10689,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 				cutin "gc_mayssel01.bmp", 1;
 				next;
 				mes "[Mayssel]";
-				mes "What information would you like to know about the Thief job?";
+				mes "What Informa√ß√£o would you like to know about the Thief job?";
 				next;
 				switch(select("About the useful stats for a Thief", "About Thief's primary skills", "Not curious about it.")) {
 				case 1:
@@ -10979,7 +10983,7 @@ iz_ac02,49,134,5	script	Vicente#ac	4_M_HUMAN_02,{
 			if (!isbegin_quest(7483)) {
 				mes "[Vicente]";
 				mes "If you wish to continue along the path of the Thief, speak to Mayssel.";
-				mes "Her information should be helpful.";
+				mes "Her Informa√ß√£o should be helpful.";
 				cutin "sc_vicente01.bmp", 2;
 				close2;
 				cutin "", 255;
@@ -12039,7 +12043,7 @@ iz_ac02,156,169,5	script	Acolyte Leader Alice#2	4_F_ACOLYTE,{
 	if (isbegin_quest(4269) < 1) {
 		mes "[Alice Yisha]";
 		mes "Did you ^ff0000register with the Criatura Academy^000000?";
-		mes "You can register at ^ff0000information center of Criatura Academy^000000.";
+		mes "You can register at ^ff0000Informa√ß√£o center of Criatura Academy^000000.";
 		cutin "acact_03.bmp", 2;
 		next;
 		mes "[Alice Yisha]";
@@ -12248,7 +12252,7 @@ iz_ac02,152,165,5	script	A Nun#2	4_F_SISTER,{
 			mes "It was not like this when I used to train in the past.";
 			next;
 			mes "[A nun]";
-			mes "You can ^ff0000register^000000 at the ^ff0000information center of the Criatura Academy^000000, it will be a great help.";
+			mes "You can ^ff0000register^000000 at the ^ff0000Informa√ß√£o center of the Criatura Academy^000000, it will be a great help.";
 			close;
 		} else {
 			mes "[A nun]";
@@ -12800,7 +12804,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		close;
 	}
 	mes "[Refining Machine Wagjak]";
-	mes "Searching for the equipment information - completed.";
+	mes "Searching for the equipment Informa√ß√£o - completed.";
 	next;
 	if (!getequipisenableref(.@part)) {
 		mes "[Refining Machine Wagjak]";
@@ -13797,7 +13801,7 @@ izlude,96,125,7	script	Enchanter Mounds#iz	4_CAT_SAILOR2,{
 		mes "As I explained you just before, the hidden enchant is the work to insert to weapoon or Armor a gem with a special option into the equipment.";
 		next;
 		mes "[Mounds]";
-		mes "As you know it, if you checked, you may notice something new was at the no. 3 and 4 slots at the bottom of item information window.";
+		mes "As you know it, if you checked, you may notice something new was at the no. 3 and 4 slots at the bottom of item Informa√ß√£o window.";
 		next;
 		mes "[Mounds]";
 		mes "Hidden enchant is being proceeded with the similar equipment worn as Almond J's.";
