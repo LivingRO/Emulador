@@ -1,8 +1,13 @@
-//===== rAthena Script =======================================
+//===== Hercules Script ======================================
 //= Quest NPCs located in Lighthalzen
+//===== By: ==================================================
+//= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
+//= Lupus, Lord Gywall
+//===== Current Version: =====================================
+//= 5.1
 //===== Description: =========================================
 //= Quests related to Lighthalzen City.
-//===== Changelogs: ==========================================
+//===== Additional Comments: =================================
 //= 4.0 Updated several NPCs to Official (iRO) dialog, and restrucured. [L0ne_W0lf]
 //= 4.1 Updated Dungeon quest, and Friendhsip quest to 10.3 standards. [L0ne_W0lf]
 //= 4.2 Fixed wrong variable type in use in "Box#cube1". [L0ne_W0lf]
@@ -22,26 +27,24 @@
 //= 4.9 Fixed incorrect use of 'close'. [Joseph]
 //= 5.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 5.1 Added GM management NPCs. [Euphy]
-//= 5.2 Fixed some quest log issues. [Capuche]
-//= 5.3 Changing NPC_ID to NPC_NAME [JohnnyPlayy]
 //============================================================
 
 // Gangster Alert [Official Conversion]
 //============================================================
-lighthalzen,1,1,0	script	Law Enforcement	HIDDEN_NPC,{
+lighthalzen,1,1,0	script	Law Enforcement	-1,{
 	end;
 
 OnEnable:
 	mapannounce "lighthalzen","Attention, citizens. Our security has been breached and the city is in Gangster Alert status. Please find shelter immediately!",bc_map;
 	initnpctimer;
-	for (set .@i, 0; .@i < 30; set .@i, .@i + 1)
+	for (.@i = 0; .@i < 30; ++.@i)
 		monster "lighthalzen",0,0,"Gangster",1592,1,"Law Enforcement::OnMyMobDead";
 	end;
 
 OnTimer220000:
 	killmonster "lighthalzen","Law Enforcement::OnMyMobDead";
 	mapannounce "lighthalzen","Attention, citizens. Our law enforcement department has successfully contained the situation. Alert status has been canceled.",bc_map;
-	set $@Lhz_Gangster_Alert, 0;
+	$@Lhz_Gangster_Alert = 0;
 	stopnpctimer;
 	end;
 
@@ -79,10 +82,10 @@ lighthalzen,267,200,3	script	Guard#lhz01	4_M_LGTGUARD,{
 		mes "around here. But how can";
 		mes "so many sneak through us?";
 		donpcevent "Law Enforcement::OnEnable";
-		set $@Lhz_Gangster_Alert, 100;
+		$@Lhz_Gangster_Alert = 100;
 		close;
 	}
-	if (gettime(DT_HOUR) >= 22 || gettime(DT_HOUR) < 2) {
+	if (gettime(HOUR) >= 22 || gettime(HOUR) < 2) {
 		mes "[Guard]";
 		mes "Zzzz... Zzz...";
 		mes "ZZZzzzzzzzzzz...";
@@ -92,7 +95,7 @@ lighthalzen,267,200,3	script	Guard#lhz01	4_M_LGTGUARD,{
 		mes "the perfect opportunity";
 		mes "to sneak past him.^000000";
 		close2;
-		set $@Lhz_Gangster_Alert, $@Lhz_Gangster_Alert + 1;
+		++$@Lhz_Gangster_Alert;
 		warp "lighthalzen",303,229;
 		end;
 	}
@@ -101,7 +104,7 @@ lighthalzen,267,200,3	script	Guard#lhz01	4_M_LGTGUARD,{
 		mes "and is looking elsewhere. Now's";
 		mes "your chance to sneak past him!^000000";
 		close2;
-		set $@Lhz_Gangster_Alert, $@Lhz_Gangster_Alert + 1;
+		++$@Lhz_Gangster_Alert;
 		warp "lighthalzen",303,229;
 		end;
 	}
@@ -146,10 +149,10 @@ lighthalzen,294,223,7	script	Guard#lhz02	4_M_LGTGUARD,{
 		mes "around here. But how can";
 		mes "so many sneak through us?";
 		donpcevent "Law Enforcement::OnEnable";
-		set $@Lhz_Gangster_Alert, 100;
+		$@Lhz_Gangster_Alert = 100;
 		close;
 	}
-	if (gettime(DT_HOUR) >= 22 || gettime(DT_HOUR) < 2) {
+	if (gettime(HOUR) >= 22 || gettime(HOUR) < 2) {
 		mes "[Guard]";
 		mes "Zzzz... Zzz...";
 		mes "ZZZzzzzzzzzzz...";
@@ -159,7 +162,7 @@ lighthalzen,294,223,7	script	Guard#lhz02	4_M_LGTGUARD,{
 		mes "the perfect opportunity";
 		mes "to sneak past him.^000000";
 		close2;
-		set $@Lhz_Gangster_Alert, $@Lhz_Gangster_Alert + 1;
+		++$@Lhz_Gangster_Alert;
 		warp "lighthalzen",260,199;
 		end;
 	}
@@ -168,7 +171,7 @@ lighthalzen,294,223,7	script	Guard#lhz02	4_M_LGTGUARD,{
 		mes "and is looking elsewhere. Now's";
 		mes "your chance to sneak past him!^000000";
 		close2;
-		set $@Lhz_Gangster_Alert, $@Lhz_Gangster_Alert + 1;
+		++$@Lhz_Gangster_Alert;
 		warp "lighthalzen",260,199;
 		end;
 	}
@@ -186,26 +189,31 @@ lighthalzen,294,223,7	script	Guard#lhz02	4_M_LGTGUARD,{
 // Cube Room Quest
 //============================================================
 lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
+	// Retain prior position in quest.
+	if (piciburn) {
+		lhz_sincube = piciburn;
+		piciburn = 0;
+	}
 	// Quest is finished.
 	if (MISC_QUEST&512) {
-		mes "[Fishbone]";
-		mes "Oh hey, it's you!";
-		mes "Now, listen. If you wanna";
-		mes "get into Regenschirm again,";
-		mes "you gotta enter that Sewer Pipe";
-		mes "that's like, northeast from me.";
-		mes "It's gross, but you gotta...";
-		next;
-		mes "[Fishbone]";
-		mes "Anyway, good luck in";
-		mes "whatever it is you're doing";
-		mes "here in Lighthazlen. Oh, and";
-		mes "be real careful! Something";
-		mes "shadier than me is going";
-		mes "on in this big city~";
-		close;
+			mes "[Fishbone]";
+			mes "Oh hey, it's you!";
+			mes "Now, listen. If you wanna";
+			mes "get into Regenschirm again,";
+			mes "you gotta enter that Sewer Pipe";
+			mes "that's like, northeast from me.";
+			mes "It's gross, but you gotta...";
+			next;
+			mes "[Fishbone]";
+			mes "Anyway, good luck in";
+			mes "whatever it is you're doing";
+			mes "here in Lighthazlen. Oh, and";
+			mes "be real careful! Something";
+			mes "shadier than me is going";
+			mes "on in this big city~";
+			close;
 	}
-	// Apparently if the boss quest progress is at 6, you skip the level requirement.
+	// Apparantly if the boss quest progress is at 6, you skip the level requirement.
 	if (lhz_boss == 6 || BaseLevel >= 60) {
 		if (lhz_sincube == 0) {
 			mes "[Fishbone]";
@@ -216,7 +224,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			lhz_sincube = 1;
 			close;
 		}
-		if (lhz_sincube == 1) {
+		else if (lhz_sincube == 1) {
 			mes "[Fishbone]";
 			mes "Hey. Hey you.";
 			mes "You're still looking";
@@ -225,14 +233,14 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			lhz_sincube = 2;
 			close;
 		}
-		if (lhz_sincube == 2) {
+		else if (lhz_sincube == 2) {
 			mes "[Fishbone]";
 			mes "Seriously, you are";
 			mes "starting to really get";
 			mes "on my nerves! What could";
 			mes "you possibly want from me?!";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Nothing really.";
 			mes "I just feel like";
 			mes "watching you work.";
@@ -245,7 +253,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "be so uptight about you looking";
 			mes "at what I'm doing, now would I?";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Nah...";
 			mes "I just think";
 			mes "you're uptight";
@@ -266,7 +274,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "ticking me off! Why";
 			mes "don't you go away?!";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Well, I was also";
 			mes "wondering why you're";
 			mes "working in a place that's";
@@ -288,7 +296,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "Hell, I could even get you";
 			mes "into that Laboratory...";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "W-wait!";
 			mes "Laboratory?!";
 			mes "Are you serious?";
@@ -303,7 +311,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "stubborn, kid. But I don't trust";
 			mes "or serve strangers, period.";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "But isn't there";
 			mes "anything I can do";
 			mes "so you can help me";
@@ -319,8 +327,8 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			lhz_sincube = 3;
 			close;
 		}
-		if (lhz_sincube == 3) {
-			mes "[" + strcharinfo(0) + "]";
+		else if (lhz_sincube == 3) {
+			mes "["+strcharinfo(0)+"]";
 			mes "Please...";
 			mes "Please tell me";
 			mes "how I can get inside";
@@ -335,9 +343,8 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			lhz_sincube = 4;
 			close;
 		}
-		if (lhz_sincube == 4) {
-			.@player_name$ = strcharinfo(0);
-			mes "[" + .@player_name$ + "]";
+		else if (lhz_sincube == 4) {
+			mes "["+strcharinfo(0)+"]";
 			mes "Why won't you";
 			mes "heeeeelp meee?";
 			mes "Pleeeeeeeease~";
@@ -351,7 +358,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "final. How many times do";
 			mes "you gotta make me spell it out?";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "But there's gotta";
 			mes "be something I can";
 			mes "do so you'll help me?";
@@ -374,7 +381,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "you need. Alright, good luck";
 			mes "to you, brave adventurer.";
 			next;
-			mes "[" + .@player_name$ + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "You're joking right?!";
 			mes "There's no way I can ever";
 			mes "get that much zeny! I'd...";
@@ -399,7 +406,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "It's like I'm";
 			mes "doing this for free...";
 			next;
-			if (select( "Okay.", "No! It's impossible!" ) == 1) {
+			if (select("Okay.:No! It's impossible!") == 1) {
 				mes "[Fishbone]";
 				mes "Alright, then";
 				mes "bring me back a";
@@ -408,7 +415,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 				mes "exactly 20 Jellopy on";
 				mes "you, okay? Seeya pal~";
 				lhz_sincube = 5;
-				setquest 12014;// More missions
+				setquest 12014;
 				close;
 			}
 			mes "[Fishbone]";
@@ -420,13 +427,13 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "whatever number I said-- zeny!";
 			close;
 		}
-		if (lhz_sincube == 5) {
+		else if (lhz_sincube == 5) {
 			mes "[Fishbone]";
 			mes "So...";
 			mes "Did you bring";
 			mes "the stuff?";
 			next;
-			switch( select( "I'm still working on it.", "Here you go!", "Um... Stuff?" ) ) {
+			switch(select("I'm still working on it.:Here you go!:Um... Stuff?")) {
 			case 1:
 				mes "[Fishbone]";
 				mes "Still working on it?";
@@ -437,40 +444,40 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 				mes "It's 20 friggin' Jellopies!";
 				close;
 			case 2:
-				if (countitem(909) < 20) {
+				if (countitem(909) > 19) {
 					mes "[Fishbone]";
-					mes "Uh...";
-					mes "I said 20 Jellopies,";
-					mes "didn't I? This ain't";
-					mes "enough pal, so go out";
-					mes "and get some more!";
+					mes "Ooh. Hey, good work.";
+					mes "Okay, I can see you're";
+					mes "the reliable type. A deal";
+					mes "is a deal, so I'll tell you";
+					mes "how you can get inside";
+					mes "that Laboratory.";
+					next;
+					mes "[Fishbone]";
+					mes "Now, if you're wondering";
+					mes "why I don't got much qualm";
+					mes "against helping you, it's";
+					mes "because I used to work in";
+					mes "the Laboratory... But then";
+					mes "they laid me off unfairly.";
+					next;
+					mes "[Fishbone]";
+					mes "Anyway, anything I can";
+					mes "do to cause them trouble";
+					mes "is good in my book. Let me";
+					mes "get some stuff ready and";
+					mes "then I'll tell you what you";
+					mes "really need to know.";
+					delitem 909,20; //Jellopy
+					lhz_sincube = 6;
 					close;
 				}
 				mes "[Fishbone]";
-				mes "Ooh. Hey, good work.";
-				mes "Okay, I can see you're";
-				mes "the reliable type. A deal";
-				mes "is a deal, so I'll tell you";
-				mes "how you can get inside";
-				mes "that Laboratory.";
-				next;
-				mes "[Fishbone]";
-				mes "Now, if you're wondering";
-				mes "why I don't got much qualm";
-				mes "against helping you, it's";
-				mes "because I used to work in";
-				mes "the Laboratory... But then";
-				mes "they laid me off unfairly.";
-				next;
-				mes "[Fishbone]";
-				mes "Anyway, anything I can";
-				mes "do to cause them trouble";
-				mes "is good in my book. Let me";
-				mes "get some stuff ready and";
-				mes "then I'll tell you what you";
-				mes "really need to know.";
-				delitem 909,20;// Jellopy
-				lhz_sincube = 6;
+				mes "Uh...";
+				mes "I said 20 Jellopies,";
+				mes "didn't I? This ain't";
+				mes "enough pal, so go out";
+				mes "and get some more!";
 				close;
 			case 3:
 				mes "[Fishbone]";
@@ -482,7 +489,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 				close;
 			}
 		}
-		if (lhz_sincube == 6) {
+		else if (lhz_sincube == 6) {
 			mes "[Fishbone]";
 			if (lhz_boss == 6) {
 				mes "way to get into Regenschrim";
@@ -499,7 +506,8 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 				mes "can find the Lab entrance.";
 			}
 			next;
-			if (select( "Not yet.", "Yes.") == 1) {
+			switch(select("Not yet.:Yes.")) {
+			case 1:
 				mes "[Fishbone]";
 				mes "Eh...?";
 				mes "Alright, it's";
@@ -520,7 +528,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			}
 			end;
 		}
-		if (lhz_sincube < 10) {
+		else if (lhz_sincube < 10) {
 			mes "[Fishbone]";
 			mes "Hm, you must not have";
 			mes "accomplished whatever";
@@ -535,7 +543,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "you want me to send";
 			mes "you there again?";
 			next;
-			if (select( "No.", "Yes." ) == 1) {
+			if (select("No.:Yes.") == 1) {
 				mes "[Fishbone]";
 				mes "Geez, you must have";
 				mes "really had a hard time";
@@ -560,7 +568,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			}
 			end;
 		}
-		if (lhz_sincube == 10) {
+		else if (lhz_sincube == 10) {
 			mes "[Fishbone]";
 			mes "Hey, you came back!";
 			mes "Good, I was starting";
@@ -568,10 +576,9 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "about what happened to";
 			mes "you. So did you get what";
 			mes "you wanted over there?";
-			if (isbegin_quest(12014) == 1)
-				completequest 12014;// More missions
+			completequest 12014;
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Yeah...";
 			mes "I hope so,";
 			mes "anyway.";
@@ -599,7 +606,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			mes "send you back there. So";
 			mes "what do you say?";
 			next;
-			if (select( "Sure", "No thanks~" ) == 1) {
+			if (select("Sure:No thanks~") == 1) {
 				mes "[Fishbone]";
 				mes "Okay then, here";
 				mes "we go! Good luck";
@@ -627,7 +634,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 		mes "just peachy, thanks~";
 		close;
 	}
-	if (BaseLevel < 60) {
+	else if (BaseLevel < 60) {
 		mes "Hey kid, get";
 		mes "outta here! Can't";
 		mes "you tell I'm dealin'";
@@ -636,7 +643,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 		mes "for baby faced guys like you!";
 		close;
 	}
-	if (lhz_boss > 6) {
+	else if (lhz_boss > 6) {
 		mes "[Fishbone]";
 		mes "Heya pal!";
 		mes "It's been a while.";
@@ -653,7 +660,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	HIDDEN_NPC,{
 		mes "on the ground.^000000";
 		close;
 	}
-	if (lhz_sincube < 10) {
+	else if (lhz_sincube < 10) {
 		if (lhz_secret01 < 1) {
 			mes "^3355FFThere are a bunch";
 			mes "of files scattered";
@@ -662,7 +669,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	HIDDEN_NPC,{
 			mes "sorts of information,";
 			mes "but they're all mixed up.^000000";
 			next;
-			if (select( "Rummage through the files.", "Cancel" ) == 1) {
+			if (select("Rummage through the files.:Cancel") == 1) {
 				mes "^3355FFWhile you are";
 				mes "rummaging through";
 				mes "the files, a Red Key";
@@ -695,7 +702,7 @@ lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 		mes "your attention for some";
 		mes "inexplicably strange reason.^000000";
 		next;
-		if ( select("Look behind picture.", "Cancel" ) == 1) {
+		if (select("Look behind picture.:Cancel") == 1) {
 			mes "^3355FFYou push and pull";
 			mes "with all your strength,";
 			mes "but the picture won't";
@@ -705,13 +712,13 @@ lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret01 == 2) {
+	else if (lhz_secret01 == 2) {
 		mes "^3355FFThis picture hanging";
 		mes "on the wall catches";
 		mes "your attention for some";
 		mes "inexplicably strange reason.^000000";
 		next;
-		if (select( "Look behind picture.", "Cancel" ) == 1) {
+		if (select("Look behind picture.:Cancel") == 1) {
 			mes "^3355FFYou push and pull";
 			mes "with all your strength,";
 			mes "but this picture is too";
@@ -754,25 +761,28 @@ lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret01 < 6) {
+	else if (lhz_secret01 < 6) {
 		mes "^3355FFThe following numbers";
 		mes "were written behind the";
 		mes "picture. If they were hidden,";
 		mes "these numbers must have";
 		mes "some kind of importance.^000000";
 		mes " ";
-		if (lhz_secret01 == 3)
+		if (lhz_secret01 == 3) {
 			mes "4 3 2 9 1 6 8 2 7";
-		else if (lhz_secret01 == 4)
+		}
+		else if (lhz_secret01 == 4) {
 			mes "3 6 4 1 2 8 7 1 5";
-		else if (lhz_secret01 == 5)
+		}
+		else if (lhz_secret01 == 5) {
 			mes "4 9 3 7 6 2 8 6 6";
+		}
 		close;
 	}
 	mes "^3355FFThere is a picture";
 	mes "hanging on the wall.^000000";
 	next;
-	if (select( "Look beneath picture.", "Cancel" ) == 1) {
+	if (select("Look beneath picture.:Cancel") == 1) {
 		mes "^3355FFThere are some";
 		mes "numbers behind the";
 		mes "picture, but now there is";
@@ -789,7 +799,7 @@ lhz_cube,242,201,0	script	Drawer#cube	HIDDEN_NPC,{
 		mes "you can't open it.^000000";
 		close;
 	}
-	if (lhz_secret01 == 1) {
+	else if (lhz_secret01 == 1) {
 		mes "^3355FF The drawer here";
 		mes "looks interesting, but";
 		mes "it's locked. Hopefully, you";
@@ -830,13 +840,13 @@ lhz_cube,248,179,0	script	Chest#cube	HIDDEN_NPC,{
 		mes "and isn't suited for battle.^000000";
 		close;
 	}
-	if (lhz_sincube == 7) {
+	else if (lhz_sincube == 7) {
 		mes "^3355FFYou've found a chest,";
 		mes "but more importantly,";
 		mes "there is a utility Axe";
 		mes "laid on top of it.^000000";
 		next;
-		if (select( "Take the utility Axe.", "Cancel" ) == 1) {
+		if (select("Take the utility Axe.:Cancel") == 1) {
 			mes "^3355FFWithout shame or";
 			mes "an ounce of guilt, you";
 			mes "pick up the utility ^000000Axe^3355FF";
@@ -853,13 +863,14 @@ lhz_cube,248,179,0	script	Chest#cube	HIDDEN_NPC,{
 }
 
 lhz_cube,237,183,0	script	Barrel#cube	HIDDEN_NPC,{
+	number_line = 0;
 	if (lhz_sincube < 8) {
 		mes "^3355FFYou have";
 		mes "found a shabbily";
 		mes "constructed barrel.^000000";
 		close;
 	}
-	if (lhz_sincube == 8) {
+	else if (lhz_sincube == 8) {
 		mes "^3355FFYou have";
 		mes "found a shabbily";
 		mes "constructed barrel.";
@@ -892,7 +903,7 @@ lhz_cube,237,183,0	script	Barrel#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_sincube == 9) {
+	else if (lhz_sincube == 9) {
 		if (lhz_secret01 < 3) {
 			mes "^3355FFYou decide to enter";
 			mes "some numbers into the";
@@ -900,12 +911,12 @@ lhz_cube,237,183,0	script	Barrel#cube	HIDDEN_NPC,{
 			mes "you can only enter single";
 			mes "digit numbers at one time...^000000";
 			next;
-			for( .@i = 0; .@i < 9; .@i++ )
+			for( $@i = 0; .@i < 9; ++.@i )
 				input .@input;
 			mes "^3355FFNothing happened...^000000";
 			close;
 		}
-		if (lhz_secret01 <= 5) {
+		else if (lhz_secret01 >= 3 && lhz_secret01 <= 5) {
 			switch(lhz_secret01) {
 			case 3: setarray .@numbers[0],4,3,2,9,1,6,8,2,7; break;
 			case 4: setarray .@numbers[0],3,6,4,1,2,8,7,1,5; break;
@@ -917,10 +928,9 @@ lhz_cube,237,183,0	script	Barrel#cube	HIDDEN_NPC,{
 			mes "metal plate on top of the box";
 			mes "you found inside the keg.^000000";
 			next;
-			for( .@i = 0; .@i < 9; .@i++ ) {
+			for( $@i = 0; .@i < 9; ++.@i ) {
 				input .@input;
-				if (.@input == .@numbers[.@i])
-					.@number_line++;
+				if (.@input == .@numbers[.@i]) .@number_line += 1;
 			}
 			if (.@number_line == 9) {
 				mes "^3355FFThe metal plate slides";
@@ -965,7 +975,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	HIDDEN_NPC,{
 		mes "insert into the keyhole.^000000";
 		close;
 	}
-	if (lhz_secret01 == 6) {
+	else if (lhz_secret01 == 6) {
 		mes "^3355FFThis is a noisily";
 		mes "operating huge machine";
 		mes "with a front panel that has";
@@ -1014,12 +1024,12 @@ lhz_cube,244,201,0	script	Status Light#cube	HIDDEN_NPC,{
 		mes "cool enough for you to touch...^000000";
 		close;
 	}
-	if (lhz_secret01 == 7) {
+	else if (lhz_secret01 == 7) {
 		mes "The Status Light";
 		mes "is now off and the";
 		mes "bulb has cooled down.";
 		next;
-		if (select( "Smash the light bulb.", "Cancel" ) == 1) {
+		if (select("Smash the light bulb.:Cancel") == 1) {
 			mes "^3355FFYou smash the";
 			mes "Status Light's bulb";
 			mes "and discover another key.";
@@ -1034,12 +1044,12 @@ lhz_cube,244,201,0	script	Status Light#cube	HIDDEN_NPC,{
 }
 
 lhz_cube,234,200,0	script	Desk#cube	HIDDEN_NPC,{
-	if (lhz_secret02 < 2) {
+	if (lhz_secret02 <= 1) {
 		mes "^3355FFYou've found";
 		mes "a completely";
 		mes "cluttered desk.^000000";
 		next;
-		switch( select( "On the desk", "Under the desk", "Desk drawer" ) ) {
+		switch(select("On the desk:Under the desk:Desk drawer")) {
 		case 1:
 			mes "^3355FFVarious documents,";
 			mes "books and lab equipment";
@@ -1074,7 +1084,7 @@ lhz_cube,234,200,0	script	Desk#cube	HIDDEN_NPC,{
 			close;
 		}
 	}
-	if (lhz_secret02 == 2) {
+	else if (lhz_secret02 == 2) {
 		mes "^3355FFYou're back at the";
 		mes "messy desk which";
 		mes "is probably used by";
@@ -1082,14 +1092,14 @@ lhz_cube,234,200,0	script	Desk#cube	HIDDEN_NPC,{
 		mes "who has someone else";
 		mes "do his desk tidying for him.^000000";
 		next;
-		switch( select( "On the desk", "Under the desk", "Desk drawer" ) ) {
+		switch(select("On the desk:Under the desk:Desk drawer")) {
 		case 1:
 			mes "^3355FFAlas, no matter how much";
 			mes "you rummage through it,";
 			mes "the clutter on the desk";
 			mes "proves to be useless to you.^000000";
 			next;
-			if (Sex == SEX_MALE) {
+			if (Sex) {
 				mes "^3355FFAn issue of the";
 				mes "Dancer magazine,";
 				mes "''Harmonic Lick'' catches";
@@ -1137,7 +1147,7 @@ lhz_cube,234,200,0	script	Desk#cube	HIDDEN_NPC,{
 	mes "objects, but such is its";
 	mes "destiny as office equipment.^000000";
 	next;
-	switch( select( "On the desk", "Under the desk", "Desk drawer" ) ) {
+	switch(select("On the desk:Under the desk:Desk drawer")) {
 	case 1:
 		mes "^3355FFAlas, no matter how much";
 		mes "you rummage through it,";
@@ -1176,7 +1186,7 @@ lhz_cube,247,198,0	script	Bed#cube	HIDDEN_NPC,{
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
 		next;
-		if (select( "On the bed", "Under the bed" ) == 1) {
+		if (select("On the bed:Under the bed") == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1194,12 +1204,12 @@ lhz_cube,247,198,0	script	Bed#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret02 == 1) {
+	else if (lhz_secret02 == 1) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
 		next;
-		if (select( "On the bed", "Under the bed" ) == 1) {
+		if (select("On the bed:Under the bed") == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1223,12 +1233,12 @@ lhz_cube,247,198,0	script	Bed#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret02 == 2) {
+	else if (lhz_secret02 == 2) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
 		next;
-		if (select( "On the bed", "Under the bed" ) == 1) {
+		if (select("On the bed:Under the bed") == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1261,12 +1271,12 @@ lhz_cube,247,198,0	script	Bed#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret02 == 3) {
+	else if (lhz_secret02 == 3) {
 		mes "^3355FFYou find a messy";
 		mes "bed that may be more";
 		mes "than meets the eye.^000000";
 		next;
-		if (select( "On the bed", "Under the bed" ) == 1) {
+		if (select("On the bed:Under the bed") == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1304,7 +1314,7 @@ lhz_cube,247,198,0	script	Bed#cube	HIDDEN_NPC,{
 	mes "in which the sheets";
 	mes "are slovenly arranged.^000000";
 	next;
-	if (select( "On the bed", "Under the bed" ) == 1) {
+	if (select("On the bed:Under the bed") == 1) {
 		mes "^3355FFNo one's in the bed";
 		mes "and if you climbed in,";
 		mes "you'd just be alone. For";
@@ -1326,7 +1336,7 @@ lhz_cube,229,184,0	script	Goblet#cube	HIDDEN_NPC,{
 			mes "It looks like you";
 			mes "missed the party.^000000";
 			next;
-			if (select( "Examine the goblet.", "Cancel" ) == 1) {
+			if (select("Examine the goblet.:Cancel") == 1) {
 				mes "^3355FFInside the goblet,";
 				mes "you find a ^000000Rusty Key^3355FF";
 				mes "which you decide to keep.";
@@ -1362,7 +1372,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	HIDDEN_NPC,{
 		mes "chemicals on something else.^000000";
 		close;
 	}
-	if (lhz_secret03 == 1) {
+	else if (lhz_secret03 == 1) {
 		mes "^3355FFThere is a bottle";
 		mes "containing slightly";
 		mes "corrosive chemicals";
@@ -1402,7 +1412,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	HIDDEN_NPC,{
 		mes "many drawers. Perhaps";
 		mes "something useful is inside?";
 		next;
-		if (select( "Open", "Cancel" ) == 1) {
+		if (select("Open:Cancel") == 1) {
 			input .@input$;
 			mes "^3355FFUnfortunately, the";
 			mes "cabinet has been locked.";
@@ -1411,7 +1421,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret03 == 2) {
+	else if (lhz_secret03 == 2) {
 		mes "^3355FFYou've found a";
 		mes "cabinet that contains";
 		mes "many drawers. Perhaps";
@@ -1464,7 +1474,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 		mes "card to insert into the slot.^000000";
 		close;
 	}
-	if (lhz_secret01 == 8) {
+	else if (lhz_secret01 == 8) {
 		mes "^3355FFYou find a strange";
 		mes "tube that seems to";
 		mes "contain something.";
@@ -1486,7 +1496,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 		}
 		close;
 	}
-	if (lhz_secret01 == 9) {
+	else if (lhz_secret01 == 9) {
 		mes "^3355FFThis is where you";
 		mes "obtained the ^000000Oval^3355FF.";
 		mes "As you look around";
@@ -1512,7 +1522,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 					mes "ground splits open, revealing";
 					mes "an underground staircase.^000000";
 					next;
-					if (select( "Go downstairs", "Cancel" ) == 1) {
+					if (select("Go downstairs:Cancel") == 1) {
 						mes "^3355FFYou walk down";
 						mes "the long flight";
 						mes "of winding stairs...^000000";
@@ -1522,7 +1532,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 						lhz_secret01 = 0;
 						lhz_secret02 = 0;
 						lhz_secret03 = 0;
-						MISC_QUEST = MISC_QUEST | 512;
+						MISC_QUEST |= 512;
 						warp "lhz_cube",177,13;
 						end;
 					}
@@ -1547,7 +1557,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 }
 
 lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
-	if (lhz_secret01 < 9 && lhz_secret02 < 4 && lhz_secret03 < 3) {
+	if ((lhz_secret01 < 9) && (lhz_secret02 < 4) && (lhz_secret03 < 3)) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes.^000000";
@@ -1557,14 +1567,15 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 		mes "^3355FFNothing happened.^000000";
 		close;
 	}
-	if (lhz_secret01 != 10 || lhz_secret02 != 5 || lhz_secret03 != 4) {
+	else if ((lhz_secret01 != 10) || (lhz_secret02 != 5) || (lhz_secret03 != 4)) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes.^000000";
 		next;
-		switch( select( "Oval Hole", "Cube Hole", "Polygon Hole" ) ) {
+		switch(select("Oval Hole:Cube Hole:Polygon Hole")) {
 		case 1:
 			if (lhz_secret01 == 9) {
+				next;
 				input .@input$;
 				if (.@input$ == "Oval") {
 					mes "^3355FFYou insert the Oval";
@@ -1576,7 +1587,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			if (lhz_secret01 == 10) {
+			else if (lhz_secret01 == 10) {
 				mes "^3355FFThe Oval shaped hole";
 				mes "already has an Oval in it.";
 				mes "Besides, it's not you have";
@@ -1588,6 +1599,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 			close;
 		case 2:
 			if (lhz_secret02 == 4) {
+				next;
 				input .@input$;
 				if (.@input$ == "Cube") {
 					mes "^3355FFYou insert the Cube";
@@ -1601,7 +1613,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			if (lhz_secret02 == 5) {
+			else if (lhz_secret02 == 5) {
 				mes "^3355FFYou already placed";
 				mes "a Cube into the hole.";
 				mes "You could take it back";
@@ -1615,6 +1627,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 			close;
 		case 3:
 			if (lhz_secret03 == 3) {
+				next;
 				input .@input$;
 				if (.@input$ == "Polygon") {
 					mes "^3355FFFortunately, the";
@@ -1630,7 +1643,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			if (lhz_secret03 == 4) {
+			else if (lhz_secret03 == 4) {
 				mes "^3355FFThe Polygon is already";
 				mes "inserted into the hole.";
 				mes "Trust that this is as much";
@@ -1642,14 +1655,14 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 			close;
 		}
 	}
-	if (lhz_secret01 == 10 && lhz_secret02 == 5 && lhz_secret03 == 4 && lhz_sincube != 10) {
+	else if (lhz_secret01 == 10 && lhz_secret02 == 5 && lhz_secret03 == 4 && lhz_sincube != 10) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes that";
 		mes "are now filled with the";
 		mes "objects you've inserted.^000000";
 		next;
-		if (select( "Open the box.", "Cancel" ) == 1) {
+		if (select("Open the box.:Cancel") == 1) {
 			mes "^3355FFYou open the box";
 			mes "and find that there's";
 			mes "a small card labeled";
@@ -1658,7 +1671,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 			mes "Permit^3355FF, knowing that you";
 			mes "will be needing it later.";
 			lhz_sincube = 10;
-			getitem 2657,1;// Lab_Passport
+			getitem 2657,1; //Lab_Passport
 		}
 		close;
 	}
@@ -1676,7 +1689,7 @@ lhz_cube,250,184,0	script	Door#cube	HIDDEN_NPC,{
 	mes "^3355FFYou've come upon a";
 	mes "door that leads outside.^000000";
 	next;
-	if (select( "Exit", "Cancel" ) == 1) {
+	if (select("Exit:Cancel") == 1) {
 		warp "lighthalzen",310,302;
 		end;
 	}
@@ -1684,8 +1697,7 @@ lhz_cube,250,184,0	script	Door#cube	HIDDEN_NPC,{
 }
 
 lhz_dun02,224,6,0	script	Exit1#lt	WARPNPC,1,1,{
-	end;
-OnTouch_:
+OnTouch:
 	if (MISC_QUEST&512) {
 		warp "lhz_cube",231,90;
 		end;
@@ -1702,13 +1714,13 @@ OnTouch_:
 lighthalzen,240,216,4	script	Suspicious Guy#lhz_01	4_M_LGTPOOR,2,2,{
 	end;
 
-OnTouch_:
+OnTouch:
 	switch(rand(1,3)) {
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 100) {
-			set Zeny, Zeny-100;
+			Zeny -= 100;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1724,7 +1736,7 @@ OnTouch_:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 200) {
-			set Zeny, Zeny-200;
+			Zeny -= 200;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1741,7 +1753,7 @@ OnTouch_:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 10) {
-			set Zeny, Zeny-10;
+			Zeny -= 10;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1775,13 +1787,13 @@ OnInit:
 	disablenpc "Suspicious Guy#lhz_02";
 	end;
 
-OnTouch_:
+OnTouch:
 	switch(rand(1,3)) {
 	case 1:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 100) {
-			set Zeny, Zeny-100;
+			Zeny -= 100;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1797,7 +1809,7 @@ OnTouch_:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 200) {
-			set Zeny, Zeny-200;
+			Zeny -= 200;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1814,7 +1826,7 @@ OnTouch_:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 10) {
-			set Zeny, Zeny-10;
+			Zeny -= 10;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1847,14 +1859,14 @@ OnInit:
 	disablenpc "Suspicious Guy#lhz_03";
 	end;
 
-OnTouch_:
+OnTouch:
 	switch(rand(1,5)) {
 	case 1:
 	case 2:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 100) {
-			set Zeny, Zeny-100;
+			Zeny -= 100;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1871,7 +1883,7 @@ OnTouch_:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 200) {
-			set Zeny, Zeny-200;
+			Zeny -= 200;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1888,7 +1900,7 @@ OnTouch_:
 		mes "^3355FF*SHHHHHHUK!*^000000";
 		specialeffect EF_STEAL;
 		if (Zeny >= 10) {
-			set Zeny, Zeny-10;
+			Zeny -= 10;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1913,7 +1925,7 @@ OnTouch_:
 		mes "I'll give you back";
 		mes "your money, just ";
 		mes "let me go! Crap!";
-		emotion ET_CRY;
+		emotion e_sob;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Alright, fine,";
@@ -1937,9 +1949,9 @@ OnTouch_:
 		mes "what do you say?";
 		next;
 		switch(select("Give me 1.:Give me 2.:Give me 3.:No, I'm fine.")) {
-		case 1: set .@number,1; set .@price,15000*1; break;
-		case 2: set .@number,2; set .@price,15000*2; break;
-		case 3: set .@number,3; set .@price,15000*3; break;
+		case 1: .@number = 1; .@price = 15000*1; break;
+		case 2: .@number = 2; .@price = 15000*2; break;
+		case 3: .@number = 3; .@price = 15000*3; break;
 		case 4:
 			mes "[Suspicious Guy]";
 			mes "Well...";
@@ -2005,7 +2017,7 @@ OnTouch_:
 						mes "but I hope we never bump";
 						mes "into each other ever again!";
 					}
-					set Zeny, Zeny-.@price;
+					Zeny -= .@price;
 					getitem 12016,.@number; //Speed_Up_Potion
 				}
 			}
@@ -2111,7 +2123,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "courtesy to a man who";
 		mes "dearly loved his friends.^000000";
 		next;
-		set friendship,15;
+		friendship = 15;
 		changequest 12005,12006;
 		getitem 1201,1; //Knife
 		close;
@@ -2243,7 +2255,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "it's not like that oath really";
 			mes "means anything now, does it?";
 			next;
-			set friendship,13;
+			friendship = 13;
 			mes "[Digotz]";
 			mes "That does it. I'm gonna";
 			mes "go see that Maku. I don't";
@@ -2319,7 +2331,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "mediate if we got into some";
 		mes "argument. Still, he couldn't";
 		mes "do anything about Maku now...";
-		set friendship,7;
+		friendship = 7;
 		changequest 12002,12003;
 		next;
 		mes "[Digotz]";
@@ -2431,7 +2443,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "^FF0000Not to mention an apology!";
 		mes "^FF0000But who cares what you think?!";
 		mes "I'm so goddamn happy without you!^000000";
-		set friendship,4;
+		friendship = 4;
 		close;
 	}
 	if (friendship == 2) {
@@ -2481,7 +2493,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "the fact me and Maku aren't";
 		mes "pals anymore. You know what?";
 		mes "Just forget everything I said.";
-		set friendship,2;
+		friendship = 2;
 		changequest 12000,12001;
 		close;
 	}
@@ -2504,9 +2516,9 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 }
 
 lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
-	mes "[Maku]";
 	if (friendship > 14) {
 		cutin "lhz_macu07",2;
+		mes "[Maku]";
 		mes "Why is this guy so";
 		mes "late? Once he shows";
 		mes "up, I swear, I'm gonna...!";
@@ -2518,16 +2530,24 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "I've been saving a whole";
 		mes "six pack of kickass to open,";
 		mes "just for him. Heh heh heh~";
+		close2;
+		cutin "lhz_macu07",255;
+		end;
 	}
-	else if (friendship == 14) {
+	if (friendship == 14) {
 		cutin "lhz_macu05",2;
+		mes "[Maku]";
 		mes "Why is Digotz";
 		mes "so late? This isn't";
 		mes "like him at all. Maybe";
 		mes "something's wrong?";
+		close2;
+		cutin "lhz_macu05",255;
+		end;
 	}
-	else if (friendship == 13 && countitem(7351) > 0) {
+	if (friendship == 13 && countitem(7351) > 0) {
 		cutin "lhz_macu06",2;
+		mes "[Maku]";
 		mes "Hey, what is that? You want";
 		mes "I should read this journal?";
 		mes "Er, okay, but I'm none too";
@@ -2568,7 +2588,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "wings and Digotz always";
 		mes "wanted to wear them too.";
 		next;
-		cutin "",255;
+		cutin "lhz_macu03",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Maku, Digotz and me went";
 		mes "outside of town. Of course,";
@@ -2594,7 +2614,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "But I gotta say, he was also";
 		mes "the most fearless of us.";
 		next;
-		cutin "",255;
+		cutin "lhz_macu03",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Digot's been sick for three";
 		mes "days now. It's just a normal";
@@ -2611,7 +2631,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "that, uh, horrible disease. No";
 		mes "one should have that one!";
 		next;
-		cutin "",255;
+		cutin "lhz_macu04",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Mom and dad keep telling";
 		mes "me not to hang out with Maku";
@@ -2632,7 +2652,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "...";
 		mes "......";
 		next;
-		cutin "",255;
+		cutin "lhz_macu01",255;
 		mes "[Benkaistein's Journal]";
 		mes "^856363Today, the three of us";
 		mes "made an oath of brotherhood,";
@@ -2674,8 +2694,8 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		cutin "lhz_macu07",255;
 		next;
 		delitem 7351,1; //Friend's_Diary
-		set friendship,14;
-		if (checkre(3)) {
+		friendship = 14;
+		if (RENEWAL_EXP) {
 			if (BaseLevel > 90) getexp 70000,0;
 			else if (BaseLevel > 75) getexp 40000,0;
 			else getexp 20000,0;
@@ -2691,9 +2711,13 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "Um, now I gotta get";
 		mes "ready for something.";
 		mes "^333333(But not to see Digotz!)^000000";
+		close2;
+		cutin "lhz_macu04",255;
+		end;
 	}
-	else if (friendship > 5 && friendship < 13) {
+	if (friendship > 5 && friendship < 13) {
 		cutin "lhz_macu06",2;
+		mes "[Maku]";
 		mes "Arrrrgh! Whenever I hear";
 		mes "about that Digotz, I get so";
 		mes "peeved! Is that guy giving";
@@ -2707,8 +2731,12 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "all those freakin' guards!";
 		mes "Arrrrrrrgh! Man, where's";
 		mes "Benkaistein when I need him?";
+		close2;
+		cutin "lhz_macu06",255;
+		end;
 	}
-	else if (friendship == 5) {
+	if (friendship == 5) {
+		mes "[Maku]";
 		mes "RrrrRrrrr....";
 		mes "RrrrrRRRrrRR....";
 		mes "GGGGGRRRRR...";
@@ -2756,16 +2784,20 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "of fights. I really miss that";
 		mes "guy. Still, he ain't around...";
 		next;
-		set friendship,6;
+		friendship = 6;
 		mes "[Maku]";
 		mes "Damn those guards!";
 		mes "If they weren't there,";
 		mes "I could just go over and";
 		mes "kick Digotz's ass! I swear,";
 		mes "if it weren't for them...!";
+		close2;
+		cutin "lhz_macu06",255;
+		end;
 	}
-	else if (friendship == 4) {
+	if (friendship == 4) {
 		cutin "lhz_macu05",2;
+		mes "[Maku]";
 		mes "What the hell are you";
 		mes "still doing around here?";
 		mes "You must have better things";
@@ -2837,7 +2869,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 							next;
 							input .@input$;
 							if (.@input$ == "I'm so goddamn happy without you!") {
-								set friendship,5;
+								friendship = 5;
 								cutin "lhz_macu06",2;
 								mes "[Maku]";
 								mes "That's it.";
@@ -2861,9 +2893,13 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "him carefully enough? It's";
 		mes "been a while, but I know";
 		mes "how Digotz talks, man.";
+		close2;
+		cutin "lhz_macu01",255;
+		end;
 	}
-	else if (friendship == 3) {
+	if (friendship == 3) {
 		cutin "lhz_macu03",2;
+		mes "[Maku]";
 		mes "Man, I need to blow off some";
 		mes "steam! Sure, me and Digotz";
 		mes "were buds before and maybe";
@@ -2885,8 +2921,12 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "I mean, I'm not the one";
 		mes "holding a grudge. It's all";
 		mes "that guy's fault! Sheeeesh!";
+		close2;
+		cutin "lhz_macu03",255;
+		end;
 	}
-	else if (friendship == 2) {
+	if (friendship == 2) {
+		mes "[Maku]";
 		mes "Hey, what are you";
 		mes "doing back over here?";
 		mes "I thought I recommended";
@@ -2904,6 +2944,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "who usedta be my buddy,";
 		mes "but obviously not anymore.";
 		next;
+		cutin "lhz_macu05",255;
 		cutin "lhz_macu02",2;
 		mes "[Maku]";
 		mes "Sure, we were real close";
@@ -2912,7 +2953,7 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "long time since we hung";
 		mes "out and he probably hates";
 		mes "my penniless guts and...";
-		set friendship,3;
+		friendship = 3;
 		changequest 12001,12002;
 		next;
 		mes "[Maku]";
@@ -2922,9 +2963,13 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "I hate the guy, one hundred";
 		mes "percent! The next time I see";
 		mes "him, I'll beat him to a pulp!";
+		close2;
+		cutin "lhz_macu02",255;
+		end;
 	}
-	else {
+	if (friendship == 1) {
 		cutin "lhz_macu01",2;
+		mes "[Maku]";
 		mes "Hey, you're one of";
 		mes "those adventurers, eh?";
 		mes "Welcome to the ghetto.";
@@ -2963,9 +3008,8 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "to someone I just met";
 		mes "anyway? Sure, we all";
 		mes "do it, but still...";
-		set friendship,1;
-		if (isbegin_quest(12000) == 0)
-			setquest 12000;
+		friendship = 1;
+		setquest 12000;
 		next;
 		mes "[Maku]";
 		mes "Well, when you get";
@@ -2974,9 +3018,67 @@ lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 		mes "out the rich section of town.";
 		mes "I'm bitter, but I'll also admit";
 		mes "it's way nicer than this place.";
+		close2;
+		cutin "lhz_macu01",255;
+		end;
 	}
+	cutin "lhz_macu01",2;
+	mes "[Maku]";
+	mes "Hey, you're one of";
+	mes "those adventurers, eh?";
+	mes "Welcome to the ghetto.";
+	mes "Nothing too adventurous";
+	mes "here, but hey, you can";
+	mes "explore all you want.";
+	next;
+	mes "[Maku]";
+	mes "I don't know if you know,";
+	mes "but actually, the people who";
+	mes "live here ain't allowed to";
+	mes "explore this whole city. It's";
+	mes "kind of taboo to talk about,";
+	mes "but what do I care, right?";
+	next;
+	mes "[Maku]";
+	mes "Yeah, basically the rich";
+	mes "people here are too afraid";
+	mes "of the poor people comin' to";
+	mes "see them, so the security in";
+	mes "this city is pretty tight! Those";
+	mes "upper class guys are trash...";
+	next;
+	mes "[Maku]";
+	mes "I didn't used to think";
+	mes "this way. I actually used";
+	mes "to have a pretty rich friend";
+	mes "till I found out he's not all";
+	mes "I thought he was. That";
+	mes "moron! Why's he like that?!";
+	next;
+	mes "[Maku]";
+	mes "Eh, forget about it.";
+	mes "Why am I even talking";
+	mes "about my personal life";
+	mes "to someone I just met";
+	mes "anyway? Sure, we all";
+	mes "do it, but still...";
+	friendship = 1;
+	next;
+	mes "[Maku]";
+	mes "Well, when you get";
+	mes "bored of the ghetto,";
+	mes "you really oughta check";
+	mes "out the rich section of town.";
+	mes "I'm bitter, but I'll also admit";
+	mes "it's way nicer than this place.";
 	close2;
-	cutin "",255;
+	cutin "lhz_macu01",255;
+	cutin "lhz_macu02",255;
+	cutin "lhz_macu03",255;
+	cutin "lhz_macu04",255;
+	cutin "lhz_macu05",255;
+	cutin "lhz_macu06",255;
+	cutin "lhz_macu07",255;
 	end;
 }
 
@@ -2990,7 +3092,7 @@ yuno_in04,107,14,5	script	Student	4_M_SAGE_A,{
 		mes "Still, students like Benkaistein can tune out the whole world";
 		mes "when they study hard enough...";
 		next;
-		set friendship,8;
+		friendship = 8;
 		mes "[Joey Choryee]";
 		mes "Benkaistein...?";
 		mes "He's in the north part";
@@ -3044,9 +3146,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "go back and forth between the";
 		mes "rich and poor areas as my thanks.";
 		next;
-		set friendship,16;
+		friendship = 16;
 		completequest 12006;
-		if (checkre(3)) {
+		if (RENEWAL_EXP) {
 			if (BaseLevel > 90) getexp 70000,0;
 			else if (BaseLevel > 75) getexp 40000,0;
 			else getexp 20000,0;
@@ -3095,7 +3197,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "remind them of all the good";
 		mes "times we used to share.";
 		next;
-		set friendship,12;
+		friendship = 12;
 		changequest 12004,12005;
 		mes "[Benkaistein]";
 		mes "Anyway, this should at";
@@ -3145,7 +3247,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "two to make up, but I also need";
 		mes "to finish this thesis. Let's see... What can I possibly do from here?";
 		next;
-		set friendship,10;
+		friendship = 10;
 		changequest 12003,12004;
 		mes "[Benkaistein]";
 		mes "Oh, I know what I can do!";
@@ -3211,7 +3313,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "I-I'm trying to study!";
 		mes "No, wait. Have you been";
 		mes "calling me all this time?";
-		set friendship,9;
+		friendship = 9;
 		close;
 	}
 	mes "[Passionate Student]";
@@ -3239,7 +3341,7 @@ yuno_in04,168,117,3	script	Book#lhz	HIDDEN_NPC,{
 		close;
 	}
 	if (friendship == 10) {
-		set friendship,11;
+		friendship = 11;
 		getitem 7351,1; //Friend's_Diary
 		mes "^3355FFThis book is labeled,";
 		mes "''Benkaistein's Journal";
@@ -3257,17 +3359,17 @@ yuno_in04,168,117,3	script	Book#lhz	HIDDEN_NPC,{
 
 // Cursed Spirit Quest
 //============================================================
-lhz_dun01,147,106,0	script	#kiz01-1	HIDDEN_NPC,3,3,{
+lhz_dun01,147,106,0	script	#kiz01-1	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
 			soundeffect "loli_ruri_stand.wav",0;
-			set lhz_curse,1;
+			lhz_curse = 1;
 			setquest 2086;
 		}
 		else if (lhz_curse < 26) {
-			set @lhz_ghost,rand(1,5);
-			sc_start SC_Curse,1000,0;
+			@lhz_ghost = rand(1,5);
+			sc_start SC_CURSE,1000,0;
 			soundeffect "loli_ruri_stand.wav",0;
 			if (@lhz_ghost == 1) {
 				mes "[??????]";
@@ -3293,21 +3395,21 @@ OnTouch_:
 	end;
 }
 
-lhz_dun01,239,135,0	duplicate(#kiz01-1)	#kiz01-2	HIDDEN_NPC,3,3
-lhz_dun01,66,213,0	duplicate(#kiz01-1)	#kiz01-3	HIDDEN_NPC,3,3
-lhz_dun01,225,198,0	duplicate(#kiz01-1)	#kiz01-4	HIDDEN_NPC,3,3
+lhz_dun01,239,135,0	duplicate(#kiz01-1)	#kiz01-2	-1,3,3
+lhz_dun01,66,212,0	duplicate(#kiz01-1)	#kiz01-3	-1,3,3
+lhz_dun01,225,198,0	duplicate(#kiz01-1)	#kiz01-4	-1,3,3
 
-lhz_dun02,244,229,0	script	#kiz02-1	HIDDEN_NPC,3,3,{
+lhz_dun02,244,229,0	script	#kiz02-1	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
 			soundeffect "tao_gunka_stand.wav",0;
-			set lhz_curse,1;
+			lhz_curse = 1;
 			setquest 2086;
 		}
 		else if (lhz_curse < 26) {
-			set @lhz_ghost,rand(1,10);
-			sc_start SC_Curse,1000,0;
+			@lhz_ghost = rand(1,10);
+			sc_start SC_CURSE,1000,0;
 			soundeffect "tao_gunka_stand.wav",0;
 			if (@lhz_ghost == 1) {
 				mes "[??????]";
@@ -3333,21 +3435,21 @@ OnTouch_:
 	end;
 }
 
-lhz_dun02,60,293,0	duplicate(#kiz02-1)	#kiz02-2	HIDDEN_NPC,3,3
-lhz_dun02,267,278,0	duplicate(#kiz02-1)	#kiz02-3	HIDDEN_NPC,3,3
-lhz_dun02,94,199,0	duplicate(#kiz02-1)	#kiz02-4	HIDDEN_NPC,3,3
+lhz_dun02,60,298,0	duplicate(#kiz02-1)	#kiz02-2	-1,3,3
+lhz_dun02,267,278,0	duplicate(#kiz02-1)	#kiz02-3	-1,3,3
+lhz_dun02,94,199,0	duplicate(#kiz02-1)	#kiz02-4	-1,3,3
 
-lhz_dun03,244,51,0	script	#kiz03-1	HIDDEN_NPC,3,3,{
+lhz_dun03,244,51,0	script	#kiz03-1	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
 			soundeffect "tao_gunka_stand.wav",0;
-			set lhz_curse,1;
+			lhz_curse = 1;
 			setquest 2086;
 		}
 		else if (lhz_curse < 26) {
-			set @lhz_ghost,rand(1,10);
-			sc_start SC_Curse,1000,0;
+			@lhz_ghost = rand(1,10);
+			sc_start SC_CURSE,1000,0;
 			soundeffect "tao_gunka_stand.wav",0;
 			if (@lhz_ghost == 1) {
 				mes "[??????]";
@@ -3373,21 +3475,21 @@ OnTouch_:
 	end;
 }
 
-lhz_dun03,123,191,0	duplicate(#kiz03-1)	#kiz03-2	HIDDEN_NPC,3,3
-lhz_dun03,74,140,0	duplicate(#kiz03-1)	#kiz03-3	HIDDEN_NPC,3,3
+lhz_dun03,123,191,0	duplicate(#kiz03-1)	#kiz03-2	-1,3,3
+lhz_dun03,74,140,0	duplicate(#kiz03-1)	#kiz03-3	-1,3,3
 
-lighthalzen,344,278,0	script	#kiz03	HIDDEN_NPC,2,2,{
+lighthalzen,344,278,0	script	#kiz03	-1,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
 			mes "............";
 			next;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_start SC_Blind,60000,0;
+			sc_start SC_BLIND,60000,0;
 			mes "............";
 			next;
 			mes "[?????]";
@@ -3413,32 +3515,32 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion ET_QUESTION, playerattached();
+			emotion e_what,1;
 			mes "["+strcharinfo(0)+"]";
 			mes "Those voices weren't";
 			mes "just in my head, were they?";
 			mes "Hello...? Anybody there...?";
 			close2;
-			sc_end SC_Blind;
-			sc_start SC_Curse,5000,0;
-			if (!lhz_spi01) set lhz_spi01,1;
+			sc_end SC_BLIND;
+			sc_start SC_CURSE,5000,0;
+			if (!lhz_spi01) lhz_spi01 = 1;
 		}
 	}
 	end;
 }
 
-lhz_in03,178,22,0	script	#kiz04	HIDDEN_NPC,2,2,{
+lhz_in03,178,22,0	script	#kiz04	-1,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 			soundeffect "tao_gunka_stand.wav",0;
 		}
 		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
 			mes "............";
 			next;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_start SC_Blind,60000,0;
+			sc_start SC_BLIND,60000,0;
 			mes "............";
 			next;
 			mes "[?????]";
@@ -3491,32 +3593,32 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion ET_QUESTION, playerattached();
+			emotion e_what,1;
 			mes "["+strcharinfo(0)+"]";
 			mes "I'm hearing things";
 			mes "again! Where are all of";
 			mes "these voices coming from?";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_Blind;
-			sc_start SC_Curse,5000,0;
-			if (!lhz_spi02) set lhz_spi02,1;
+			sc_end SC_BLIND;
+			sc_start SC_CURSE,5000,0;
+			if (!lhz_spi02) lhz_spi02 = 1;
 		}
 	}
 	end;
 }
 
-lighthalzen,295,227,0	script	#kiz05	HIDDEN_NPC,2,2,{
+lighthalzen,295,227,0	script	#kiz05	-1,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
 			mes "............";
 			next;
 			soundeffect "loli_ruri_stand.wav",0;
-			sc_start SC_Blind,60000,0;
+			sc_start SC_BLIND,60000,0;
 			mes "............";
 			next;
 			mes "[?????]";
@@ -3544,25 +3646,25 @@ OnTouch_:
 			mes "I must be hallucinating!";
 			close2;
 			soundeffect "loli_ruri_stand.wav",0;
-			sc_end SC_Blind;
-			sc_start SC_Curse,3000,0;
-			if (!lhz_spi03) set lhz_spi03,1;
+			sc_end SC_BLIND;
+			sc_start SC_CURSE,3000,0;
+			if (!lhz_spi03) lhz_spi03 = 1;
 		}
 	}
 	end;
 }
 
-lighthalzen,364,315,0	script	#kiz06	HIDDEN_NPC,3,3,{
+lighthalzen,364,315,0	script	#kiz06	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
 			mes "............";
 			next;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_start SC_Blind,60000,0;
+			sc_start SC_BLIND,60000,0;
 			mes "............";
 			next;
 			mes "[?????]";
@@ -3603,25 +3705,25 @@ OnTouch_:
 			mes "............";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_Blind;
-			sc_start SC_Curse,5000,0;
-			if (!lhz_spi04) set lhz_spi04,1;
+			sc_end SC_BLIND;
+			sc_start SC_CURSE,5000,0;
+			if (!lhz_spi04) lhz_spi04 = 1;
 		}
 	}
 	end;
 }
 
-lhz_in01,113,150,0	script	#kiz07	HIDDEN_NPC,3,3,{
+lhz_in01,113,150,0	script	#kiz07	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
 			mes "............";
 			next;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_start SC_Blind,60000,0;
+			sc_start SC_BLIND,60000,0;
 			mes "............";
 			next;
 			mes "[?????]";
@@ -3657,25 +3759,25 @@ OnTouch_:
 			mes "............";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_Blind;
-			sc_start SC_Curse,3000,0;
-			if (lhz_curse == 6) set lhz_curse,7;
+			sc_end SC_BLIND;
+			sc_start SC_CURSE,3000,0;
+			if (lhz_curse == 6) lhz_curse = 7;
 		}
 	}
 	end;
 }
 
-lhz_in01,272,227,0	script	#kiz08	HIDDEN_NPC,2,2,{
+lhz_in01,272,227,0	script	#kiz08	-1,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 		else if ((lhz_curse > 0) && (lhz_curse < 26)) {
 			mes "............";
 			next;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_start SC_Blind,60000,0;
+			sc_start SC_BLIND,60000,0;
 			mes "............";
 			next;
 			mes "[????]";
@@ -3741,15 +3843,15 @@ OnTouch_:
 			mes "............";
 			close2;
 			soundeffect "tao_gunka_stand.wav",0;
-			sc_end SC_Blind;
-			sc_start SC_Curse,3000,0;
-			if (lhz_curse == 11) set lhz_curse,12;
+			sc_end SC_BLIND;
+			sc_start SC_CURSE,3000,0;
+			if (lhz_curse == 11) lhz_curse = 12;
 		}
 	}
 	end;
 }
 
-lhz_in01,206,129,0	script	#kiz09	HIDDEN_NPC,5,5,{
+lhz_in01,206,129,0	script	#kiz09	-1,5,5,{
 OnTouch_:
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 12) {
@@ -3757,12 +3859,12 @@ OnTouch_:
 			next;
 			mes "............";
 			soundeffect "loli_ruri_stand.wav",0;
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 			close2;
 			warp "lhz_que01",26,27;
 		}
 		else if (((lhz_curse > 0) && (lhz_curse < 12)) && ((lhz_curse > 12) && (lhz_curse < 26))) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 	}
 	end;
@@ -3776,7 +3878,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	4_M_SAGE_C,{
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion ET_SWEAT;
+			emotion e_swt,"#li_Varmunt";
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -3784,7 +3886,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	4_M_SAGE_C,{
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion ET_BEST, getnpcid(0, "#li_researcher");
+			emotion e_no1,"#li_researcher";
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -3889,7 +3991,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	4_M_SAGE_C,{
 			mes "...";
 			mes "......";
 			mes ".........";
-			set lhz_curse,13;
+			lhz_curse = 13;
 			close2;
 			warp "lhz_in01",206,129;
 			end;
@@ -3911,7 +4013,7 @@ lhz_que01,29,24,3	script	#li_researcher	4_M_SAGE_A,{
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion ET_SWEAT, getnpcid(0, "#li_Varmunt");
+			emotion e_swt,"#li_Varmunt";
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -3919,7 +4021,7 @@ lhz_que01,29,24,3	script	#li_researcher	4_M_SAGE_A,{
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion ET_BEST;
+			emotion e_no1,"#li_researcher";
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -4024,7 +4126,7 @@ lhz_que01,29,24,3	script	#li_researcher	4_M_SAGE_A,{
 			mes "...";
 			mes "......";
 			mes ".........";
-			set lhz_curse,13;
+			lhz_curse = 13;
 			close2;
 			warp "lhz_in01",206,129;
 			end;
@@ -4039,7 +4141,7 @@ lhz_que01,29,24,3	script	#li_researcher	4_M_SAGE_A,{
 	end;
 }
 
-lhz_in01,282,166,0	script	#kiz10	HIDDEN_NPC,3,3,{
+lhz_in01,282,166,0	script	#kiz10	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 16) {
@@ -4059,13 +4161,13 @@ OnTouch_:
 			mes "......";
 			mes ".........";
 			soundeffect "loli_ruri_stand.wav",0;
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 			close2;
 			warp "lhz_que01",98,59;
 			end;
 		}
 		else if (((lhz_curse > 0) && (lhz_curse < 16)) && ((lhz_curse > 16) && (lhz_curse < 26))) {
-			sc_start SC_Curse,1000,0;
+			sc_start SC_CURSE,1000,0;
 		}
 	}
 	end;
@@ -4195,7 +4297,7 @@ lhz_que01,99,74,5	script	#li_Man	1_M_02,{
 		mes "No matter how hard you try,";
 		mes "you can't open its clasp to see";
 		mes "what this pendant contains.^000000";
-		set lhz_curse,17;
+		lhz_curse = 17;
 		changequest 2090,2091;
 		getitem 7341,1; //Worn_Out_Pendant
 		close2;
@@ -4207,7 +4309,7 @@ lhz_que01,99,74,5	script	#li_Man	1_M_02,{
 	end;
 }
 
-lhz_que01,90,71,5	script	#li_bird	1019,3,3,{
+lhz_que01,90,71,5	script	#li_bird	PECOPECO,3,3,{
 	mes "[Peco Peco]";
 	mes "You're a fool!";
 	mes "You're a fool!";
@@ -4266,7 +4368,7 @@ lighthalzen,346,263,3	script	Elder#lhz	4_F_EINOLD,{
 				mes "down your spine, cold sweats,";
 				mes "maybe even hearing voices?";
 				soundeffect "loli_ruri_stand.wav",0;
-				sc_start SC_Curse,5000,0;
+				sc_start SC_CURSE,5000,0;
 				next;
 				select("Yes! How do I get rid of them?");
 				mes "[Elder]";
@@ -4341,7 +4443,7 @@ lighthalzen,346,263,3	script	Elder#lhz	4_F_EINOLD,{
 				mes "I hope you can appease";
 				mes "the wrath of these spirits...";
 				mes "But as long as you let them guide you, you ought to be safe.";
-				set lhz_curse,6;
+				lhz_curse = 6;
 				changequest 2086,2087;
 				close;
 			case 2:
@@ -4398,7 +4500,7 @@ lighthalzen,346,263,3	script	Elder#lhz	4_F_EINOLD,{
 					mes "It won't be long until";
 					mes "the spirits are consumed";
 					mes "by their supernatural rage...";
-					set lhz_curse,18;
+					lhz_curse = 18;
 					changequest 2091,2092;
 					close;
 				case 2:
@@ -4461,7 +4563,7 @@ lighthalzen,346,263,3	script	Elder#lhz	4_F_EINOLD,{
 				mes "revealing a picture of a happy";
 				mes "couple. Somehow, the girl in";
 				mes "the picture, sitting uncomfortably^FFFFFF^3355FF in an old chair, looks familiar...^000000";
-				set lhz_curse,19;
+				lhz_curse = 19;
 				changequest 2092,2093;
 				delitem 523,5; //Holy_Water
 				delitem 744,1; //Bunch_Of_Flowers
@@ -4767,7 +4869,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 			mes "Well...";
 			mes "This is awkward.";
 			delitem 7341,1; //Worn_Out_Pendant
-			set lhz_curse,24;
+			lhz_curse = 24;
 			close;
 		}
 		else {
@@ -4845,7 +4947,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 				mes "What are you talking about?";
 				close;
 			}
-			emotion ET_SURPRISE;
+			emotion e_gasp,"Crippled Girl#li_tre";
 			mes "[Crippled Girl]";
 			mes "Oh, that's mine!";
 			mes "I gave it to my big brother";
@@ -4888,7 +4990,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 				mes "Sheesh.";
 				mes "Don't kill the";
 				mes "messenger.";
-				set lhz_curse,20;
+				lhz_curse = 20;
 				close2;
 				warp "lighthalzen",322,323;
 				end;
@@ -4981,7 +5083,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 						mes "["+strcharinfo(0)+"]";
 						mes "Yes, I'm sure of that.";
 						delitem 7341,1; //Worn_Out_Pendant
-						set lhz_curse,25;
+						lhz_curse = 25;
 						close;
 					case 2:
 						mes "["+strcharinfo(0)+"]";
@@ -5018,7 +5120,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 						mes "[Setsu]";
 						mes "I'll try hard!";
 						delitem 7341,1; //Worn_Out_Pendant
-						set lhz_curse,25;
+						lhz_curse = 25;
 						close;
 					}
 				}
@@ -5059,7 +5161,7 @@ lighthalzen,324,322,0	script	#li_door	WARPNPC,2,2,{
 OnTouch_:
 	if ((lhz_curse > 19) && (lhz_curse < 23)) {
 		mes "^3355FFThe door is locked.^000000";
-		set lhz_curse,lhz_curse+1;
+		lhz_curse = lhz_curse+1;
 		close;
 	}
 	else if (lhz_curse > 23) {
@@ -5085,9 +5187,9 @@ OnTouch_:
 	end;
 }
 
-lhz_in03,12,162,0	warp	#to_lhz		1,1,lighthalzen,321,322
+lhz_in03,12,162,0	warp	#to_lhz	1,1,lighthalzen,321,322
 
-lighthalzen,319,321,0	script	#li_bother	HIDDEN_NPC,2,2,{ //3,3
+lighthalzen,319,321,0	script	#li_bother	-1,2,2,{ //3,3
 OnTouch_:
 	if ((lhz_curse == 24 ) || (lhz_curse == 25)) {
 		mes ".............";
@@ -5124,9 +5226,9 @@ OnTouch_:
 		mes "is tied to the ^FF0000Rekenber";
 		mes "Corporation^000000 and that";
 		mes "^FF0000Regenschirm Laboratory^000000.";
-		set lhz_curse,26;
+		lhz_curse = 26;
 		changequest 2093,2094;
-		if (checkre(3)) {
+		if (RENEWAL_EXP) {
 			if (BaseLevel < 70) getexp 30000,30000;
 			else if ((BaseLevel > 69) && (BaseLevel < 80)) getexp 40000,70000;
 			else if ((BaseLevel > 79) && (BaseLevel < 90)) getexp 70000,90000;
@@ -5224,7 +5326,7 @@ lhz_in01,114,181,5	script	Representative#li_01	1_F_LIBRARYGIRL,{
 			mes "the hallway to the left in";
 			mes "order to find our Library.";
 			mes "Thank you and have a nice day.";
-			set lhz_curse,8;
+			lhz_curse = 8;
 			changequest 2087,2088;
 			close;
 		}
@@ -5338,8 +5440,8 @@ lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 			mes "Regenschirm. It was his work";
 			mes "in science that enabled the";
 			mes "Rekenber Corporation to grow into the nation's biggest company.";
-			if (lhz_curse == 8) set lhz_curse,9;
-			else if (lhz_curse == 9) set lhz_curse,10;
+			if (lhz_curse == 8) lhz_curse = 9;
+			else if (lhz_curse == 9) lhz_curse = 10;
 			next;
 			break;
 		case 2:
@@ -5357,8 +5459,8 @@ lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 			mes "you can imagine. Remember";
 			mes "that Rekenber is the name";
 			mes "that you can trust.";
-			if (lhz_curse == 8) set lhz_curse,9;
-			else if (lhz_curse == 9) set lhz_curse,10;
+			if (lhz_curse == 8) lhz_curse = 9;
+			else if (lhz_curse == 9) lhz_curse = 10;
 			next;
 			break;
 		}
@@ -5368,8 +5470,7 @@ lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 		mes "please refer to the Rekenber";
 		mes "Guidebook located to my side.";
 		mes "Thank you and have a nice day.";
-		if (isbegin_quest(2088))
-			changequest 2088,2089;
+		changequest 2088,2089;
 		close;
 	}
 	else {
@@ -5474,7 +5575,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "by making the ancient power";
 	mes "of the gods more accessible";
 	mes "by means of new technologies.";
-	if (lhz_curse == 10) set lhz_curse,11;
+	if (lhz_curse == 10) lhz_curse = 11;
 	next;
 	mes "..............";
 	close;
@@ -5503,7 +5604,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 			mes "I've fired? Get lost, or I'll";
 			mes "treat you to the pain of";
 			mes "being eaten alive!";
-			set lhz_curse,14;
+			lhz_curse = 14;
 			close;
 		}
 	}
@@ -5512,7 +5613,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 		mes "You again?!";
 		mes "What the hell do";
 		mes "you want from me?!";
-		emotion ET_ANGER;
+		emotion e_ag,"Mad Scientist#li";
 		next;
 		switch(select("Let me speak with you.:Sorry for bothering you.")) {
 		case 1:
@@ -5523,7 +5624,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 			next;
 			mes "[Wolfchev]";
 			mes "...........!";
-			emotion ET_SURPRISE;
+			emotion e_gasp,"Mad Scientist#li";
 			next;
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
@@ -5531,11 +5632,11 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 			mes "thing I must collect. Yes, yes.";
 			mes "Here's a hint... It's round...";
 			mes "Shiny... Kids love playing games with them! Oh, I said too much!";
-			set lhz_curse,15;
+			lhz_curse = 15;
 			changequest 2089,2090;
 			close;
 		case 2:
-			emotion ET_FRET;
+			emotion e_an,"Mad Scientist#li";
 			mes "[Wolfchev]";
 			mes "''Sorry?!'' Do you";
 			mes "think ''sorry'' will";
@@ -5563,7 +5664,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 				mes "now that I would never";
 				mes "tell you why I neeeeed";
 				mes "these Beads. Bweh-heh!";
-				emotion ET_KIK;
+				emotion e_gg,"Mad Scientist#li";
 				next;
 				break;
 			}
@@ -5577,7 +5678,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 			while (1) {
 				switch(select("Ask about hobbies:Ask about work")) {
 				case 1:
-					if (Sex == SEX_MALE) {
+					if (Sex == 1) {
 						mes "[Wolfchev]";
 						mes "Hyuu~ I think you're";
 						mes "just a little too innocent";
@@ -5614,7 +5715,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 					mes "them. Not that I cause them";
 					mes "undue suffering or anything...";
 					next;
-					set .@exit,1;
+					.@exit = 1;
 					break;
 				}
 				if (.@exit) break;
@@ -5654,7 +5755,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 			mes "on schedule. I can't afford";
 			mes "the leisure of speaking with";
 			mes "you any longer. Bweh heh heh!";
-			set lhz_curse,16;
+			lhz_curse = 16;
 			close;
 		}
 		else {
@@ -5665,9 +5766,9 @@ lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 			next;
 			mes "[Wolfchev]";
 			mes "...........!";
-			emotion ET_SURPRISE;
+			emotion e_gasp,"Mad Scientist#li";
 			next;
-			emotion ET_KIK;
+			emotion e_gg,"Mad Scientist#li";
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
 			mes "something. Yes, bring me the";
@@ -5697,7 +5798,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "specifically targeted that";
 			mes "area in order to provide ample";
 			mes "opportunity for employment.";
-			set lhz_curse,27;
+			lhz_curse = 27;
 			close;
 		case 2:
 			mes "[Sueii Slierre]";
@@ -5732,7 +5833,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "to assist you if you have";
 			mes "more inquiries regarding";
 			mes "the Regenschirm Laboratory.";
-			set lhz_curse,28;
+			lhz_curse = 28;
 			close;
 		case 2:
 			mes "[Sueii Slierre]";
@@ -5755,7 +5856,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 		case 1:
 			mes "[Sueii Slierre]";
 			mes ".............!";
-			emotion ET_SURPRISE;
+			emotion e_gasp,"Secretary Slierre#li";
 			next;
 			mes "[Sueii Slierre]";
 			mes "How do you know";
@@ -5820,7 +5921,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "you have any more questions.";
 			next;
 			select("About Wolfchev's Research");
-			emotion ET_THINK;
+			emotion e_dots,"Secretary Slierre#li";
 			mes "[Sueii Slierre]";
 			mes "I couldn't tell you any";
 			mes "more about Wolfchev.";
@@ -5892,7 +5993,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 						mes "[Sueii Slierre]";
 						mes "...";
 						mes "......";
-						emotion ET_AHA;
+						emotion e_ic,"Secretary Slierre#li";
 						next;
 						mes "[Sueii Slierre]";
 						mes "So... You're";
@@ -5949,7 +6050,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 						mes "merits an investigation.";
 						mes "I'll let you know if we";
 						mes "find anything significant...";
-						set lhz_curse,30;
+						lhz_curse = 30;
 						close;
 					}
 					else {
@@ -5959,7 +6060,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 						mes "seem to be carrying anything";
 						mes "that can be construed as proof.";
 						mes "I suggest you bring something that actually supports your claim.";
-						set lhz_curse,29;
+						lhz_curse = 29;
 						close;
 					}
 					break;
@@ -5969,7 +6070,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 					mes "I'd like to get back on";
 					mes "task. Please excuse me.";
 					close2;
-					set lhz_curse,30;
+					lhz_curse = 30;
 					end;
 				}
 				break;
@@ -6000,7 +6101,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "[Sueii Slierre]";
 			mes "...";
 			mes "......";
-			emotion ET_AHA;
+			emotion e_ic,"Secretary Slierre#li";
 			next;
 			mes "[Sueii Slierre]";
 			mes "So... You're";
@@ -6057,7 +6158,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "merits an investigation.";
 			mes "I'll let you know if we";
 			mes "find anything significant...";
-			set lhz_curse,30;
+			lhz_curse = 30;
 			close;
 		}
 		else {
@@ -6068,14 +6169,14 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "allay my doubts about your";
 			mes "claim. Now, if you'll excuse";
 			mes "me, I need to get back on task.";
-			set lhz_curse,29;
+			lhz_curse = 29;
 			close2;
 			warp "lhz_in01",228,226;
 			end;
 		}
 	}
 	else if (lhz_curse == 30) {
-		set .@li_keka,rand(1,10);
+		.@li_keka = rand(1,10);
 		if (.@li_keka > 7) {
 			if (checkweight(1201,1) == 0) {
 				mes "[Sueii Slierre]";
@@ -6117,7 +6218,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "on people! Anyway, please";
 			mes "accept this as a token of";
 			mes "our gratitude, adventurer.";
-			set lhz_curse,31;
+			lhz_curse = 31;
 			changequest 2094,2095;
 			getitem 603,1; //Old_Blue_Box
 			getitem 12016,10; //Speed_Up_Potion
@@ -6162,7 +6263,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 	}
 }
 
-lhz_que01,94,24,0	script	#li_end	HIDDEN_NPC,2,2,{
+lhz_que01,94,24,0	script	#li_end	-1,2,2,{
 OnTouch_:
 	if (lhz_curse > 30) {
 		mes "^3131FFThere's no trace of";
@@ -6170,7 +6271,7 @@ OnTouch_:
 		mes "his stacks of well organized";
 		mes "files remain here in the lab.^000000";
 		if (lhz_curse == 31) {
-			set lhz_curse,32;
+			lhz_curse = 32;
 			completequest 2095;
 		}
 		close;
@@ -6288,7 +6389,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 		mes "Ha ha ha!";
 		mes "Anyway, I hope you";
 		mes "have a good day today~";
-		set lhz_boss,1;
+		lhz_boss = 1;
 		close;
 	}
 	else if(lhz_boss == 1)
@@ -6352,7 +6453,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 				mes "have mistaken me";
 				mes "for somebody else!";
 				mes "Now, if you'll excuse me...";
-				set lhz_boss,3;
+				lhz_boss = 3;
 				next;
 				mes "^3355FFEven if it wasn't";
 				mes "Ghalstein that you";
@@ -6432,7 +6533,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 								mes "some time to think";
 								mes "about how I can best";
 								mes "handle this situation.";
-								set lhz_boss,4;
+								lhz_boss = 4;
 								close;
 
 							case 2:
@@ -6614,7 +6715,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 								mes "I'll give you a moment to";
 								mes "steady yourself before we";
 								mes "talk about our mission.";
-								set lhz_boss,5;
+								lhz_boss = 5;
 								close;
 						}
 						break;
@@ -6631,7 +6732,6 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 				{
 					case 1:
 						break;
-
 					case 2:
 						mes "[Ghalstein]";
 						mes "Very good.";
@@ -6652,7 +6752,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 						mes "I'll give you a moment to";
 						mes "steady yourself before we";
 						mes "talk about our mission.";
-						set lhz_boss,5;
+						lhz_boss = 5;
 						close;
 				}
 
@@ -6680,7 +6780,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 		next;
 		mes "[??????]";
 		mes "^666666Now...^000000";
-		if(Sex == SEX_MALE) mes "^666666Make him^000000";
+		if(Sex == 1) mes "^666666Make him^000000";
 		else mes "^666666Make her^000000";
 		mes "^666666swallow this pill.^000000";
 		next;
@@ -6690,7 +6790,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 		mes "thoughts hazier until it begins";
 		mes "to feel like your entire mind";
 		mes "is getting bleached somehow.^000000";
-		set lhz_boss,0;
+		lhz_boss = 0;
 		close2;
 		warp "lighthalzen",217,313;
 		end;
@@ -6750,7 +6850,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 		mes "maybe you can find a";
 		mes "contact who can sneak";
 		mes "you inside the Laboratory.";
-		set lhz_boss,6;
+		lhz_boss = 6;
 		changequest 12015,12016;
 		close;
 	}
@@ -6766,7 +6866,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 	}
 	else if(lhz_boss == 7)
 	{
-		if(!(MISC_QUEST&512))
+		if(!MISC_QUEST&512)
 		{
 			mes "[Ghalstein]";
 			mes "An error occurred.";
@@ -6800,7 +6900,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 			delitem 7346,1; //Pile_Of_Ymir_Heart
 			delitem 7347,10; //Lab_Staff_Record
 			delitem 7345,10; //Armlet_Of_Prisoner
-			set lhz_boss,8;
+			lhz_boss = 8;
 			getitem 7348,1; //Indication_Of_Member01
 			changequest 12016,12017;
 			close;
@@ -6900,9 +7000,9 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 		mes "to do so much, but ultimately,";
 		mes "we weren't able to accomplish";
 		mes "what we set out to do. Still...";
-		set lhz_boss,44;
+		lhz_boss = 44;
 		getitem 617,1; //Old_Violet_Box
-		getexp (checkre(3))?180000:1800000,0;
+		getexp RENEWAL_EXP?180000:1800000,0;
 		completequest 12028;
 		next;
 		mes "[Ghalstein]";
@@ -6927,9 +7027,9 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 	}
 }
 
-lighthalzen,173,167,1	script	Switch	HIDDEN_NPC,2,4,{
+lighthalzen,173,167,1	script	Switch	-1,2,4,{
 
-OnTouch_:
+OnTouch:
 	if(lhz_boss == 1)
 	{
 		mes "[??????]";
@@ -6953,7 +7053,6 @@ OnTouch_:
 				mes "awfully familiar...";
 				mes "But what do I care?)";
 				close;
-
 			case 2:
 				mes "["+strcharinfo(0)+"]";
 				mes "(This is too weird.";
@@ -7005,7 +7104,7 @@ OnTouch_:
 				mes "Whoever it belonged";
 				mes "to is gone! What's";
 				mes "going on here?^000000";
-				set lhz_boss,2;
+				lhz_boss = 2;
 				setquest 12015;
 				close;
 		}
@@ -7085,7 +7184,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 						mes "you're the one I've been";
 						mes "waiting here for. Alright,";
 						mes "just give me a second...";
-						set lhz_boss,9;
+						lhz_boss = 9;
 						close;
 
 					case 2:
@@ -7152,7 +7251,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 		mes "bring back any information";
 		mes "he may have for us. Remember,";
 		mes "because of his position, you can only see him during certain hours.";
-		set lhz_boss,10;
+		lhz_boss = 10;
 		close;
 	}
 	else if(lhz_boss == 10)
@@ -7177,7 +7276,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 		mes "you'll only be allowed to see";
 		mes "him from ^FF00008:00 PM to 11:00 PM^000000,";
 		mes "and from ^FF000011:00 AM to 2:00PM PST^000000.Good luck on this mission, friend.";
-		set lhz_boss,11;
+		lhz_boss = 11;
 		changequest 12017,12018;
 		close;
 	}
@@ -7280,7 +7379,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 					mes "Membership Card.^000000";
 					close;
 				}
-				if(((gettime(DT_HOUR) > 10) && (gettime(DT_HOUR) < 15)) || ((gettime(DT_HOUR) > 19) && (gettime(DT_HOUR) <= 23)))
+				if(((gettime(HOUR) > 10) && (gettime(HOUR) < 15)) || ((gettime(HOUR) > 19) && (gettime(HOUR) <= 23)))
 				{
 					mes "^3355FFYou suavely flash";
 					mes "your ''Secret Wing''";
@@ -7381,7 +7480,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 		mes "to trouble you. Thank";
 		mes "you so much for your help.";
 		delitem 7342,1;
-		set lhz_boss,17;
+		lhz_boss = 17;
 		close;
 	}
 	else if(lhz_boss < 21)
@@ -7400,7 +7499,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 		mes "Oh, the president";
 		mes "is expecting you.";
 		mes "Please, go right";
-		if(Sex == SEX_MALE) mes "on ahead, sir.";
+		if(Sex == 1) mes "on ahead, sir.";
 		else mes "on ahead, ma'am.";
 		close2;
 		warp "yuno_pre",113,53;
@@ -7409,33 +7508,33 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 	else if(hg_tre == 56)
 	{
 		mes "[Hes O'Neil]";
-	        mes "The President has given the order that ";
-        	mes "nobody is allowed to enter this place.";
-	        next;
-        	mes "["+strcharinfo(0)+"]";
-	        mes "However, you will change your mind after listening to my explanation.";
-        	next;
-	        mes "[Hes O'Neil]";
-        	mes "...............";
-	        mes "Is it something very important?";
-        	next;
-	        mes "["+strcharinfo(0)+"]";
-        	mes "It is the most important thing.";
-	        next;
-        	mes "[Hes O'Neil]";
-	        mes "Alright then, there you go.";
-        	mes "(Whisper) I hope you will become his source of strength.";
-	        close2;
-        	warp "yuno_pre",113,53;
-        	end;
+		mes "The President has given the order that ";
+		mes "nobody is allowed to enter this place.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "However, you will change your mind after listening to my explanation.";
+		next;
+		mes "[Hes O'Neil]";
+		mes "...............";
+		mes "Is it something very important?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "It is the most important thing.";
+		next;
+		mes "[Hes O'Neil]";
+		mes "Alright then, there you go.";
+		mes "(Whisper) I hope you will become his source of strength.";
+		close2;
+		warp "yuno_pre",113,53;
+		end;
         }
         else if(hg_tre > 56)
         {
 		mes "[Hes O'Neil]";
 		mes "The president said that you're welcome to visit him anytime.";
 		close2;
-        	warp "yuno_pre",113,53;
-        	end;
+		warp "yuno_pre",113,53;
+		end;
         }
 	else
 	{
@@ -7466,7 +7565,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 	}
 	else if(lhz_boss == 11 || lhz_boss == 12)
 	{
-		if(lhz_boss == 12) set @visit_pre,rand(1,10);
+		if(lhz_boss == 12) @visit_pre = rand(1,10);
 		if(@visit_pre == 7)
 		{
 			mes "[?????]";
@@ -7491,7 +7590,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 			mes "Yes, it's about time";
 			mes "for me to depart. Ah,";
 			mes "and may I ask who this";
-			if(Sex == SEX_MALE) mes "young gentleman here is?";
+			if(Sex == 1) mes "young gentleman here is?";
 			else mes "lovely young lady is?";
 			next;
 			mes "[Guard]";
@@ -7509,7 +7608,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 			mes "[Guard]";
 			mes "Take care,";
 			mes "Mr. Keshnaar.";
-			set lhz_boss,13;
+			lhz_boss = 13;
 			disablenpc "A Fine Gentleman";
 			close;
 
@@ -7519,7 +7618,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 		mes "Currently, the president";
 		mes "is seeing another guest.";
 		mes "Thank you for your patience.";
-		if(lhz_boss == 11) set lhz_boss,12;
+		if(lhz_boss == 11) lhz_boss = 12;
 		close;
 	}
 	else if(lhz_boss == 13)
@@ -7533,7 +7632,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 		switch( select( "Thank you.","Who was that gentleman...?" ) )
 		{
 			case 1:
-				if(Sex == SEX_MALE) mes "A Mister "+strcharinfo(0)+"";
+				if(Sex == 1) mes "A Mister "+strcharinfo(0)+"";
 				else
 				{
 					if(getpartnerid()) mes "A Missis "+strcharinfo(0)+"";
@@ -7562,7 +7661,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 				mes "the Rekenber Corporation.";
 				mes "He often visits the president";
 				mes "to discuss various issues.";
-				set lhz_boss,14;
+				lhz_boss = 14;
 				close;
 		}
 	}
@@ -7750,7 +7849,7 @@ L_Mission:
 						mes "Alright, give me a second";
 						mes "to search for this file before";
 						mes "I explain the mission.";
-						set lhz_boss,15;
+						lhz_boss = 15;
 						close2;
 						cutin "",255;
 						end;
@@ -7780,7 +7879,7 @@ L_Mission:
 		mes "folder to ^FF0000Ms. Hes O'Neil^000000";
 		mes "for me before you leave.";
 		mes "Thank you very much.";
-		set lhz_boss,16;
+		lhz_boss = 16;
 		getitem 7342,1; //File01
 		changequest 12018,12019;
 		close2;
@@ -7837,7 +7936,7 @@ L_Mission:
 		mes "say that with pride. L-let";
 		mes "me check the files a minute...";
 		delitem 7343,1;
-		set lhz_boss,22;
+		lhz_boss = 22;
 		close2;
 		cutin "",255;
 		end;
@@ -7884,8 +7983,8 @@ L_Mission:
 			mes "to discover Shinokas before";
 			mes "we can get him to talk.";
 			changequest 12022,12023;
-			if(Shinokas_Quest == 11) set lhz_boss,24;
-			else set lhz_boss,23;
+			if(Shinokas_Quest == 11) lhz_boss = 24;
+			else lhz_boss = 23;
 			close2;
 			cutin "",255;
 			end;
@@ -7946,7 +8045,7 @@ L_Mission:
 			mes "She'll know exactly";
 			mes "who you are and";
 			mes "how to help you.";
-			set lhz_boss,26;
+			lhz_boss = 26;
 			completequest 12023;
 			setquest 12024;
 			close2;
@@ -8059,7 +8158,7 @@ L_Mission:
 				mes "new developments in the";
 				mes "investigation involving";
 				mes "Shinokas and his secret...";
-				set lhz_boss,25;
+				lhz_boss = 25;
 				close2;
 				cutin "",255;
 				end;
@@ -8104,7 +8203,7 @@ L_Mission:
 			mes "She'll know exactly";
 			mes "who you are and";
 			mes "how to help you.";
-			set lhz_boss,26;
+			lhz_boss = 26;
 			completequest 12023;
 			setquest 12024;
 			close2;
@@ -8182,7 +8281,7 @@ L_Mission:
 		mes "received some critically";
 		mes "important intel to give you.";
 		delitem 7344,1;
-		set lhz_boss,38;
+		lhz_boss = 38;
 		close2;
 		cutin "",255;
 		end;
@@ -8242,7 +8341,7 @@ L_Mission:
 		mes "know more about how";
 		mes "all of this happened...";
 		delitem 7343,1;
-		set lhz_boss,40;
+		lhz_boss = 40;
 		close2;
 		cutin "",255;
 		end;
@@ -8274,7 +8373,7 @@ L_Mission:
 		mes "...Yes, sir.";
 		mes "Right away.";
 		next;
-		set lhz_boss,42;
+		lhz_boss = 42;
 		close2;
 		cutin "",255;
 		end;
@@ -8379,8 +8478,8 @@ L_Mission:
 		mes "here too. Go and talk to";
 		mes "^3355FFGhalstein^000000 again. It's time";
 		mes "we let you loose, adventurer.";
-		set lhz_boss,43;
-		// completequest 12028;
+		lhz_boss = 43;
+		completequest 12028;
 		close2;
 		cutin "",255;
 		end;
@@ -8390,8 +8489,8 @@ L_Mission:
 		mes "[Karl]";
 		mes ".........";
 		mes "............";
-		for(set .@i,12015; .@i < 12028; set .@i,.@i+1) {
-			if (checkquest(.@i) >= 0 && checkquest(.@i) < 2)
+		for (.@i = 12015; .@i <= 12028; ++.@i) {
+			if (questprogress(.@i) && questprogress(.@i) != 2)
 				completequest .@i;
 		}
 		close;
@@ -8421,7 +8520,7 @@ L_Mission:
 		mes "["+strcharinfo(0)+"]";
 		mes "Not long ago, the scientists of Regenschrim have stolen the research record and destroyed the machines that they used for research purposes.";
 		next;
-		emotion ET_SURPRISE;
+		emotion e_gasp,0;
 		mes "[Karl]";
 		mes "...!";
 		mes "Did you do that? ";
@@ -8470,9 +8569,9 @@ L_Mission:
 		mes "[Karl]";
 		mes "Thank you so much. ";
 		mes "You can count on me to right what was wrong.";
-		set hg_tre,57;
+		hg_tre = 57;
 		delitem 7342,1; //File01
-		getexp (checkre(3))?200000:2000000,0;
+		getexp RENEWAL_EXP?200000:2000000,0;
 		getitem 617,1;
 		close2;
 		cutin "",255;
@@ -8516,9 +8615,9 @@ OnInit:
 	end;
 }
 
-yuno_pre,117,60,0	script	Eavesdrop	HIDDEN_NPC,10,5,{
+yuno_pre,117,60,0	script	Eavesdrop	-1,10,5,{
 
-OnTouch_:
+OnTouch:
 	if(lhz_boss == 16)
 	{
 		mes "^3355FFWhat the...?";
@@ -8793,7 +8892,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 								mes "He's seriously wounded,";
 								mes "so please hurry before";
 								mes "the enemy can get to him...";
-								set lhz_boss,18;
+								lhz_boss = 18;
 								changequest 12019,12020;
 								close;
 						}
@@ -8869,7 +8968,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "sacrifice before we can allow ourselves the luxury of mourning";
 		mes "our loss. Let me read these files first before you deliver them...";
 		delitem 7343,1;
-		set lhz_boss,20;
+		lhz_boss = 20;
 		close;
 	}
 	else if(lhz_boss == 20)
@@ -8881,7 +8980,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "whom I am talking about.";
 		mes "The Secret Wing is counting";
 		mes "on you, brave adventurer.";
-		set lhz_boss,21;
+		lhz_boss = 21;
 		getitem 7343,1; //File02
 		changequest 12021,12022;
 		next;
@@ -8970,7 +9069,7 @@ lhz_fild02,228,214,0	script	Wounded Man	4_M_DIEMAN,{
 					mes "If you came a little later,";
 					mes "I'd be a goner. H-here,";
 					mes "t-take this with you...";
-					set lhz_boss,19;
+					lhz_boss = 19;
 					getitem 7343,1; //File02
 					changequest 12020,12021;
 					next;
@@ -8994,7 +9093,6 @@ lhz_fild02,228,214,0	script	Wounded Man	4_M_DIEMAN,{
 				mes "Jargeah just passed";
 				mes "out in a very ugly way.";
 				close;
-
 			case 2:
 				mes "^3355FFAnd so you left the";
 				mes "wounded man alone. Not";
@@ -9007,9 +9105,9 @@ OnInit:
 	end;
 }
 
-lhz_fild02,224,220,0	script	Wounded Man Switch	HIDDEN_NPC,3,3,{
+lhz_fild02,224,220,0	script	Wounded Man Switch	-1,3,3,{
 
-OnTouch_:
+OnTouch:
 	if(lhz_boss == 18)
 	{
 		mes "[?????]";
@@ -9021,9 +9119,9 @@ OnTouch_:
 	}
 }
 
-lhz_fild01,76,214,0	script	Esuna Trigger	HIDDEN_NPC,5,5,{
+lhz_fild01,76,214,0	script	Esuna Trigger	-1,5,5,{
 
-OnTouch_:
+OnTouch:
 	if((lhz_boss == 26) || (lhz_boss == 36) || (lhz_boss == 38) || (lhz_boss == 40))
 	{
 		mes "[????]";
@@ -9087,7 +9185,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "He'll explain everything else,";
 		mes "so be careful and don't let";
 		mes "them get suspicious of you!";
-		set lhz_boss,27;
+		lhz_boss = 27;
 		changequest 12024,12025;
 		close2;
 		disablenpc "Mysterious Woman";
@@ -9126,7 +9224,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "have to check on the president";
 		mes "for me first. Plus, this new";
 		mes "intel needs to be confirmed...";
-		set lhz_boss,37;
+		lhz_boss = 37;
 		close2;
 		disablenpc "Mysterious Woman";
 		end;
@@ -9153,7 +9251,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "you've got to give this";
 		mes "file to the president as";
 		mes "quickly as you can. Hurry!";
-		set lhz_boss,39;
+		lhz_boss = 39;
 		getitem 7343,1;
 		close2;
 		disablenpc "Mysterious Woman";
@@ -9232,7 +9330,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "[Esuna]";
 		mes "For now, this is";
 		mes "goodbye. Take care...";
-		set lhz_boss,41;
+		lhz_boss = 41;
 		changequest 12027,12028;
 		close2;
 		disablenpc "Mysterious Woman";
@@ -9396,7 +9494,7 @@ lhz_in01,285,169,3	script	Researcher#2	4_LGTSCIENCE,{
 		mes "but you'll only be able to";
 		mes "stick around for 3 minutes";
 		mes "at a time. The Secret Archive is to the right of this laboratory.";
-		set lhz_boss,28;
+		lhz_boss = 28;
 		getitem 7349,1; //Indication_Of_Member02
 		changequest 12025,12026;
 		next;
@@ -9490,7 +9588,7 @@ lhz_in01,285,169,3	script	Researcher#2	4_LGTSCIENCE,{
 		mes "found her last time. She'll";
 		mes "know that you're coming.";
 		delitem 7349,1; //Indication_Of_Member02
-		set lhz_boss,36;
+		lhz_boss = 36;
 		changequest 12026,12027;
 		close;
 	}
@@ -9511,10 +9609,10 @@ lhz_in01,187,31,0	script	#Sneak	HIDDEN_NPC,4,3,{
 
 	end;
 
-OnTouch_:
+OnTouch:
 	if((lhz_boss > 27) && (lhz_boss < 35))
 	{
-		set @sneaktime,gettimetick(0) % 100;
+		@sneaktime = gettimetick(0) % 100;
 		if((@sneaktime > 10 && @sneaktime < 59) || (@sneaktime < -10 && @sneaktime > -59))
 		{
 			mes "^3355FFAs you approach";
@@ -9600,7 +9698,7 @@ L_Enter:
 										mes "will be automatically sent";
 										mes "outside for security reasons.";
 										close2;
-										set lhz_boss,29;
+										lhz_boss = 29;
 										donpcevent "Timer_Sneak::OnEnter";
 										warp "lhz_in01",177,35;
 										end;
@@ -9620,7 +9718,7 @@ L_Enter:
 							mes "screech after you input";
 							mes "the password. You really";
 							mes "should try to input it again.^000000";
-							set @sneakerror,@sneakerror +1;
+							++@sneakerror;
 							next;
 							if(@sneakerror > 2)
 							{
@@ -9664,9 +9762,9 @@ L_Enter:
 	}
 }
 
-lhz_in01,177,44,0	script	Timer_Sneak	HIDDEN_NPC,8,12,{
+lhz_in01,177,44,0	script	Timer_Sneak	-1,8,12,{
 
-OnTouch_:
+OnTouch:
 	warp "lhz_in01",191,49;
 	end;
 
@@ -9723,7 +9821,7 @@ L_Search:
 					mes "Kafra Corporation and";
 					mes "Cool Event Corp are";
 					mes "located in Arena 3-2.^000000";
-					set lhz_boss,30;
+					lhz_boss = 30;
 					close;
 				}
 				else if(@sneaksearch$ == "shinokas")
@@ -9732,7 +9830,7 @@ L_Search:
 					mes "Documents regarding";
 					mes "Shinokas are located";
 					mes "in Arena 1-5.^000000";
-					set lhz_boss,31;
+					lhz_boss = 31;
 					close;
 				}
 				else if((@sneaksearch$ == "stein") || (@sneaksearch$ == "STEIN") || (@sneaksearch$ == "S.T.E.I.N"))
@@ -9764,7 +9862,7 @@ L_Search:
 					mes "more highly classified files";
 					mes "on Weierstrass, please use";
 					mes "a higher security archive.^000000";
-					set lhz_boss,32;
+					lhz_boss = 32;
 					close;
 				}
 				else if(@sneaksearch$ == "einbroch")
@@ -9773,7 +9871,7 @@ L_Search:
 					mes "Documents regarding";
 					mes "Einbroch are stored";
 					mes "in Area 6-1.^000000";
-					set lhz_boss,33;
+					lhz_boss = 33;
 					close;
 				}
 				else if(@sneaksearch$ == "lighthalzen")
@@ -9782,7 +9880,7 @@ L_Search:
 					mes "Documents regarding";
 					mes "Lighthalzen are stored";
 					mes "in Area 3-3.^000000";
-					set lhz_boss,34;
+					lhz_boss = 34;
 					close;
 				}
 				else if(@sneaksearch$ == "rekenber")
@@ -9902,7 +10000,7 @@ lhz_in01,184,40,0	script	Area 1-5	HIDDEN_NPC,{
 		mes "of Ymir's Heart. Apparently,";
 		mes "a beast from Einbroch folk";
 		mes "lore inhabited the area...^000000";
-		set lhz_boss,35;
+		lhz_boss = 35;
 		getitem 7344,1;
 		close;
 	}
@@ -10179,7 +10277,7 @@ lhz_dun02,282,278,0	script	Broken Machine	HIDDEN_NPC,{
 						mes "He was probably right";
 						mes "not to describe it to you.";
 						mes "Words alone aren't enough...^000000";
-						set lhz_boss,7;
+						lhz_boss = 7;
 						getitem 7346,1;
 						close;
 
@@ -10220,10 +10318,10 @@ sec_in02,17,170,4	script	boss::lght_boss_admin	1_M_SIGNMONK,{
 		break;
 	case 2:
 		input .@input,0,1000;
-		set lght_boss,.@input;
+		lght_boss = .@input;
 		break;
 	case 3:
-		set Shinokas_Quest,11;
+		Shinokas_Quest = 11;
 		close;
 	}
 	mes " ";
@@ -10398,9 +10496,9 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "Damn it! Just... Don't come";
 		mes "back. I can't work like this...";
 		next;
-		set lhz_rekenber,22;
-		getexp (checkre(3))?55000:550000,0;
-		completequest 12014;
+		lhz_rekenber = 22;
+		getexp RENEWAL_EXP?55000:550000,0;
+		completequest 12013;
 		cutin "lhz_kaz01",2;
 		mes "[Kazien]";
 		mes "Look, I can't have";
@@ -10483,8 +10581,8 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "that, can't you? Anyway, you";
 		mes "can handle those thugs, right?";
 		next;
-		set lhz_rekenber,17;
-		getexp (checkre(3))?45000:450000,0;
+		lhz_rekenber = 17;
+		getexp RENEWAL_EXP?45000:450000,0;
 		cutin "lhz_kaz10",2;
 		mes "[Kazien]";
 		mes "Right. Now get back to";
@@ -10575,9 +10673,9 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "another package destined";
 		mes "for the Rune-Midgarts Kingdom.";
 		next;
-		set lhz_rekenber,12;
-		// changequest 5005,5006;
-		getexp (checkre(3))?40000:400000,0;
+		lhz_rekenber = 12;
+		changequest 5005,5006;
+		getexp RENEWAL_EXP?40000:400000,0;
 		cutin "lhz_kaz03",2;
 		mes "[Kazien]";
 		mes "Alright, I'll see you";
@@ -10630,8 +10728,8 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "he asks you to do, come back";
 		mes "to me for another job, okay?";
 		next;
-		set lhz_rekenber,8;
-		changequest 12010,12011;
+		lhz_rekenber = 8;
+		changequest 12008,12010;
 		cutin "lhz_kaz01",2;
 		mes "[Kazien]";
 		mes "Don't forget...";
@@ -10655,7 +10753,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 			mes "remember at all. Oooh, I hate";
 			mes "being this busy, I can't focus!";
 			next;
-			set lhz_rekenber,0;
+			lhz_rekenber = 0;
 			erasequest 12009;
 			mes "[Kazien]";
 			mes "Arrgh, this is not good.";
@@ -10751,7 +10849,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "me! How am I supposed";
 		mes "to trust you now?";
 		next;
-		set lhz_rekenber,7;
+		lhz_rekenber = 7;
 		cutin "lhz_kaz06",2;
 		mes "[Kazien]";
 		mes "Oh... You...";
@@ -10788,7 +10886,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "Laboratory Guard, but";
 		mes "he wouldn't even let me in.";
 		next;
-		set lhz_rekenber,6;
+		lhz_rekenber = 6;
 		changequest 12008,12009;
 		cutin "lhz_kaz10",2;
 		mes "[Kazien]";
@@ -10874,7 +10972,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "his order^000000. We pride ourselves";
 		mes "in our clients' confidentiality, so keep it secret, got it?";
 		next;
-		set lhz_rekenber,3;
+		lhz_rekenber = 3;
 		changequest 12007,12008;
 		mes "[Kazien]";
 		mes "I'll just be waiting";
@@ -10942,7 +11040,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		switch( select( "Yes, of course.","Nope, I love giving away secrets." ) )
 		{
 			case 1:
-				set lhz_rekenber,2;
+				lhz_rekenber = 2;
 				mes "[Kazien]";
 				mes "Great, great.";
 				mes "I guess we can just";
@@ -11005,7 +11103,7 @@ lighthalzen,141,162,3	script	Old Man#reken	4_M_03,{
 	mes "required for some positions.";
 	next;
 	if(!lhz_rekenber) {
-		set lhz_rekenber,1;
+		lhz_rekenber = 1;
 		setquest 12007;
 	}
 	mes "[Old Man]";
@@ -11061,8 +11159,8 @@ einbroch,55,52,3	script	Laboratory Guard#reken	4_M_EIN_SOLDIER,{
 						mes "working here. Anyway,";
 						mes "I still can't allow you to";
 						mes "enter the laboratory.";
-						set lhz_rekenber,4;
-						// changequest 12008,12010;
+						lhz_rekenber = 4;
+						changequest 12008,12010;
 						close;
 
 					case 2:
@@ -11073,11 +11171,10 @@ einbroch,55,52,3	script	Laboratory Guard#reken	4_M_EIN_SOLDIER,{
 						mes "trouble getting past this";
 						mes "guard. Otherwise, I might";
 						mes "never finish this job!^000000)";
-						set lhz_rekenber,5;
+						lhz_rekenber = 5;
 						changequest 12008,12010;
 						close;
 				}
-
 			case 2:
 				mes "[" + strcharinfo(0) + "]";
 				mes "Whoa, I'm leaving!";
@@ -11086,7 +11183,7 @@ einbroch,55,52,3	script	Laboratory Guard#reken	4_M_EIN_SOLDIER,{
 				mes "trouble getting past this";
 				mes "guard. Otherwise, I might";
 				mes "never finish this job!^000000)";
-				set lhz_rekenber,5;
+				lhz_rekenber = 5;
 				changequest 12008,12010;
 				close;
 		}
@@ -11100,7 +11197,7 @@ einbroch,55,52,3	script	Laboratory Guard#reken	4_M_EIN_SOLDIER,{
 	close;
 }
 
-airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
+airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTGUARD,{
 
 	if(lhz_rekenber > 21)
 	{
@@ -11175,7 +11272,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "idea, then I don't wanna find";
 		mes "out for myself. Oh, hey...";
 		next;
-		set lhz_rekenber,20;
+		lhz_rekenber = 20;
 		getitem 504,1; //White_Potion
 		cutin "lhz_ryo12",2;
 		mes "[Lyozien]";
@@ -11209,7 +11306,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "let them damage the packages!";
 		close2;
 		cutin "",255;
-		set lhz_rekenber,19;
+		lhz_rekenber = 19;
 		donpcevent "#bully2::OnEnter";
 		donpcevent "Man#Lyozien::OnStop";
 		end;
@@ -11241,7 +11338,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "boxes, I don't ever wanna";
 		mes "disappoint him, you know?";
 		next;
-		set lhz_rekenber,18;
+		lhz_rekenber = 18;
 		cutin "lhz_ryo10",2;
 		mes "[Lyozien]";
 		mes "Anyway, that's";
@@ -11283,7 +11380,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "to know. Man, it's good";
 		mes "that you're working for us.";
 		mes "Those thugs frighten me...";
-		set lhz_rekenber,16;
+		lhz_rekenber = 16;
 		cutin "lhz_ryo01",2;
 		mes "[Lyozien]";
 		mes "Now I feeel much more secure.";
@@ -11332,7 +11429,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "or that the packages must";
 		mes "be destroyed. Boy, I sure";
 		mes "am glad that you're here!";
-		set lhz_rekenber,14;
+		lhz_rekenber = 14;
 		close2;
 		cutin "",255;
 		end;
@@ -11367,7 +11464,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "sure they don't get them!";
 		close2;
 		cutin "",255;
-		set lhz_rekenber,13;
+		lhz_rekenber = 13;
 		donpcevent "Man#Lyozien::OnStop";
 		donpcevent "#bully1::OnEnter";
 		end;
@@ -11420,8 +11517,8 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "sort of situation, right? You";
 		mes "know, embarassing orders...";
 		next;
-		set lhz_rekenber,11;
-		changequest 12013,12014;
+		lhz_rekenber = 11;
+		changequest 12011,12012;
 		cutin "lhz_ryo01",2;
 		mes "[Lyozien]";
 		mes "No? Eh, just meet up with";
@@ -11503,8 +11600,8 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "to go to Izlude, find Mr. Ahman";
 		mes "at the Airport, and tell him that his orders have safely arrived.";
 		next;
-		set lhz_rekenber,9;
-		changequest 12011,12012;
+		lhz_rekenber = 9;
+		changequest 12010,12011;
 		cutin "lhz_ryo11",2;
 		mes "[Lyozien]";
 		mes "Once you tell Mr. Ahman";
@@ -11538,7 +11635,7 @@ OnStop:
 	end;
 }
 
--	script	::Scamp	HIDDEN_NPC,{
+-	script	::Scamp	-1,{
 
 	if(lhz_rekenber > 21)
 	{
@@ -11577,7 +11674,7 @@ OnStop:
 		mes "time to relax on the Airship.";
 		mes "Oh, and don't worry, I'll";
 		mes "take care of the packages.";
-		set lhz_rekenber,21;
+		lhz_rekenber = 21;
 		close;
 	}
 	else if (lhz_rekenber > 15 && lhz_rekenber < 20)
@@ -11622,7 +11719,7 @@ OnStop:
 		mes "I had some idea of what";
 		mes "they were up to, really.";
 		next;
-		set lhz_rekenber,15;
+		lhz_rekenber = 15;
 		mes "[Ahman]";
 		mes "For now, you should";
 		mes "go and report to Lyozien.";
@@ -11708,7 +11805,7 @@ OnStop:
 		mes "worry about it. Thank you for";
 		mes "notifying me about the delivery.^FFFFFF  ^000000 Now, you should go back and ";
 		mes "tell Lyozien. Take care now~";
-		set lhz_rekenber,10;
+		lhz_rekenber = 10;
 		changequest 12012,12013;
 		close;
 	}
@@ -11721,7 +11818,7 @@ OnStop:
 	close;
 }
 
-airplane_01,1,1,1	script	#bully1	HIDDEN_NPC,{
+airplane_01,1,1,1	script	#bully1	-1,{
 
 OnInit:
 	disablenpc "#bully1";
@@ -11732,7 +11829,7 @@ OnEnter:
 	initnpctimer;
 	monster "airplane_01",96,53,"Thug",1592,1,"#bully1::OnMyMobDead";
 	monster "airplane_01",87,47,"Thug",1592,1,"#bully1::OnMyMobDead";
-	set .bullymobs,2;
+	.bullymobs = 2;
 	end;
 
 OnReset:
@@ -11740,7 +11837,7 @@ OnReset:
 	end;
 
 OnMyMobDead:
-	set .bullymobs,.bullymobs -1;
+	--.bullymobs;
 	if(.bullymobs < 1)
 	{
 		mes "[Bully]";
@@ -11764,7 +11861,7 @@ OnTimer120000:
 	end;
 }
 
-airplane_01,2,2,1	script	#bully2	HIDDEN_NPC,{
+airplane_01,2,2,1	script	#bully2	-1,{
 
 OnInit:
 	disablenpc "#bully2";
@@ -11776,7 +11873,7 @@ OnEnter:
 	monster "airplane_01",96,53,"Thug",1592,1,"#bully2::OnMyMobDead";
 	monster "airplane_01",87,47,"Thug",1592,1,"#bully2::OnMyMobDead";
 	monster "airplane_01",97,43,"Thug",1592,1,"#bully2::OnMyMobDead";
-	set .bullymobs,3;
+	.bullymobs = 3;
 	end;
 
 OnReset:
@@ -11784,7 +11881,7 @@ OnReset:
 	end;
 
 OnMyMobDead:
-	set .bullymobs,.bullymobs -1;
+	--.bullymobs;
 	if(.bullymobs < 1)
 	{
 		mes "^3355FFHey-- there's a slit";
@@ -11819,7 +11916,7 @@ OnEnter:
 	enablenpc "#packidentity";
 	end;
 
-OnTouch_:
+OnTouch:
 	if(lhz_rekenber == 19)
 	{
 		mes "^3355FFYou peek through the";
@@ -11849,7 +11946,7 @@ OnTimer120000:
 
 lhz_in01,187,247,3	script	#flashback1	HIDDEN_WARP_NPC,2,2,{
 
-OnTouch_:
+OnTouch:
 	if(lhz_rekenber == 22)
 	{
 		cutin "lhz_kaz11",2;
@@ -11860,7 +11957,7 @@ OnTouch_:
 		mes "[Kazien]";
 		mes "Answer me! Answer me! Answer meee!";
 		next;
-		set lhz_rekenber,23;
+		lhz_rekenber = 23;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
 		mes ".............Damn it.";
@@ -11871,7 +11968,7 @@ OnTouch_:
 
 lhz_in01,75,248,3	script	#flashback2	HIDDEN_WARP_NPC,2,2,{
 
-OnTouch_:
+OnTouch:
 	if(lhz_rekenber == 22)
 	{
 		cutin "lhz_kaz11",2;
@@ -11896,7 +11993,7 @@ OnTouch_:
 		mes "is world peace if I'm not even";
 		mes "alive to enjoy it, huh?";
 		next;
-		set lhz_rekenber,23;
+		lhz_rekenber = 23;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
 		mes "......";
@@ -11913,7 +12010,7 @@ airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 	mes "Input password.";
 	mes "Enter 0 to cancel.";
 	next;
-	set .@i, callfunc("F_GM_NPC",1028,0,0,4000);
+	.@i = callfunc("F_GM_NPC",1028,0,0,4000);
 	if (.@i == -2) {
 		mes "[Lyozien Switch]";
 		mes "Incorrect.";
@@ -11932,11 +12029,11 @@ airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 		next;
 		switch(select("On:OFF")) {
 		case 1:
-			set .@str$,"activated";
+			.@str$ = "activated";
 			donpcevent "Man#Lyozien::OnEnable";
 			break;
 		case 2:
-			set .@str$,"deactivated";
+			.@str$ = "deactivated";
 			donpcevent "Man#Lyozien::OnDisable";
 			break;
 		}
@@ -11954,7 +12051,7 @@ airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 //============================================================
 //= Grammar/script check please. This was a quick job.
 //= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
-//= 0.3 Initial Release. [Persian] [Vicious_Pucca] [aoa00] [Evera] [MasterOfMupppets] [Lupus] [Lord Gywall]
+//= 0.3 Initial Release
 //= 0.5 Added mobsters spawn and Einbroch pollution. Alert lasts either 10 minutes or all mob killed.
 //= 0.6-0.9 fix small bug. Added Bio-lab entrance Quest. Added Getting security-card Quest.
 //= 1.0 Patched "mobsters spawn & Alert" like Real-RO.

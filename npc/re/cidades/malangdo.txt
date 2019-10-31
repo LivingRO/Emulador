@@ -1,27 +1,31 @@
-//===== rAthena Script ======================================= 
-//= Malangdo Town
-//===== By: ================================================== 
-//= Muad_Dib
-//===== Current Version: ===================================== 
-//= 1.5
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
-//= [Official Conversion]
-//= Malangdo Town Script
-//===== Additional Comments: ================================= 
-//= 1.0 First version. [Euphy]
-//= 1.1 Added entrance scripts.
-//= 1.2 Moved "Odgnalam" coordinates.
-//= 1.3 Fixed dialogues.
-//= 1.4 Dialogue edits, source iRO.
-//= 1.5 Added Izlude duplicates.
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: malangdo.txt                           |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.5/1.5/1.5/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: NPCs da Cidade de Malangdo                  |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Malangdo Transportation :: malangdo_go
 //============================================================
 -	script	Dolangmal	-1,{
-	if (checkquest(5091) == -1) {
+	if (!questprogress(5091)) {
 		mes "[Dolangmal]";
 		mes "Hey~! Hi human~ This is Mr. Dolangmal. kakaka~";
 		next;
@@ -29,7 +33,7 @@
 		mes "We are sent to here to take you to the heaven of cats, ^A2314BMalangdo^000000.";
 		next;
 		mes "[Dolangmal]";
-		set .@s$,"Why don't you go to ^A2314BMalangdo^000000?";
+		.@s$ = "Why don't you go to ^A2314BMalangdo^000000?";
 		switch(atoi(strnpcinfo(2))) {
 			case 1: mes "How is that? The crowded city of Prontera is good, but why don't you go our heaven of the cats, ^A2314BMalangdo^000000?"; break;
 			case 2: mes "Why don't you go to ^A2314BMalangdo^000000? That place is better than Geffen, where there are only crowds of simple honest wizards."; break;
@@ -149,15 +153,15 @@
 		close;
 	}
 }
-prontera,114,77,6	duplicate(Dolangmal)	Dolangmal#1	553
-geffen,109,61,6	duplicate(Dolangmal)	Dolangmal#2	553
-payon,200,106,4	duplicate(Dolangmal)	Dolangmal#3	553
-aldebaran,170,104,4	duplicate(Dolangmal)	Dolangmal#4	553
-morocc,168,275,4	duplicate(Dolangmal)	Dolangmal#5	553
-yuno,165,122,4	duplicate(Dolangmal)	Dolangmal#6	553
-rachel,121,126,4	duplicate(Dolangmal)	Dolangmal#7	553
-lighthalzen,254,83,5	duplicate(Dolangmal)	Dolangmal#8	553
-mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	553
+prontera,114,77,6	duplicate(Dolangmal)	Dolangmal#1	4_CAT_DOWN
+geffen,109,61,6	duplicate(Dolangmal)	Dolangmal#2	4_CAT_DOWN
+payon,200,106,4	duplicate(Dolangmal)	Dolangmal#3	4_CAT_DOWN
+aldebaran,170,104,4	duplicate(Dolangmal)	Dolangmal#4	4_CAT_DOWN
+morocc,168,275,4	duplicate(Dolangmal)	Dolangmal#5	4_CAT_DOWN
+yuno,165,122,4	duplicate(Dolangmal)	Dolangmal#6	4_CAT_DOWN
+rachel,121,126,4	duplicate(Dolangmal)	Dolangmal#7	4_CAT_DOWN
+lighthalzen,254,83,5	duplicate(Dolangmal)	Dolangmal#8	4_CAT_DOWN
+mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	4_CAT_DOWN
 
 -	script	::Odgnalam	-1,{
 	mes "This cat is sleeping in the warm "+((strnpcinfo(2) == "albe")?"Alberta":"Izlude")+" sun.";
@@ -167,17 +171,17 @@ mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	553
 	mes "Meow? Huh?";
 	next;
 	if (ep13_yong1 == 0) {
-		set .@price,1000;
-		set .@s1$,"Huh! You are so annoying. Let me send you to ^A2314BMalangdo^000000 for ^0000FF1000 Zeny^000000.";
-		set .@s2$,"Money? Where is the money? You can't go anywhere without the money. Shame on you.";
+		.@price = 1000;
+		.@s1$ = "Huh! You are so annoying. Let me send you to ^A2314BMalangdo^000000 for ^0000FF1000 Zeny^000000.";
+		.@s2$ = "Money? Where is the money? You can't go anywhere without the money. Shame on you.";
 	} else if (ep13_yong1 < 60) {
-		set .@price,999;
-		set .@s1$,"You have a little relationship with fleet of cat. I'll give you special discount price ^0000FF999 Zeny^000000 to ^A2314BMalangdo^000000, because you have relationship with fleet.";
-		set .@s2$,"Where is the money? You don't have a sense of honor.";
+		.@price = 999;
+		.@s1$ = "You have a little relationship with fleet of cat. I'll give you special discount price ^0000FF999 Zeny^000000 to ^A2314BMalangdo^000000, because you have relationship with fleet.";
+		.@s2$ = "Where is the money? You don't have a sense of honor.";
 	} else if (ep13_yong1 > 59 && ep13_yong1 < 80) {
-		set .@price,500;
-		set .@s1$,"You gave several help to our cat's fleet so let me give you special that with 50% discount price ^0000FF500 Zeny^000000. I'll send you to ^A2314BMalangdo^000000.";
-		set .@s2$,"You don't have any money for paying 50% discount price? I can't believe it.";
+		.@price = 500;
+		.@s1$ = "You gave several help to our cat's fleet so let me give you special that with 50% discount price ^0000FF500 Zeny^000000. I'll send you to ^A2314BMalangdo^000000.";
+		.@s2$ = "You don't have any money for paying 50% discount price? I can't believe it.";
 	} else {
 		mes "[Odgnalam]";
 		mes "You are a hero of cat's fleet. Your activity is the legend between us.";
@@ -201,55 +205,55 @@ mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	553
 		mes "Money? Where is the money? You can't go anywhere without the money. Shame on you.";
 		close;
 	}
-	set Zeny, Zeny - .@price;
+	Zeny -= .@price;
 	mes "[Odgnalam]";
 	mes "Let me send you right away. Let's go~";
 	warp "malangdo",217,85;
 	close;
 }
-alberta,200,151,4	duplicate(Odgnalam)	Odgnalam#albe	554
-izlude,182,218,4	duplicate(Odgnalam)	Odgnalam#iz	554	// Old coordinates: (182,192)
-izlude_a,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_a	554
-izlude_b,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_b	554
-izlude_c,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_c	554
-izlude_d,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_d	554
+alberta,200,151,4	duplicate(Odgnalam)	Odgnalam#albe	4_CAT_REST
+izlude,182,218,4	duplicate(Odgnalam)	Odgnalam#iz	4_CAT_REST	// Old coordinates: (182,192)
+izlude_a,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_a	4_CAT_REST
+izlude_b,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_b	4_CAT_REST
+izlude_c,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_c	4_CAT_REST
+izlude_d,182,218,4	duplicate(Odgnalam)	Odgnalam#iz_d	4_CAT_REST
 
-malangdo,219,86,4	script	Kong#malang	545,{
+malangdo,219,86,4	script	Kong#malang	4_CAT_SAILOR2,{
 	mes "[Kong]";
 	mes "Did you have fun in Malangdo?";
 	mes "The fleet has a service to Izlude and Alberta.";
 	next;
 	if (ep13_yong1 == 0) {
-		set .@price,1000;
-		set .@s1$, "1000 zeny";
-		set .@s2$, "Have a nice day in Malangdo.";
-		set .@no_money$, "It is difficult for free.";
-		set .@yes_money$, "Have a nice trip.";
+		.@price = 1000;
+		.@s1$ = "1000 zeny";
+		.@s2$ = "Have a nice day in Malangdo.";
+		.@no_money$ = "It is difficult for free.";
+		.@yes_money$ = "Have a nice trip.";
 		mes "[Kong]";
 		mes "The fee of ship is only 1000 zeny, where do you want to go?";
 		next;
 	} else if (ep13_yong1 < 60) {
-		set .@price,999;
-		set .@s1$,"999 zeny";
-		set .@s2$, "Have a full of fortune day in Malangdo...";
-		set .@no_money$, "It is difficult even though you have a relationship with the fleet.";
-		set .@yes_money$, "Thanks, have a wonderful trip.";
+		.@price = 999;
+		.@s1$ = "999 zeny";
+		.@s2$ = "Have a full of fortune day in Malangdo...";
+		.@no_money$ = "It is difficult even though you have a relationship with the fleet.";
+		.@yes_money$ = "Thanks, have a wonderful trip.";
 		mes "[Kong]";
 		mes "You have a connection with our fleet. Apply special price 999 zeny. Where do you want to go?";
 		next;
 	} else if (ep13_yong1 > 59 && ep13_yong1 < 80) {
-		set .@price,500;
-		set .@s1$,"500 zeny";
-		set .@s2$, "There are full of fortune and jackpot in Malangdo.";
-		set .@no_money$, "Oh my god. You don't have 500 zeny? It is difficult for free.";
-		set .@yes_money$, "Have a nice trip and come again.";
+		.@price = 500;
+		.@s1$ = "500 zeny";
+		.@s2$ = "There are full of fortune and jackpot in Malangdo.";
+		.@no_money$ = "Oh my god. You don't have 500 zeny? It is difficult for free.";
+		.@yes_money$ = "Have a nice trip and come again.";
 		mes "[Kong]";
 		mes "Wow~ You contributed to our fleet a lot. Alright!! Special discount price 500 zeny. Where do you want to go?";
 		next;
 	} else {
-		set .@price,0;
-		set .@s1$,"Free for the hero of our fleet!!";
-		set .@s2$, "No one objects to the hero of our fleet staying in Malangdo...";
+		.@price = 0;
+		.@s1$ = "Free for the hero of our fleet!!";
+		.@s2$ = "No one objects to the hero of our fleet staying in Malangdo...";
 		mes "[Kong]";
 		mes "Ah... You are the legendary hero of our cat's fleet.";
 		next;
@@ -257,7 +261,7 @@ malangdo,219,86,4	script	Kong#malang	545,{
 		mes "We can't charge the hero of our fleet. What is your destination?";
 		next;
 	}
-	set .@i, select("- Izlude destination --- "+.@s1$+":- Alberta destination --- "+.@s1$+":- Stay on Malangdo");
+	.@i = select("- Izlude destination --- "+.@s1$+":- Alberta destination --- "+.@s1$+":- Stay on Malangdo");
 	mes "[Kong]";
 	if (.@i == 3) {
 		mes .@s2$;
@@ -275,7 +279,7 @@ malangdo,219,86,4	script	Kong#malang	545,{
 		mes .@no_money$;
 		close;
 	}
-	set Zeny, Zeny - .@price;
+	Zeny -= .@price;
 	mes .@yes_money$;
 	if (.@i == 1)
 		warp "izlude",195,212;
@@ -286,7 +290,7 @@ malangdo,219,86,4	script	Kong#malang	545,{
 
 // Generic Malangdo NPCs :: malang_tre
 //============================================================
-malangdo,147,117,3	script	Innkeeper#malang	554,{
+malangdo,147,117,3	script	Innkeeper#malang	4_CAT_REST,{
 	mes "You see a lazy cat standing on a chair.";
 	mes "You guess that this is the Innkeeper.";
 	next;
@@ -304,7 +308,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 				specialeffect2 EF_HEALSP;
 				mes "[Innkeeper]";
 				mes "Now relax.";
-				emotion ET_CHUP;
+				emotion e_kis;
 				next;
 				warp "malangdo",140,121;
 				close;
@@ -320,7 +324,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 	case 2:
 		mes "[Innkeeper]";
 		mes "Location saved. We should keep company, haha~";
-		savepoint "malangdo",142,118,1,1;
+		savepoint "malangdo",142,118;
 		close;
 	case 3:
 		mes "[Innkeeper]";
@@ -332,7 +336,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 	close;
 }
 
-malangdo,151,120,3	script	Minstrel#mal	479,{
+malangdo,151,120,3	script	Minstrel#mal	4_M_MINSTREL,{
 	mes "[Minstrel]";
 	mes "Boy, that lazy cat makes me want to just nap all day long.";
 	next;
@@ -341,7 +345,7 @@ malangdo,151,120,3	script	Minstrel#mal	479,{
 	close;
 }
 
-malangdo,149,120,5	script	Wanderer#mal	485,5,1,{
+malangdo,149,120,5	script	Wanderer#mal	4_F_WANDERER,5,1,{
 	mes "[Wanderer]";
 	mes "The cats living in here are so energetic.";
 	mes "Is it weird that they make me want to dance all day?";
@@ -361,21 +365,21 @@ OnTouch:
 	case 3:
 		soundeffect "assassin_of_sunset.wav",0;
 		break;
-	case 4: 
-		emotion ET_DELIGHT;
-		emotion ET_DELIGHT, getnpcid(0, "Minstrel#mal");
+	case 4:
+		emotion e_ho;
+		emotion e_ho,0,"Wandering Minstrel#mal";
 		break;
 	}
 	end;
 }
 
-malangdo,216,168,3	script	Cat Trainer#mal1	558,0,8,{
-	emotion ET_COOL;
+malangdo,216,168,3	script	Cat Trainer#mal1	4_F_ALCHE_A,0,8,{
+	emotion e_awsm;
 	mes "[Cat Trainer]";
 	mes "Ooo~ their soft puffy tails and soft fur~";
 	mes "I can't stand it, this is heaven~~!!";
 	next;
-	emotion ET_KIK;
+	emotion e_gg;
 	mes "[Cat Trainer]";
 	mes "My hidden card, ^FF0000Silvervine Fruit^000000, can make all cats in Malangdo my slaves~ haha!";
 	next;
@@ -390,24 +394,24 @@ malangdo,216,168,3	script	Cat Trainer#mal1	558,0,8,{
 	mes "Why would I tell you when I can barely get it?";
 	mes "I wouldn't even tell you for all the zeny in the world~!";
 	next;
-	emotion ET_KIK;
+	emotion e_gg;
 	mes "[Cat Trainer]";
 	mes "All the Malangdo cats are mine~!";
 	mes "Muahahahaha~";
 	mes "With enough ^FF0000Silvervine Fruit^000000 I can be a queen in Malangdo~ ohhhh!!!";
 	close;
 OnTouch:
-	emotion ET_SPARK;
+	emotion e_flash;
 	end;
 }
 
-malangdo,164,203,3	script	Cat Trainer#mal2	853,{
-	emotion ET_COOL;
+malangdo,164,203,3	script	Cat Trainer#mal2	4_M_YURI,{
+	emotion e_awsm;
 	mes "[Cat Trainer]";
 	mes "Ooo~ their soft puffy tails and soft fur~";
 	mes "I can't stand it, this is heaven~~!!";
 	next;
-	emotion ET_KIK;
+	emotion e_gg;
 	mes "[Cat Trainer]";
 	mes "This is my little secret called";
 	mes "^FF0000Silvervine Fruit^000000. I can use";
@@ -427,7 +431,7 @@ malangdo,164,203,3	script	Cat Trainer#mal2	853,{
 	mes "[Cat Trainer]";
 	mes "Hey, you almost made me tell my secret.";
 	next;
-	emotion ET_KIK;
+	emotion e_gg;
 	mes "[Cat Trainer]";
 	mes "One day these cats will be mine.";
 	mes "I can be a king in Malangdo~ ohhh~!";

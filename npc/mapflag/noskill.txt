@@ -1,15 +1,13 @@
-//===== rAthena Script =======================================
+//===== Hercules Script ======================================
 //= Mapflag: Disable skill use.
 //===== By: ==================================================
-//= rAthena Dev Team
+//= Hercules Dev Team
 //===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Disables all skills on the map.
-//===== Additional Comments: ================================= 
-//= 1.1 Added additional maps. [L0ne_W0lf]
+//===== Additional Comments: =================================
+//= 1.1 - Added additional maps. [L0ne_W0lf]
 //============================================================
 
 //Prontera Arena ===============

@@ -1,12 +1,10 @@
-//===== rAthena Script =======================================
+//===== Hercules Script ======================================
 //= Mapflag: Jail.
 //===== By: ==================================================
-//= rAthena Dev Team
+//= Hercules Dev Team
 //===== Current Version: =====================================
 //= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= pvp: Turns on PvP mode
 //= pvp_noparty: Can't attack player in same party
 //= nobranch: No Dead Branching allowed.
@@ -15,9 +13,8 @@
 //= nosave: No saving respawn point allowed. Use SavePoint to use the
 //=                players previous savepoint, or choose one manually.
 //= noteleport: No Teleporting allowed.  No fly wings or butterfly wings.
-//= hidemobhpbar: No HP bar will be displayed for monsters.
-//===== Additional Comments: ================================= 
-//= 1.0 Initial script.
+//===== Additional Comments: =================================
+//= 1.0 - Initial script.
 //============================================================
 
 // No Memory =============================
@@ -41,8 +38,5 @@ sec_pri	mapflag	pvp
 // No Party ==============================
 sec_pri	mapflag	pvp_noparty
 
-// Nightmare Equipment Drops PVP =========
+//Nightmare Equipment Drops PVP ==========
 sec_pri	mapflag	pvp_nightmaredrop	random,equip,300
-
-// Hide Monster HP bar ===================
-sec_pri	mapflag	hidemobhpbar

@@ -1,26 +1,18 @@
-//===== rAthena Script =======================================
+//===== Hercules Script ======================================
 //= Mapflag: Disable warping.
 //===== By: ==================================================
-//= rAthena Dev Team
+//= Hercules Dev Team
 //===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
-//= Disables warping from a map.
-//= Script commands 'warpparty' and 'warpguild' will not warp
-//=   players.
-//= Atcommands @warp, @go, @load, @jump, @partyrecall,
-//=   @guildrecall, and @recallall will not warp players.
-//= GD_EMERGENCYCALL and UNT_CALLFAMILY will not warp players.
-//===== Additional Comments: ================================= 
-//= 1.3 Added WoE SE maps.
+//===== Description: =========================================
+//= Disables use of @go to a map.
+//===== Additional Comments: =================================
+//= 1.3 - Added WoE SE maps.
 //============================================================
 
 // Special Quests Places =====
 ama_test	mapflag	nowarp
 gon_test	mapflag	nowarp
-que_ba	mapflag	nowarp
 
 // Guild Castles =============
 aldeg_cas01	mapflag	nowarp
@@ -81,22 +73,3 @@ bat_a02	mapflag	nowarp
 // Poring War ==================
 poring_w01	mapflag	nowarp
 poring_w02	mapflag	nowarp
-
-// RWC Maps ===============
-2009rwc_01	mapflag	nowarp
-2009rwc_02	mapflag	nowarp
-2009rwc_03	mapflag	nowarp
-2009rwc_04	mapflag	nowarp
-2009rwc_05	mapflag	nowarp
-2009rwc_06	mapflag	nowarp
-2009rwc_07	mapflag	nowarp
-2009rwc_08	mapflag	nowarp
-2009rwc_f01	mapflag	nowarp
-2012rwc_01	mapflag	nowarp
-2012rwc_02	mapflag	nowarp
-2012rwc_03	mapflag	nowarp
-2012rwc_04	mapflag	nowarp
-2012rwc_05	mapflag	nowarp
-2012rwc_06	mapflag	nowarp
-2012rwc_07	mapflag	nowarp
-2012rwc_08	mapflag	nowarp
