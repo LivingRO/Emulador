@@ -1,28 +1,30 @@
-//===== Hercules Script ======================================
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Gonryun
 //===== By: ==================================================
 //= KarLaeda
-//===== Current Version: =====================================
+//===== Current Version: ===================================== 
 //= 1.2
-//===== Description: =========================================
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
 //= [Official Conversion]
 //= Broken Sword Quest (Kept old mechanics)
 //= Lost Knife Quest
-//===== Additional Comments: =================================
+//===== Additional Comments: ================================= 
 //= 1.1 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=     Added Lost Knife, updated dialog for Broken Sword
 //=     dungeon quest mechanics aportion is still the same.
 //= 1.2a Bugfixes (bugreport:2404) [Paradox924X]
 //= 1.2b More Bugfixes (bugreport:2407) [Paradox924X]
-//============================================================
+//============================================================ 
 
 // Broken Sword :: broken_sword
-//============================================================
-gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
+//============================================================ 
+gon_in,17,93,5	script	Chief#gon	775,{
 	if (BaseLevel > 50) {
 		if (b_sword == 0) {
-			b_sword = 1;
+			set b_sword,1;
 			mes "[Shi Yan Wen]";
 			mes "Hmm...?";
 			mes "Oh, hello there~";
@@ -100,7 +102,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 					mes "happened... Well, if you see";
 					mes "any suspicious characters around,";
 					mes "or find what was stolen, please let me know.";
-					b_sword = 3;
+					set b_sword,3;
 					close;
 				case 2:
 					mes "[Shi Yan Wen]";
@@ -124,7 +126,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 						mes "um..Thank you.";
 						mes "If you somehow come across it,";
 						mes "please let me know.";
-						b_sword = 11;
+						set b_sword,11;
 						close;
 					}
 					mes "[Shi Yan Wen]";
@@ -136,7 +138,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 					next;
 					mes "[Shi Yan Wen]";
 					mes "If you would help me find the sword, I will surely repay you for your efforts.";
-					b_sword = 3;
+					set b_sword,3;
 					close;
 				case 3:
 					mes "[Shi Yan Wen]";
@@ -161,7 +163,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 						mes "Um..Thank you.";
 						mes "If you somehow come across it,";
 						mes "please let me know.";
-						b_sword = 11;
+						set b_sword,11;
 						close;
 					}
 					mes "[Shi Yan Wen]";
@@ -173,7 +175,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 					next;
 					mes "[Shi Yan Wen]";
 					mes "If you would help me find the sword, I will surely repay you for your efforts.";
-					b_sword = 3;
+					set b_sword,3;
 					close;
 				}
 			case 3:
@@ -192,7 +194,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 				mes "So far, it looks like";
 				mes "you're doing good work.";
 				mes "Take this old family medicine, it might be of use sometime soon.";
-				b_sword = 7;
+				set b_sword,7;
 				getitem 504,3; //White_Potion
 				close;
 			case 7:
@@ -250,7 +252,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 					mes "would have never found it.";
 					mes "Please accept this as a";
 					mes "token of my gratitude...";
-					b_sword = 15;
+					set b_sword,15;
 					getitem 603,1; //Old_Blue_Box
 					next;
 					mes "[Shi Yan Wen]";
@@ -285,7 +287,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 				mes "Oh, one last thing. This is";
 				mes "but a trinket, but please";
 				mes "accept this gift from me.";
-				b_sword = 14;
+				set b_sword,14;
 				getitem 603,1; //Old_Blue_Box
 				close;
 			case 11:
@@ -305,7 +307,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 				mes "[Shi Yan Wen]";
 				mes "Here...take this.";
 				mes "Have a good time in Kunlun~";
-				b_sword = 13;
+				set b_sword,13;
 				getitem 504,1; //White_Potion
 				close;
 			case 13:
@@ -370,7 +372,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 			mes "This is a small gift for you.";
 			mes "Please take it as thanks for a job well done!";
 			delitem 1123,1; //Haedonggum
-			b_sword = 33;
+			set b_sword,33;
 			getitem 2404,1; //Shoes_
 			next;
 			mes "[Shi Yan Wen]";
@@ -415,7 +417,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 	close;
 }
 
-gon_in,152,35,4	script	Hostess#gon	4_F_GON,{
+gon_in,152,35,4	script	Hostess#gon	702,{
 	if (b_sword < 1) {
 		mes "[Mei Yen Fang]";
 		mes "Oh...you're new here, right?";
@@ -456,7 +458,7 @@ gon_in,152,35,4	script	Hostess#gon	4_F_GON,{
 		mes "I better watch out...";
 		mes "Oh, what am I saying?";
 		mes "Enjoy your time in my shop...hehe~";
-		b_sword = 2;
+		set b_sword,2;
 		close;
 	case 3:
 		mes "[Mei Yen Fang]";
@@ -473,7 +475,7 @@ gon_in,152,35,4	script	Hostess#gon	4_F_GON,{
 		mes "He seems to know about what";
 		mes "happened last night, but...";
 		mes "He's been drinking all night long.";
-		b_sword = 4;
+		set b_sword,4;
 		close;
 	}
 	if (b_sword > 3 && b_sword < 11) {
@@ -513,13 +515,13 @@ gon_in,152,35,4	script	Hostess#gon	4_F_GON,{
 	close;
 }
 
-gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
+gon_in,165,16,4	script	Man in hangover#gon	748,{
 	if (b_sword < 4) {
 		mes "[Xue Bong]";
 		mes "Ahhh.. my stomach.. my head..";
 		mes "I shouldn't drink so much..";
 		mes "Ehhhh....";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	else if (b_sword < 6) {
@@ -530,7 +532,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 				mes "*Urk!* I feel sick...";
 				mes "Can somebody bring me a potion?";
 				mes "*Groan*....";
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				close;
 			}
 			mes "[Xue Bong]";
@@ -552,11 +554,11 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 					mes "[Xue Bong]";
 					mes "C'mon, man...";
 					mes "I...I'm in freakin' pain here...";
-					b_sword = 12;
+					set b_sword,12;
 					close;
 				case 2:
 					delitem 506,1; //Green_Potion
-					b_sword = 5;
+					set b_sword,5;
 					mes "[Xue Bong]";
 					mes "Oh man...thanks.";
 					mes "I thought you were teasing me.";
@@ -588,7 +590,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 						mes "whether it was a man,";
 						mes "a poring, or if I had just";
 						mes "drank too much..eheh.";
-						b_sword = 6;
+						set b_sword,6;
 						close;
 					}
 					mes "[Xue Bong]";
@@ -600,8 +602,8 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 				}
 			case 2:
 				delitem 506,1; //Green_Potion
-				b_sword = 5;
-				emotion e_thx;
+				set b_sword,5;
+				emotion ET_THANKS;
 				mes "[Xue Bong]";
 				mes "Whew, Thanks!";
 				mes "I feel much better now.";
@@ -642,7 +644,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 						mes "disappeared. I'm not";
 						mes "sure if it was a human or an";
 						mes "animal...";
-						b_sword = 6;
+						set b_sword,6;
 						next;
 						mes "[Xue Bong]";
 						mes "Anything else I can help you with?";
@@ -726,7 +728,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 				mes "outside. I have no idea";
 				mes "whether it was a man, a poring,";
 				mes "or if I just had too much to drink...heheh~";
-				b_sword = 6;
+				set b_sword,6;
 				close;
 			case 2:
 				mes "[Xue Bong]";
@@ -752,7 +754,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 			mes "Ahhh.. my stomach.. my head..";
 			mes "I shouldn't drink so much..";
 			mes "ughh....";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		case 12:
 			mes "[Xue Bong]";
@@ -762,7 +764,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 			mes "blind eye to a";
 			mes "boozer's suffering?";
 			mes "Urk...!";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		case 13:
 			mes "[Xue Bong]";
@@ -771,7 +773,7 @@ gon_in,165,16,4	script	Man in hangover#gon	4_M_ALCHE_A,{
 			mes "How could you turn away";
 			mes "a drunk in need...?";
 			mes "*Groan*...";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 	}
@@ -793,7 +795,7 @@ OnCommandOn:
 	end;
 }
 
-gon_dun01,201,25,0	script	trace1-1#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun01,201,25,0	script	trace1-1#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-1::OnCommandOn";
 	end;
 
@@ -839,9 +841,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun01,202,25,0	script	#getitem1-1	HIDDEN_NPC,2,1,{
+gon_dun01,202,25,0	script	#getitem1-1	111,2,1,{
 	if (b_sword != 7) end;
-	b_sword = 8;
+	set b_sword,8;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -861,7 +863,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun01,190,160,0	script	trace1-2#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun01,190,160,0	script	trace1-2#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-2::OnCommandOn";
 	end;
 
@@ -907,9 +909,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun01,190,159,0	script	#getitem1-2	HIDDEN_NPC,2,1,{
+gon_dun01,190,159,0	script	#getitem1-2	111,2,1,{
 	if (b_sword != 7) end;
-	b_sword = 8;
+	set b_sword,8;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -929,7 +931,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun01,163,53,0	script	trace1-3#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun01,163,53,0	script	trace1-3#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-3::OnCommandOn";
 	end;
 
@@ -975,9 +977,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun01,164,53,0	script	#getitem1-3	HIDDEN_NPC,2,1,{
+gon_dun01,164,53,0	script	#getitem1-3	111,2,1,{
 	if (b_sword != 7) end;
-	b_sword = 8;
+	set b_sword,8;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -997,7 +999,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun01,133,183,0	script	trace1-4#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun01,133,183,0	script	trace1-4#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-4::OnCommandOn";
 	end;
 
@@ -1043,9 +1045,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun01,134,183,0	script	#getitem1-4	HIDDEN_NPC,2,1,{
+gon_dun01,134,183,0	script	#getitem1-4	111,2,1,{
 	if (b_sword != 7) end;
-	b_sword = 8;
+	set b_sword,8;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1065,7 +1067,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun01,139,257,0	script	trace1-5#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun01,139,257,0	script	trace1-5#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-5::OnCommandOn";
 	end;
 
@@ -1111,9 +1113,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun01,140,257,0	script	#getitem1-5	HIDDEN_NPC,2,1,{
+gon_dun01,140,257,0	script	#getitem1-5	111,2,1,{
 	if (b_sword != 7) end;
-	b_sword = 8;
+	set b_sword,8;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1141,7 +1143,7 @@ OnCommandOn:
 	end;
 }
 
-gon_dun02,65,168,0	script	trace2-1#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun02,65,168,0	script	trace2-1#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-1::OnCommandOn";
 	end;
 
@@ -1187,9 +1189,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun02,202,25,0	script	#getitem2-1	HIDDEN_NPC,2,1,{
+gon_dun02,202,25,0	script	#getitem2-1	111,2,1,{
 	if (b_sword != 8) end;
-	b_sword = 9;
+	set b_sword,9;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1209,7 +1211,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun02,265,200,0	script	trace2-2#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun02,265,200,0	script	trace2-2#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-2::OnCommandOn";
 	end;
 
@@ -1255,9 +1257,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun02,265,201,0	script	#getitem2-2	HIDDEN_NPC,2,1,{
+gon_dun02,265,201,0	script	#getitem2-2	111,2,1,{
 	if (b_sword != 8) end;
-	b_sword = 9;
+	set b_sword,9;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1277,7 +1279,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun02,247,129,0	script	trace2-3#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun02,247,129,0	script	trace2-3#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-3::OnCommandOn";
 	end;
 
@@ -1323,9 +1325,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun02,247,128,0	script	#getitem2-3	HIDDEN_NPC,2,1,{
+gon_dun02,247,128,0	script	#getitem2-3	111,2,1,{
 	if (b_sword != 8) end;
-	b_sword = 9;
+	set b_sword,9;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1345,7 +1347,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun02,149,74,0	script	trace2-4#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun02,149,74,0	script	trace2-4#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-4::OnCommandOn";
 	end;
 
@@ -1391,9 +1393,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun02,149,75,0	script	#getitem2-4	HIDDEN_NPC,2,1,{
+gon_dun02,149,75,0	script	#getitem2-4	111,2,1,{
 	if (b_sword != 8) end;
-	b_sword = 9;
+	set b_sword,9;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1413,7 +1415,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun02,23,105,0	script	trace2-5#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun02,23,105,0	script	trace2-5#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-5::OnCommandOn";
 	end;
 
@@ -1459,9 +1461,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun02,23,106,0	script	#getitem2-5	HIDDEN_NPC,2,1,{
+gon_dun02,23,106,0	script	#getitem2-5	111,2,1,{
 	if (b_sword != 8) end;
-	b_sword = 9;
+	set b_sword,9;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1481,7 +1483,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun02,249,39,0	script	trace2-6#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun02,249,39,0	script	trace2-6#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-6::OnCommandOn";
 	end;
 
@@ -1527,9 +1529,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun02,249,40,0	script	#getitem2-6	HIDDEN_NPC,2,1,{
+gon_dun02,249,40,0	script	#getitem2-6	111,2,1,{
 	if (b_sword != 8) end;
-	b_sword = 9;
+	set b_sword,9;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	close;
@@ -1557,7 +1559,7 @@ OnCommandOn:
 	end;
 }
 
-gon_dun03,11,75,0	script	trace3-1#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,11,75,0	script	trace3-1#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-1::OnCommandOn";
 	end;
 
@@ -1603,9 +1605,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,10,74,0	script	#getitem3-1	HIDDEN_NPC,2,1,{
+gon_dun03,10,74,0	script	#getitem3-1	111,2,1,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -1629,7 +1631,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun03,199,103,0	script	trace3-2#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,199,103,0	script	trace3-2#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-2::OnCommandOn";
 	end;
 
@@ -1675,9 +1677,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,199,102,0	script	#getitem3-2	HIDDEN_NPC,2,1,{
+gon_dun03,199,102,0	script	#getitem3-2	111,2,1,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -1701,7 +1703,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun03,14,162,0	script	trace3-3#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,14,162,0	script	trace3-3#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-3::OnCommandOn";
 	end;
 
@@ -1747,9 +1749,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,14,163,0	script	#getitem3-3	HIDDEN_NPC,2,1,{
+gon_dun03,14,163,0	script	#getitem3-3	111,2,1,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -1773,7 +1775,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun03,155,263,0	script	trace3-4#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,155,263,0	script	trace3-4#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-4::OnCommandOn";
 	end;
 
@@ -1819,9 +1821,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,156,263,0	script	#getitem3-4	HIDDEN_NPC,2,1,{
+gon_dun03,156,263,0	script	#getitem3-4	111,2,1,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -1845,7 +1847,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun03,169,90,0	script	trace3-5#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,169,90,0	script	trace3-5#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-5::OnCommandOn";
 	end;
 
@@ -1891,9 +1893,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,170,90,0	script	#getitem3-5	HIDDEN_NPC,2,1,{
+gon_dun03,170,90,0	script	#getitem3-5	111,2,1,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -1917,7 +1919,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun03,162,40,0	script	trace3-6#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,162,40,0	script	trace3-6#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-6::OnCommandOn";
 	end;
 
@@ -1963,9 +1965,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,68,39,0	script	#getitem3-6	HIDDEN_NPC,1,2,{
+gon_dun03,68,39,0	script	#getitem3-6	111,1,2,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -1989,7 +1991,7 @@ OnCommandOff:
 	end;
 }
 
-gon_dun03,68,212,0	script	trace3-7#gnbs	HIDDEN_WARP_NPC,1,1,{
+gon_dun03,68,212,0	script	trace3-7#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-7::OnCommandOn";
 	end;
 
@@ -2035,9 +2037,9 @@ OnTimer3000:
 	end;
 }
 
-gon_dun03,68,213,0	script	#getitem3-7	HIDDEN_NPC,1,2,{
+gon_dun03,68,213,0	script	#getitem3-7	111,1,2,{
 	if (b_sword != 9) end;
-	b_sword = 10;
+	set b_sword,10;
 	mes "You found a ^FF0000piece of blade^000000.";
 	mes "Seems like it's a part of the sword you've been looking for.";
 	next;
@@ -2061,7 +2063,7 @@ OnCommandOff:
 	end;
 }
 
-gon_in,18,27,5	script	Madam#gnbs	4_F_TWGRANDMOM,{
+gon_in,18,27,5	script	Madam#gnbs	771,{
 	mes "[Shang Hua Yen]";
 	mes "Ho, ho, ho~";
 	mes "Who might this be?";
@@ -2073,7 +2075,7 @@ gon_in,18,27,5	script	Madam#gnbs	4_F_TWGRANDMOM,{
 		mes "Hello, darling~";
 		close;
 	}
-	if (Sex == 0) {
+	if (Sex == SEX_FEMALE) {
 		mes "[Shang Hua Yen]";
 		mes "Hoho~ he's upstairs.";
 		mes "My, are you such a pretty lady~";
@@ -2086,11 +2088,11 @@ gon_in,18,27,5	script	Madam#gnbs	4_F_TWGRANDMOM,{
 	mes "My~! Aren't you a darling young";
 	mes "man. But still, not nearly as handsome as my husband~";
 	mes "Tee hee~";
-	emotion e_lv;
+	emotion ET_THROB;
 	close;
 }
 
-gon_dun03,62,222,0	script	Strange dead body#gnbs	HIDDEN_NPC,{
+gon_dun03,62,222,0	script	Strange dead body#gnbs	111,{
 	if (b_sword < 7) {
 		mes "Here's a decomposing corpse.";
 		mes "It seems like monsters devoured it.";
@@ -2140,14 +2142,14 @@ gon_dun03,62,222,0	script	Strange dead body#gnbs	HIDDEN_NPC,{
 	close;
 }
 
-gonryun,139,142,7	script	Girl##gnbs1	4_F_TWMASKGIRL,{
+gonryun,139,142,7	script	Girl##gnbs1	772,{
 	if (b_sword < 12) {
 		mes "[Shi Ying Xiao]";
 		mes "..........";
 		mes "I was happy meeting visitors";
 		mes "from outside the village,";
 		mes "but because of the thief, I feel terrible now...";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	mes "[Shi Ying Xiao]";
@@ -2170,18 +2172,18 @@ gonryun,139,142,7	script	Girl##gnbs1	4_F_TWMASKGIRL,{
 	mes "[ ^6699FF" + strcharinfo(0) + "^000000 ]";
 	mes "I AM YOUR HERO!";
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Shi Ying Xiao]";
 	mes "Thank you so much for bringing hope to our village, hero~";
 	close;
 }
 
-gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
+gonryun,100,241,0	script	Stranger#gnbs	733,{
 	if (b_sword < 14) {
 		mes "[Zuo Hei]";
 		mes "Hmm...";
 		mes "I'm pretty busy right now, come back later.";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (b_sword < 17) {
@@ -2216,7 +2218,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 						mes "see for myself that";
 						mes "you're really interested";
 						mes "in helping others.";
-						b_sword = 16;
+						set b_sword,16;
 						close;
 					}
 					mes "[Zuo Hei]";
@@ -2232,7 +2234,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "That's none of your business.";
 				mes "Take a look in the mirror first";
 				mes "before you say things like that.";
-				emotion e_ag;
+				emotion ET_ANGER;
 				close;
 			case 1:
 				mes "[Zuo Hei]";
@@ -2242,7 +2244,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "Why don't you go and take care of them first.";
 				mes "Once you start to help someone,";
 				mes "you can't just quit halfway.";
-				b_sword = 16;
+				set b_sword,16;
 				close;
 			case 2:
 				mes "[Zuo Hei]";
@@ -2252,7 +2254,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "Why don't you go and take care of them first.";
 				mes "Once you start to help someone,";
 				mes "you can't just quit halfway.";
-				b_sword = 16;
+				set b_sword,16;
 				close;
 			case 3:
 				mes "[Zuo Hei]";
@@ -2272,7 +2274,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 						mes "you'll need a very skilled smith.";
 						mes "Go to ^FF0000Geffen^000000, you'll find someone";
 						mes "who can help you.";
-						b_sword = 17;
+						set b_sword,17;
 						close;
 					}
 					mes "[Zuo Hei]";
@@ -2288,7 +2290,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "That's none of your business.";
 				mes "Take a look in the mirror first";
 				mes "before you say things like that.";
-				emotion e_ag;
+				emotion ET_ANGER;
 				close;
 			case 4:
 				mes "[Zuo Hei]";
@@ -2302,7 +2304,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "keep the promises they make.";
 				mes "You'll not get any information from me.";
 				mes "Don't ever bother me again.";
-				b_sword = 15;
+				set b_sword,15;
 				close;
 			}
 			break;
@@ -2310,7 +2312,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 			mes "[Zuo Hei]";
 			mes "Sorry, I'm busy right now.";
 			mes "Why don't you come back later.";
-			emotion e_dots;
+			emotion ET_THINK;
 			close;
 		case 16:
 			switch(nakha) {
@@ -2355,7 +2357,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 						mes "you'll need a very skilled smith.";
 						mes "Go to ^FF0000Geffen^000000, you'll find someone";
 						mes "who can help you.";
-						b_sword = 17;
+						set b_sword,17;
 						close;
 					}
 					mes "[Zuo Hei]";
@@ -2372,7 +2374,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "That's none of your business.";
 				mes "Take a look in the mirror first";
 				mes "before you say things like that.";
-				emotion e_ag;
+				emotion ET_ANGER;
 				close;
 			case 4:
 				mes "[Zuo Hei]";
@@ -2386,7 +2388,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 				mes "I don't like people who fail";
 				mes "to keep their promises.";
 				mes "You'll not get any information from me. Don't ever bother me again.";
-				b_sword = 15;
+				set b_sword,15;
 				close;
 			}
 		}
@@ -2412,7 +2414,7 @@ gonryun,100,241,0	script	Stranger#gnbs	4_M_JOB_KNIGHT1,{
 	close;
 }
 
-geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
+geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 	if (b_sword < 17) {
 		mes "[Aumgarl]";
 		mes "*Sob*..*sob*....";
@@ -2440,7 +2442,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 					mes "I'm sorry, but we're closed.";
 					mes "Come again another time.";
 					mes "Goodbye.";
-					b_sword = 18;
+					set b_sword,18;
 					close;
 				}
 				mes "[Aumgarl]";
@@ -2458,7 +2460,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 			mes "Like I said, we're closed!";
 			mes "Come back later.";
 			if (rand(1,8) == 7) {
-				b_sword = 19;
+				set b_sword,19;
 				mes "Didn't you hear me?! Sheesh!";
 			}
 			close2;
@@ -2485,7 +2487,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 				mes "granddaughter all of a sudden!?";
 				mes "Get the hell out of here!";
 				mes "Don't ever come back here again!";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			case 2:
 				mes "[Aumgarl]";
@@ -2509,7 +2511,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 					mes "granddaughter all of a sudden!?";
 					mes "Get out of here you pervert!";
 					mes "Don't ever come back here again!";
-					emotion e_pif;
+					emotion ET_HNG;
 					close;
 				case 2:
 					mes "[Aumgarl]";
@@ -2571,7 +2573,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 						mes "as her fate. I just feel";
 						mes "so sorry for Lyroo.";
 						mes "...";
-						emotion e_dots;
+						emotion ET_THINK;
 						close;
 					case 2:
 						mes "[Aumgarl]";
@@ -2649,7 +2651,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 								mes "[Aumgarl]";
 								mes "Thank you...";
 								mes "Thank you...";
-								b_sword = 20;
+								set b_sword,20;
 								close;
 							}
 							mes "[Aumgarl]";
@@ -2676,7 +2678,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 								mes "I hate people who lie like that. Get out of my sight.";
 								mes "Get out of my sight.";
 								mes " ";
-								emotion e_pif;
+								emotion ET_HNG;
 								close2;
 								warp "geffen",173,169;
 								end;
@@ -2756,7 +2758,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 			mes "[Aumgarl]";
 			mes "Thank you so much...";
 			mes "Without your help...";
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "it would have been hopeless.";
 			next;
 			mes "[Aumgarl]";
@@ -2772,7 +2774,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 				mes "Whenever you have a favor to ask,";
 				mes "come and find me. I'll do";
 				mes "my best to help you.";
-				b_sword = 29;
+				set b_sword,29;
 				close;
 			case 2:
 				mes "[Aumgarl]";
@@ -2840,7 +2842,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 				mes "But these are the necessary";
 				mes "supplies we need to repair the sword.";
 				mes "I'll go find some other materials.";
-				b_sword = 30;
+				set b_sword,30;
 				close;
 			}
 		case 29:
@@ -2924,7 +2926,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 				mes "These are necessary supplies.";
 				mes "We need them to repair the sword.";
 				mes "I'll go find some other materials.";
-				b_sword = 30;
+				set b_sword,30;
 				close;
 			}
 		case 30:
@@ -2940,7 +2942,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 				delitem 1005,1; //Hammer_Of_Blacksmith
 				delitem 1000,2; //Star_Crumb
 				delitem 7098,5; //Live_Coal
-				b_sword = 31;
+				set b_sword,31;
 				close;
 			}
 			mes "[Aumgarl]";
@@ -2980,7 +2982,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 				next;
 				mes "'You received repaired";
 				mes "'^FF0000SaYumMoon's sword^000000'.";
-				b_sword = 32;
+				set b_sword,32;
 				getitem 1123,1; //Haedonggum
 				close;
 			}
@@ -3000,7 +3002,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	4_M_JOB_BLACKSMITH,{
 	close;
 }
 
-geffen_in,106,106,7	script	Girl#gnbs2	4_M_KID2,{
+geffen_in,106,106,7	script	Girl#gnbs2	716,{
 	if (b_sword < 20) {
 		mes "[Lyroo]";
 		mes "Ah...Ah....";
@@ -3027,7 +3029,7 @@ geffen_in,106,106,7	script	Girl#gnbs2	4_M_KID2,{
 	else if (b_sword == 24 || b_sword == 25 || b_sword == 26) {
 		mes "[Lyroo]";
 		mes "Ahh...ahh....";
-		if (Sex == 0)
+		if (Sex == SEX_FEMALE)
 			mes "It's ..you.. pretty...sister..";
 		else
 			mes "It's ..you.. handsome...brother..";
@@ -3075,7 +3077,7 @@ geffen_in,106,106,7	script	Girl#gnbs2	4_M_KID2,{
 	else if (b_sword == 27) {
 		mes "[Lyroo]";
 		mes "uh...umm?";
-		if (Sex == 0)
+		if (Sex == SEX_FEMALE)
 			mes "Ah....It's you, pretty sister...";
 		else
 			mes "Ah....It's you, handsome brother...";
@@ -3100,21 +3102,21 @@ geffen_in,106,106,7	script	Girl#gnbs2	4_M_KID2,{
 		mes "After taking the medicine, Lyroo";
 		mes "fell asleep.^000000";
 		delitem 606,1; //Aloebera
-		b_sword = 28;
+		set b_sword,28;
 		close;
 	}
 	mes "[Lyroo]";
 	mes "Heehehe...";
-	if (Sex == 0)
+	if (Sex == SEX_FEMALE)
 		mes "Thank you my pretty sister.";
-	else
+	else 
 		mes "Thank you handsome brother~";
 	mes "I'll get my health back";
 	mes "and be a strong girl!";
 	close;
 }
 
-prontera,275,86,2	script	Young man#SaYumMoon	4W_M_01,{
+prontera,275,86,2	script	Young man#SaYumMoon	97,{
 	if (b_sword < 20) {
 		mes "[Neil]";
 		mes "Oh man, it feels so good";
@@ -3152,11 +3154,11 @@ prontera,275,86,2	script	Young man#SaYumMoon	4W_M_01,{
 	mes "[Neil]";
 	mes "It was a miracle!";
 	mes "I'm so happy to be alive!";
-	if (b_sword == 20) b_sword = 21;
+	if (b_sword == 20) set b_sword,21;
 	close;
 }
 
-yuno,208,164,4	script	Active little girl#gnbs	4W_F_01,{
+yuno,208,164,4	script	Active little girl#gnbs	101,{
 	if (b_sword < 21) {
 		mes "[Hisa]";
 		mes ".....";
@@ -3187,7 +3189,7 @@ yuno,208,164,4	script	Active little girl#gnbs	4W_F_01,{
 	mes "She's probably at home after";
 	mes "coming back from some trip.";
 	mes "Haha~";
-	if (b_sword == 21) b_sword = 22;
+	if (b_sword == 21) set b_sword,22;
 	if (rand(1,2) == 2) {
 		next;
 		mes "[Hisa]";
@@ -3198,7 +3200,7 @@ yuno,208,164,4	script	Active little girl#gnbs	4W_F_01,{
 	close;
 }
 
-yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
+yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 	if (b_sword < 23) {
 		mes "[??????]";
 		mes "I don't believe we've met";
@@ -3235,7 +3237,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 								mes "Ah...I'm sorry..";
 								mes "I haven't seen a guy like you";
 								mes "for a long time.";
-								emotion e_heh;
+								emotion ET_SMILE;
 								next;
 								mes "[Cylrnel]";
 								mes "You make me laugh...";
@@ -3259,7 +3261,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 									next;
 									mes "[Cylrnel]";
 									mes "Without the exact symptoms, I can't make an accurate diagnosis.";
-									b_sword = 24;
+									set b_sword,24;
 									close;
 								}
 								mes "[Cylrnel]";
@@ -3302,7 +3304,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 								next;
 								mes "[Cylrnel]";
 								mes "Without the exact symptoms, I can't make an accurate diagnosis.";
-								b_sword = 24;
+								set b_sword,24;
 								close;
 							}
 							mes "[Cylrnel]";
@@ -3369,21 +3371,21 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 			next;
 			mes "[Cylrnel]";
 			mes "First, how was her body temperature?";
-			sick = 0;
+			set sick,0;
 			next;
 			switch(select("Very hot.:Very cold.:Normal.:Turns hot and cold repeatedly.")) {
 			case 1:
-				.@sick1$ = "Very hot.";
+				set .@sick1$,"Very hot.";
 				break;
 			case 2:
-				.@sick1$ = "Very cold.";
+				set .@sick1$,"Very cold.";
 				break;
 			case 3:
-				.@sick1$ = "Normal.";
+				set .@sick1$,"Normal.";
 				break;
 			case 4:
-				.@sick1$ = "Turns hot and cold repeatedly";
-				++.@sick;
+				set .@sick1$,"Turns hot and cold repeatedly";
+				set .@sick,.@sick+1;
 				break;
 			}
 			mes "[Cylrnel]";
@@ -3392,17 +3394,17 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 			next;
 			switch(select("No sweating at all.:Sweating all over the body.:Runny nose.:No tears, sweats at all.")) {
 			case 1:
-				.@sick2$ = "No sweating at all.";
-				++.@sick;
+				set .@sick2$,"No sweating at all.";
+				set .@sick,.@sick+1;
 				break;
 			case 2:
-				.@sick2$ = "Sweating all over the body.";
+				set .@sick2$,"Sweating all over the body.";
 				break;
 			case 3:
-				.@sick2$ = "Runny nose.";
+				set .@sick2$,"Runny nose.";
 				break;
 			case 4:
-				.@sick2$ = "No tears, sweats at all.";
+				set .@sick2$,"No tears, sweats at all.";
 				break;
 			}
 			mes "[Cylrnel]";
@@ -3411,17 +3413,17 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 			next;
 			switch(select("Nothing in particular.:Becomes paralyzed often.:Muscles became soft.:Muscles became hard.")) {
 			case 1:
-				.@sick3$ = "Nothing in particular.";
+				set .@sick3$,"Nothing in particular.";
 				break;
 			case 2:
-				.@sick3$ = "Becomes paralyzed often.";
-				++.@sick;
+				set .@sick3$,"Becomes paralyzed often.";
+				set .@sick,.@sick+1;
 				break;
 			case 3:
-				.@sick3$ = "Muscles became soft.";
+				set .@sick3$,"Muscles became soft.";
 				break;
 			case 4:
-				.@sick3$ = "Muscles became hard.";
+				set .@sick3$,"Muscles became hard.";
 				break;
 			}
 			mes "[Cylrnel]";
@@ -3429,17 +3431,17 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 			next;
 			switch(select("Stomach hurts like it's been stabbed by a knife.:Head hurts like it's been smashed by a hammer.:Heart beats irregularly.:Has difficulty in breathing.")) {
 			case 1:
-				.@sick4$ = "Stomach hurts like it's been stabbed by a knife.";
+				set .@sick4$,"Stomach hurts like it's been stabbed by a knife.";
 				break;
 			case 2:
-				.@sick4$ = "Head hurts like it's been smashed by a hammer.";
+				set .@sick4$,"Head hurts like it's been smashed by a hammer.";
 				break;
 			case 3:
-				.@sick4$ = "Heart beats irregularly.";
-				++.@sick;
+				set .@sick4$,"Heart beats irregularly.";
+				set .@sick,.@sick+1;
 				break;
 			case 4:
-				.@sick4$ = "Has difficulty in breathing.";
+				set .@sick4$,"Has difficulty in breathing.";
 				break;
 			}
 			mes "[Cylrnel]";
@@ -3489,7 +3491,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 				mes "10 Witch Starsands";
 				mes "5 Burning Hearts";
 				mes "5 Ice Cubics";
-				b_sword = 26;
+				set b_sword,26;
 				next;
 				mes "[Cylrnel]";
 				mes "Wrote them down?";
@@ -3512,7 +3514,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 				mes "5 Witch Starsands";
 				mes "3 Burning Hearts";
 				mes "3 Ice Cubics";
-				b_sword = 25;
+				set b_sword,25;
 				next;
 				mes "[Cylrnel]";
 				mes "Wrote them down?";
@@ -3557,7 +3559,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 				delitem 1061,5; //Starsand_Of_Witch
 				delitem 7097,3; //Burning_Heart
 				delitem 7066,3; //Ice_Piece
-				b_sword = 24;
+				set b_sword,24;
 				next;
 				mes "[Cylrnel]";
 				mes "I've chosen the ingredients";
@@ -3619,7 +3621,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 				delitem 1061,10; //Starsand_Of_Witch
 				delitem 7097,5; //Burning_Heart
 				delitem 7066,5; //Ice_Piece
-				b_sword = 27;
+				set b_sword,27;
 				getitem 606,1; //Aloebera
 				close;
 			}
@@ -3669,12 +3671,12 @@ yuno_in01,99,101,4	script	Doctor#gnbs	4_F_ALCHE,{
 	mes "[Cylrnel]";
 	mes "But I found a treatment...";
 	mes "And...it's..a...secret! Haha~!";
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	close;
 }
 
-yuno_in01,104,94,0	script	go away#gnbs	HIDDEN_WARP_NPC,2,1,{
-OnTouch:
+yuno_in01,104,94,0	script	go away#gnbs	139,2,1,{
+OnTouch_:
 	if (b_sword < 22) {
 		mes "[??????]";
 		mes "^FF0000What are you doing here?";
@@ -3687,7 +3689,7 @@ OnTouch:
 		if (rand(1,10) == 10) {
 			mes "[??????]";
 			mes "I am very busy right now. Please leave.";
-			b_sword = 23;
+			set b_sword,23;
 			close;
 		}
 		mes "[??????]";
@@ -3701,8 +3703,8 @@ OnTouch:
 }
 
 // Lost Knife :: gon_npc
-//============================================================
-gonryun,237,226,3	script	Han Ran Jiao#gon	4_M_TWMIDMAN,{
+//============================================================ 
+gonryun,237,226,3	script	Han Ran Jiao#gon	776,{
 	if (nakha == 0) {
 		mes "[Han Ran Jiao]";
 		mes "Oh no! What will I do?!";
@@ -3710,7 +3712,7 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	4_M_TWMIDMAN,{
 		mes "my irreplaceable knife! Ahhhhhh!";
 		next;
 		if (BaseLevel >= 20) {
-			nakha = 1;
+			set nakha,1;
 			mes "[Han Ran Jiao]";
 			mes "I need to go down to get it";
 			mes "but...the monsters...";
@@ -3756,7 +3758,7 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	4_M_TWMIDMAN,{
 		mes "knife to me?";
 		next;
 		if (select("Return the knife.:Refuse.") == 1) {
-			nakha = 3;
+			set nakha,3;
 			delitem 1201,1; //Knife
 			mes "[Han Ran Jiao]";
 			mes "Thank you! Thank you so much!";
@@ -3797,10 +3799,10 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	4_M_TWMIDMAN,{
 	}
 }
 
-gon_fild01,245,257,0	script	#gonknife	HIDDEN_NPC,3,3,{
-OnTouch:
+gon_fild01,245,257,0	script	#gonknife	111,3,3,{
+OnTouch_:
 	if (nakha == 1) {
-		nakha = 2;
+		set nakha,2;
 		mes "^3355FFHm? What's this?";
 		mes " ";
 		mes "Something was hidden beneath the leaves...^000000";

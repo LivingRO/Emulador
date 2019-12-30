@@ -954,7 +954,7 @@ izlude,122,207,3	script	Equipe da Academia#0	4_M_KHKYEL,3,3,{
 							next;
 							mes "[Hun]";
 							mes "Se você seguir esta estrada até o norte, você pode ver";
-							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,220,200</INFO></NAVI>.";
 							mes "Qualquer um pode se inscrever, então aproveite.";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Equipe de Informações#"+strnpcinfo(2));
@@ -973,7 +973,7 @@ izlude,122,207,3	script	Equipe da Academia#0	4_M_KHKYEL,3,3,{
 							mes "[Hun]";
 							mes "Não há exigência ou pagamento para se inscrever, então seria uma grande ajuda para você.";
 							mes "Quando você passar por este caminho para o norte, você encontrará";
-							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,220,200</INFO></NAVI>.";
 							next;
 							mes "[Hun]";
 							mes "Se houver mais aventureiros como você, o futuro será mais brilhante.";
@@ -995,7 +995,7 @@ izlude,122,207,3	script	Equipe da Academia#0	4_M_KHKYEL,3,3,{
 							next;
 							mes "[Hun]";
 							mes "Quando você passar por este caminho para o norte, você encontrará";
-							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,220,200</INFO></NAVI>.";
 							mes "O que está bem, está bem, não é?";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Equipe de Informações#"+strnpcinfo(2));
@@ -1030,7 +1030,7 @@ izlude,122,207,3	script	Equipe da Academia#0	4_M_KHKYEL,3,3,{
 						next;
 						mes "[Hun]";
 							mes "Se você seguir esta estrada até o norte, você pode ver";
-							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,220,200</INFO></NAVI>.";
 							mes "Qualquer um pode se inscrever, então aproveite.";
 						next;
 							emotion ET_SURPRISE, getnpcid(0, "Equipe de Informações#"+strnpcinfo(2));
@@ -1049,7 +1049,7 @@ izlude,122,207,3	script	Equipe da Academia#0	4_M_KHKYEL,3,3,{
 						mes "[Hun]";
 							mes "Não há exigência ou pagamento para se inscrever, então seria uma grande ajuda para você.";
 							mes "Quando você passar por este caminho para o norte, você encontrará";
-							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,220,200</INFO></NAVI>.";
 						next;
 						mes "[Hun]";
 							mes "Se houver mais aventureiros como você, o futuro será mais brilhante.";
@@ -1071,7 +1071,7 @@ izlude,122,207,3	script	Equipe da Academia#0	4_M_KHKYEL,3,3,{
 						next;
 						mes "[Hun]";
 							mes "Quando você passar por este caminho para o norte, você encontrará";
-							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "<NAVI>[O prédio da Academia]<INFO>iz_ac01,220,200</INFO></NAVI>.";
 							mes "O que está bem, está bem, não é?";
 						next;
 							emotion ET_SURPRISE, getnpcid(0, "Equipe de Informações#"+strnpcinfo(2));

@@ -1,25 +1,23 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Mapflag: Enable Neuralizer use.
 //===== By: ==================================================
-//= Daegaladh
+//= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
-//===== Description: =========================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
 //= Maps where Neuralizer (12213) can be used.
-//===== Additional Comments: =================================
-//= 1.0 - Initial script.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Daegaladh]
+//= 1.1 Renewal split. [Euphy]
 //============================================================
 
 alberta	mapflag	reset
 aldebaran	mapflag	reset
 amatsu	mapflag	reset
 ayothaya	mapflag	reset
-brasilis	mapflag	reset
 comodo	mapflag	reset
-dewata	mapflag	reset
-dicastes01	mapflag	reset
-dicastes02	mapflag	reset
-eclage	mapflag	reset
 einbroch	mapflag	reset
 einbech	mapflag	reset
 geffen	mapflag	reset
@@ -29,12 +27,9 @@ jawaii	mapflag	reset
 hugel	mapflag	reset
 lighthalzen	mapflag	reset
 louyang	mapflag	reset
-malangdo	mapflag	reset
-malaya	mapflag	reset
 manuk	mapflag	reset
 mid_camp	mapflag	reset
 moc_ruins	mapflag	reset
-mora	mapflag	reset
 morocc	mapflag	reset
 moscovia	mapflag	reset
 niflheim	mapflag	reset

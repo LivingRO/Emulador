@@ -1,13 +1,16 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Mapflag: Night mode.
 //===== By: ==================================================
-//= Skotlex
+//= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
-//===== Description: =========================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
 //= Enables night mode effects.
-//===== Additional Comments: =================================
-//= 1.0 - Initial script.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Skotlex]
+//= 1.1 Renewal split. [Euphy]
 //============================================================
 
 alb2trea	mapflag	nightenabled
@@ -256,9 +259,6 @@ mosk_dun02	mapflag	nightenabled
 mosk_dun03	mapflag	nightenabled
 que_temsky	mapflag	nightenabled
 sch_gld	mapflag	nightenabled
-moc_fild20	mapflag	nightenabled
-moc_fild21	mapflag	nightenabled
-moc_fild22	mapflag	nightenabled
 aru_gld	mapflag	nightenabled
 que_qsch01	mapflag	nightenabled
 que_qsch02	mapflag	nightenabled
@@ -295,26 +295,5 @@ manuk	mapflag	nightenabled
 man_fild02	mapflag	nightenabled
 splendide	mapflag	nightenabled
 spl_fild01	mapflag	nightenabled
-brasilis	mapflag	nightenabled
-bra_fild01	mapflag	nightenabled
-dicastes01	mapflag	nightenabled
-dicastes02	mapflag	nightenabled
-dic_fild01	mapflag	nightenabled
-dic_fild02	mapflag	nightenabled
-
-// Episode 14 ====================
-bif_fild01	mapflag	nightenabled
-bif_fild02	mapflag	nightenabled
-dewata	mapflag	nightenabled
-dew_fild01	mapflag	nightenabled
-dew_dun02	mapflag	nightenabled
-malangdo	mapflag	nightenabled
-malaya	mapflag	nightenabled
-ma_fild01	mapflag	nightenabled
-ma_fild02	mapflag	nightenabled
-ma_scene01	mapflag	nightenabled
-eclage	mapflag	nightenabled
-ecl_fild01	mapflag	nightenabled
-ecl_hub01	mapflag	nightenabled
 
 //evt_zombie	mapflag	nightenabled

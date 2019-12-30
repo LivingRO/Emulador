@@ -1,30 +1,35 @@
-//    ________________________________________________________
-//   /                                                        \
-//   |       _           _   _   _                            |
-//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
-//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
-//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
-//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
-//   |                                                        |
-//   |                    brAthena Script                     |
-//   |--------------------------------------------------------|
-//   | Nome do Script:  morocc.txt                            |
-//   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
-//   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 2.2/2.2/2.2/1.0                |
-//   |--------------------------------------------------------|
-//   | Descrição: NPCs da Cidade de Morocc.                   |
-//   |--------------------------------------------------------|
-//   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
-//   |--------------------------------------------------------|
-//   | - Anotações                                            |
-//   \________________________________________________________/
+//===== rAthena Script =======================================
+//= Morroc Town
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 2.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Morroc Town NPCs
+//===== Additional Comments: =================================
+//= Fully working
+//= Fixed Lapidary sprite, Implemented ANTHELL trigger
+//= (in both NPC/Warps) [Lupus]. Removed it from NPC and put in Warp
+//= 1.3 Removed some NPC due to Assassin Job Quest [kobra_k88]
+//= 1.3b mobs name corrected [Lupus], 1.3c - Adv classes support
+//= 1.4 Fixed typos [Nexon]
+//= 1.5 Added a lvl 4 weapon quest related NPC [MasterOfMuppets]
+//= 1.6 Added Bartender NPC, made by Persian69 [Vicious_Pucca]
+//= 1.7 Removed Duplicates [Silent]
+//= 1.8 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.9 Removed duplicate NPC, changed temp char vars to temp npc. [L0ne_W0;f]
+//= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 2.0a Fixed outdated info about Milk [Lupus]
+//= 2.1 Updated/Added NPCs for episode 12.1. [L0ne_W0lf]
+//= 2.2 Removed duplicate bartender NPC. (bugreport:4555) [L0ne_W0lf]
+//============================================================
 
 // Morroc
 //============================================================
-morocc,150,120,5	script	Soldado de Morroc#01::MocSoldier	4_M_MOC_SOLDIER,3,3,{
+morocc,150,120,5	script	Soldado de Morroc#01::MocSoldier	707,3,3,{
 	mes "[Soldado de Morroc]";
 	mes "Ei, você! Pare ai.";
 	next;
@@ -32,7 +37,7 @@ morocc,150,120,5	script	Soldado de Morroc#01::MocSoldier	4_M_MOC_SOLDIER,3,3,{
 	mes "Essa é uma área restrita. Você não pode se aproximar!";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "[Soldado de Morroc]";
 	mes "Ei, você! Pare ai.";
 	next;
@@ -138,20 +143,20 @@ morocc,223,102,0	script	Voluntário de Morroc#06::MocVolunteer	2_M_BARD_ORIENT,{
 
 morocc,226,102,4	duplicate(MocVolunteer)	Voluntário de Morroc#07	4_F_JOB_BLACKSMITH
 
-moc_ruins,123,154,0	script	Jovem Moço#moc01	4W_M_03,{
-	mes "[Jovem Moço]";
+moc_ruins,123,154,0	script	Jovem#moc01	4W_M_03,{
+	mes "[Jovem]";
 	mes "A cidade está completamente destruída, mas esta estrutura triangular gigante não foi danificada. Talvez ela seja protegida por algum tipo de poder especial.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Você sabe... Aquelas gigantes construções triangulares no lado Noroeste de Morroc conhecidas como Pirâmides...";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Essas coisas tem estado por ali por milhares e milhares de anos. Ninguém sabe quando e por quê elas foram costruídas, ou quem as construiu.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Todos nós sabemos que toneladas de monstros vivem dentro dessas construções esquisitas. Você pode querer ficar longe destes lugares realmente perigosos.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Estes monstros da Pirâmide podem ser muito, muito sensíveis ao doce cheiro de gente...";
 	close;
 }
@@ -165,90 +170,90 @@ moc_ruins,128,153,0	script	Grampa#moc	1_M_PUBMASTER,{
 	close;
 }
 
-moc_ruins,132,144,0	script	Jovem Moço#moc	4_M_03,{
-	mes "[Jovem Moço]";
+moc_ruins,132,144,0	script	Jovem#moc	4_M_03,{
+	mes "[Jovem]";
 	mes "Eu lembro que disse que os bandidos do deserto são os Lobos do Deserto... Estes bastardos sempre andam em bandos e podem ser mais cruéis e ultrajantes se um deles for atacado.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Eles são tão perversos, e falo sério, não estou brincando. Você só consegue achar alguns ossos e leites estragados nas mochilas depois destes lobos passarem.";
 	mes "Essas coisas são tão cruéis e imorais.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Mas o fato é que... eu ainda sinto que estes impiedosos monstros de sangue frio não são amedrontadores se comparados com o que aconteceu em Morroc. Morroc já está um inferno.";
 	close;
 }
 
-moc_ruins,115,144,3	script	Jovem Moço#moc02	4_M_01,{
-	mes "[Jovem Moço]";
+moc_ruins,115,144,3	script	Jovem#moc02	4_M_01,{
+	mes "[Jovem]";
 	mes "Eu trabalho no comércio, então eu sempre tenho que atravessar o quente e seco Deserto de Morroc à negócios.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Mas eu não posso mais fazer isso.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Agora que eu não posso, sinto saudades dos velhos tempos.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Como naquela vez, enquanto eu estava no meio do deserto, fiquei com tanta sede que peguei um cactus... mas antes que eu pudesse cortá-lo, ele me bateu! Então ele atirou no meu traseiro todas aquelas agulhas...";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Mais tarde, descobri que não era um cactus normal que havia achado, mas um monstro chamado 'Muka'.";
 	mes "Agora eu penso sobre o assunto, isso foi tão divertido quanto perigoso.";
 	close;
 }
 
-moc_ruins,109,138,0	script	Jovem Moço#moc03	4W_M_03,{
-	mes "[Jovem Moço]";
+moc_ruins,109,138,0	script	Jovem#moc03	4W_M_03,{
+	mes "[Jovem]";
 	mes "A rainha incontestável das jóias tem de ser o Diamante. Depois de olhar para ele apenas uma vez, ninguém pode negar a sua beleza.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Muitos fatores determinam o seu valor, mas a coisa mais importante é o seu tamanho.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Deve ser também um cristal perfeito, não rachado ou arranhado, se quiser vender o diamante por muitos zeny.";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Mas veja! A pedra mais dura do mundo quebrou duas!";
 	next;
-	mes "[Jovem Moço]";
+	mes "[Jovem]";
 	mes "Eu sei que não é o momento de se preocupar com algumas pedras preciosas, mas... esta... era o meu tudo...";
 	close;
 }
 
-morocc,54,251,0	script	Jovem Moço#moc04	4_M_ORIENT02,{
-	mes "[Jovem Moço Bêbado]";
+morocc,54,251,0	script	Jovem#moc04	4_M_ORIENT02,{
+	mes "[Jovem Bêbado]";
 	mes "Espere um segundo...! Você é talvez um aventureiro? Bem-vindo! Como vai a sua viagem?";
 	mes "Heh heh~ Deixe-me te contar uma história. Você sabe que eu acabei de sair daquela taberna, alí, né?";
 	next;
-	mes "[Jovem Moço Bêbado]";
+	mes "[Jovem Bêbado]";
 	mes "Eu ouvi que Satan Morroc chegou. Simplesmente saiu da fissura do tempo e do espaço blá... hic ~";
 	next;
-	mes "[Jovem Moço Bêbado]";
+	mes "[Jovem Bêbado]";
 	mes "Ah... Eu quero ver este Satan com meus próprios olhos! Mas eu realmente não deveria. Nem em sonho eu veria este Satan em pessoa.";
 	next;
-	mes "[Jovem Moço Bêbado]";
+	mes "[Jovem Bêbado]";
 	mes "Mas eu acho que não teria nada a perder se você, uma pessoa de coragem, que veio através do deserto tentar seduzir para encontrá-lo, não acha? Teehee ~ Não se esqueça de me pagar uma bebida quando você encontrá-lo!";
 	mes "Hic!";
 	next;
-	mes "[Jovem Moço Bêbado]";
+	mes "[Jovem Bêbado]";
 	mes "Enfim, você sabe onde estamos? Eu só estava dando uma bebidinha na taverna, mas repentinamente, todos os cidadões haviam desaparecido quando saí... ou, uns quinhentos anos se passaram???!";
 	close;
 }
 
-moc_ruins,94,117,0	script	Jovem Moço Pálido	1_M_02,{
-	mes "[Jovem Moço Pálido]";
+moc_ruins,94,117,0	script	Jovem Pálido	1_M_02,{
+	mes "[Jovem Pálido]";
 	mes "... Neste dia... eu vi a lua sangrenta no céu. Era tão silencioso que pareceu assustador.";
 	next;
-	mes "[Jovem Moço Pálido]";
+	mes "[Jovem Pálido]";
 	mes "Nem mesmo um sopro e vento seco, e o ar tão pesado e abafado, que eu mal podia respirar.";
 	next;
-	mes "[Jovem Moço Pálido]";
+	mes "[Jovem Pálido]";
 	mes "Mas então, Bang! Foi justamente na hora que eu vi uma quantidade enorme de fumaça saindo do Castelo de Morroc com um som ensurdecedor.";
 	next;
-	mes "[Jovem Moço Pálido]";
+	mes "[Jovem Pálido]";
 	mes "Tudo aconteceu muito rápido. O Oasis do Castelo secou completamente e a cidade foi destruída. E... e aquela voz... eu ouvi uma voz.";
 	next;
-	mes "[Jovem Moço Pálido]";
+	mes "[Jovem Pálido]";
 	mes "Sangue... Sangue é o que ele pega para pagar pela alma... e aquele som obscuro da risada...";
 	mes "Aah!!! Está... ainda está ecoando nas meus ouvidos!!! Aahhhhh!!!!";
 	next;
@@ -339,7 +344,7 @@ moc_ruins,121,116,4	script	Senhora#moc	1_F_01,{
 	}
 }
 
-moc_ruins,155,107,4	script	Ant Man#moc	1_M_01,{
+moc_ruins,155,107,4	script	Ant Man#moc	47,{
 	mes "[Akira]";
 	mes "Ei, você. Você atravessou o deserto?";
 	next;
@@ -392,59 +397,59 @@ moc_ruins,155,107,4	script	Ant Man#moc	1_M_01,{
 }
 
 moc_ruins,143,43,4	script	Mercenário#moc	2_M_THIEFMASTER,{
-	mes "[Jovem Moço Mercenário]";
+	mes "[Jovem Mercenário]";
 	mes "Imbatíveis nas lutas mano-a-mano, Mercenários sempre superam seus inimigos! Eee, sempre derrotam seus inimigos sem deixar rastros.";
 	next;
-	mes "[Jovem Moço Mercenário]";
+	mes "[Jovem Mercenário]";
 	mes "Mas o que fizeram quando aconteceu a destruição de Morroc!!!";
 	next;
 	switch(select("?????:Onde eu posso encontrar o clã dos Mercenários?:Terminar Conversa")) {
 	case 1:
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Eu ouvi mercenários assassinando pessoas, quietos e sorrateiramente...";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Saí de casa há três anos, e tenho procurado por sua base secreta desde...";
 		mes "Eles são realmente invisíveis?!";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Bem.. Talvez seja tarde demais agora...";
 		mes "Agora que toda a cidade foi destruída... Não me importo com o que vai acontecer...";
 		close;
 	case 2:
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Você sabe que...";
 		mes "Ela parecia ser impossível de encontrar.";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Bem, eu ouvi dizer que se você deixar esta cidade e ir dois mapas para o leste e, em seguida, dois mapas para o Sul, você deve encontrá-lo..";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "A 'Torre da Miragem', a principal construção do Deserto de Sograt, supostamente aparece naquela terrível tempestade de areia! Mas, eu ainda não consegui encontrá-la.";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Se você encontrá-los, e o líder do clã achar que está qualificado, você pode se tornar um Mercenário! Ou, pelo menos, eu acho..";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "E eu ouvi que o Mercenário mais incrível de todos é o Algoz! Mas, isso ainda é um mistério maior~ Você não será capaz de vê-los a menos que seja é um grande gatuno!";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Mas então ... Que diabos eles estavam fazendo quando Morroc foi destruída?!!!";
 		close;
 	case 3:
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Mercenário é uma das classes avançadas para Gatuno, e especializado em combate com as propriedades de ataque Neutro e Veneno.";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Eles são também muito sorrateiros! Ouvi dizer que eles são capazes de se camuflar de modo que ninguém possa vê-los!";
 		next;
-		mes "[Jovem Moço Mercenário]";
+		mes "[Jovem Mercenário]";
 		mes "Mas então ... Que diabos eles estavam fazendo quando Morroc foi destruída?!!!";
 		close;
 	}
 }
 
-moc_ruins,173,141,4	script	Dimitri#moc	1_M_03,{
+moc_ruins,173,141,4	script	Dimitri#moc	49,{
 	mes "[Dimitri]";
 	mes "O deserto de Morroc tem a maior temperatura média em Midgard. Você deve pensar duas vezes antes de se sentar na areia no meio do deserto, do contrário isso vai fazer com que o seu traseiro seja tostado.";
 	next;
@@ -719,7 +724,7 @@ morocc_in,166,76,3	script	Atendente#02	1_ETC_01,{
 	switch(select("Sograt Tropical:Escarlate Praiano:Nada.")) {
 	case 1:
 		if (Zeny >= 1000 ) {
-			Zeny -= 1000;
+			set Zeny, Zeny-1000;
 			getitem 12112,1;
 			mes "[Atendente]";
 			mes "Lá vai.";
@@ -730,7 +735,7 @@ morocc_in,166,76,3	script	Atendente#02	1_ETC_01,{
 		break;
 	case 2:
 		if (Zeny >= 1000 ) {
-			Zeny -= 1000;
+			set Zeny, Zeny-1000;
 			getitem 12113,1;
 			mes "[Atendente]";
 			mes "Lá vai,";
@@ -759,7 +764,7 @@ moc_fild16,195,281,4	script	Mercenário Guardião#1::SinGuard	4_M_MOC_SOLDIER,{
 		mes "Bem-vindo.";
 		close;
 	}
-	.@temp = rand(1,4);
+	set .@temp, rand(1,4);
 	if(.@temp == 1) mes "........";
 	if(.@temp == 2) mes "Hmmm..........";
 	if(.@temp == 3) mes "Hmmm...você não deveria estar aqui.....";
@@ -774,3 +779,4 @@ moc_fild16,200,231,4	duplicate(SinGuard)	Mercenário Guardião#5	4_M_MOC_SOLDIER
 moc_fild16,211,231,4	duplicate(SinGuard)	Mercenário Guardião#6	4_M_MOC_SOLDIER
 moc_fild16,200,257,4	duplicate(SinGuard)	Mercenário Guardião#7	4_M_MOC_SOLDIER
 moc_fild16,211,257,4	duplicate(SinGuard)	Mercenário Guardião#8	4_M_MOC_SOLDIER
+

@@ -1,55 +1,37 @@
-//  ___________________________________________________________________
-// /                                                                   \
-// |            _           _   _   _                                  |
-// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
-// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
-// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
-// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
-// |                                                                   |
-// |                        brAthena  Script                           |
-// |                        www.brathena.org                           |
-// |-------------------------------------------------------------------|
-// |                                                                   |
-// | Copyright (c) brAthena Dev Team                                   |
-// |                                                                   |
-// |-------------------------------------------------------------------|
-// | Licenciado sob a licenca GNU GPL                                  |
-// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
-// |-------------------------------------------------------------------|
-// | Autor:                                                            |
-// |		- Euphy                                                    |
-// | Tradução:                                                         |
-// |        - Paglia Host                                              |
-// | Revisão:                                                          |
-// |		- Orce                                                     |
-// |                                                                   |
-// |---- Versão atual--------------------------------------------------|
-// |        - 1.6                                                      |
-// |---- Descrição: ---------------------------------------------------|
-// | Um controlador para Guerra do Emperium projetado para             |
-// | simplicidade e facilidade de uso.                                 |
-// | Muitos conceitos tomados do script do ToastOfDoom,                |
-// | e "recompensas" tem função original por Goddameit.                |
-// |-------------------------------------------------------------------|
-// | Certifique-se de desabilitar os controladores padrão!             |
-// |   npc\gde\1ed\1ed_controlador.txt                                 |
-// |   npc\gde\2ed\2ed_controlador.txt                                 |
-// \___________________________________________________________________/
+//===== rAthena Script =======================================
+//= Euphy's WOE Controller
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A controller for War of Emperium designed for
+//= simplicity and ease of use.
+//= Many concepts taken from ToastOfDoom's script,
+//= and "rewards" function originally by Goddameit.
+//===== Additional Comments: =================================
+//= Be sure to disable the default agit controllers!
+//== npc\guild\agit_controller.txt
+//== npc\guild2\agit_start_se.txt
+//============================================================
 
-// |-----------------------------------------------------------
-// | NPC de informação
-// |-----------------------------------------------------------
-prontera,170,181,4	script	Controlador Woe	2_BOARD1,{
+// Information NPC
+//============================================================
+prontera,142,174,4	script	Controlador da WOE	835,{
 	doevent "WOE_CONTROL::OnMenu";
 	end;
 OnAgitStart:
 	while(agitcheck()) {
-		misceffect EF_BEGINSPELL6;
+		specialeffect EF_BEGINSPELL6;
 		sleep 425;
 	}
 	end;
 }
 
+// Script Core
+//============================================================
 -	script	WOE_CONTROL	-1,{
 function Disp_Owner; function Add_Zero;
 
@@ -87,18 +69,21 @@ OnInit:
 // |     - Se Guild Master de está habilitado (opção 4), esse recurso não é utilizado.
 // |-----------------------------------------------------------
 
-	// Combine valores conforme necessário (ex. 1|8 = 1+8 = 9).
-	// Neste ex esta configurado para ativar o sistema e fazer verificação de IP.
+	// Combine valores conforme necessário (e.g. 1|8 = 1+8 = 9).
 	set .Options, 1|8;
 
-	// Recompensas por castelo.
-	// -- Quando administrado diretamente: <itemID>,<amount>{,<itemID>,<amount>,...}
-	// -- por correio (opção 2): <itemID>,<amount>,<Zeny>
-	setarray .Reward[0],14001,1;
+	// Recompensas por castelo..
+	//   setarray .reward_id[0],     <itemID>{,<itemID>,...}
+	//   setarray .reward_amount[0], <amount>{,<amount>,...}
+	setarray .reward_id[0],14001;
+	setarray .reward_amount[0],1;
 
-// |-----------------------------------------------------------
-// | Constants (leave this section alone).
-// |-----------------------------------------------------------
+	// Zeny reward:
+	.reward_zeny = 0;
+
+// -----------------------------------------------------------
+//  Constants (leave this section alone).
+// -----------------------------------------------------------
 
 	setarray .Castles$[0],
 		"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05",
@@ -110,12 +95,13 @@ OnInit:
 	setarray .EndLabel$[0],"ar01","ar02","ar03","ar04","ar05","sc01","sc02","sc03","sc04","sc05";
 	setarray .Days$[0],"Domingo","Segunda-Feira","Terça-Feira","Quarta-feira","Quinta-Feira","Sexta-Feira","Sábado";
 	setarray .Regions$[0],"Prontera","Payon","Geffen","Aldebaran","Arunafeltz","Schwaltzvalt";
-	setarray .map$[0],"prt_gld","pay_gld","gef_fild13","alde_gld","aru_gld","sch_gld";
-	setarray .mapx[0],134,240,153,111,208,121,295,317,140,204,214,308,143,193,305,48, 95,142,239,264,158,83, 68,299,292,293,288, 97,137, 71;
-	setarray .mapy[0], 65,128,137,240,240,233,116,293,160,266, 75,240,240,278, 87,83,249, 85,242, 90,272,47,155,345,107,100,252,196, 90,315;
+	setarray .Map$[0],"prt_gld","pay_gld","gef_fild13","alde_gld","aru_gld","sch_gld";
+	setarray .MapX[0],134,240,153,111,208,121,295,317,140,204,214,308,143,193,305,48, 95,142,239,264,158,83, 68,299,292,293,288, 97,137, 71;
+	setarray .MapY[0], 65,128,137,240,240,233,116,293,160,266, 75,240,240,278, 87,83,249, 85,242, 90,272,47,155,345,107,100,252,196, 90,315;
 
-// |-----------------------------------------------------------
+// -----------------------------------------------------------
 
+	.reward_id_size = getarraysize(.reward_id);
 	set .Size, getarraysize($WOE_CONTROL);
 	if (.AutoKick || .NoOwner)
 		for(set .@i,0; .@i<30; set .@i,.@i+1) {
@@ -129,16 +115,16 @@ OnMinute00:
 	freeloop(1);
 	if (agitcheck() || agitcheck2()) {
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-			if (gettime(4) == $WOE_CONTROL[.@i] && gettime(3) == $WOE_CONTROL[.@i+2]) {
+			if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) == $WOE_CONTROL[.@i+2]) {
 			OnWOEEnd:
 				announce "A Guerra de Emperium acabou!",bc_all|bc_woe;
-				agitend; agitend2;
+				AgitEnd; AgitEnd2;
 				sleep 1000;
 				for(set .@j,0; .@j<30; set .@j,.@j+1) {
 					if (.Active[0]&(1<<.@j)) Disp_Owner(.Castles$[.@j],1);
 					if (.ExitWarp) maprespawnguildid .Castles$[.@j],0,3;
 				}
-				if (.Options&1 && .Active[0] && .ForceEnd != 2) callsub OnReward, .Active[0];
+				if ((.Options&1) && .Active[0] && .ForceEnd != 2) callsub OnReward, .Active[0];
 				deletearray .Active[0],2;
 				if (.ForceEnd) { set .ForceEnd,0; end; }
 				break;
@@ -147,13 +133,13 @@ OnMinute00:
 	if ((!agitcheck() && !agitcheck2()) || .Init) {
 		if (!agitcheck() && !agitcheck2()) set .Init,0;
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-			if (gettime(4) == $WOE_CONTROL[.@i] && gettime(3) >= $WOE_CONTROL[.@i+1] && gettime(3) < $WOE_CONTROL[.@i+2]) {
+			if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) >= $WOE_CONTROL[.@i+1] && gettime(DT_HOUR) < $WOE_CONTROL[.@i+2]) {
 				deletearray .Active[0],2;
 				set .Active[0], $WOE_CONTROL[.@i+3];
-				if (.Init) { agitend; agitend2; }
+				if (.Init) { AgitEnd; AgitEnd2; }
 				else announce "A Guerra de Emperium começou!",bc_all|bc_woe;
-				agitstart; agitstart2;
 				sleep 1000;
+				AgitStart; AgitStart2;
 				for(set .@j,0; .@j<30; set .@j,.@j+1) {
 					if (.Active[0]&(1<<.@j)) {
 						if (!.Init) Disp_Owner(.Castles$[.@j],0);
@@ -176,8 +162,8 @@ OnMinute00:
 
 function Disp_Owner {
 	set .@o, getcastledata(getarg(0),1);
-	if (.@o) announce "O castelo ["+getcastlename(getarg(0))+"] "+((getarg(1))?"foi conquistado":"é ocupado")+" pelo Clã ["+getguildname(.@o)+"].",bc_all|bc_woe;
-	else announce "O castelo ["+getcastlename(getarg(0))+"] está atualmente desocupado.",bc_all|bc_woe;
+	if (.@o) announce "O Castelo ["+getcastlename(getarg(0))+"] "+((getarg(1))?"foi conquistado":"está ocupado")+" pelo Clã ["+getguildname(.@o)+"].",bc_all|bc_woe;
+	else announce "O Castelo ["+getcastlename(getarg(0))+"] está atualmente desocupado.",bc_all|bc_woe;
 	return;
 }
 function Add_Zero {
@@ -185,37 +171,53 @@ function Add_Zero {
 }
 
 OnReward:
+	if (!.reward_id_size && !.reward_zeny)
+		return;
+
 	set .@sql$, ((.Options&4)?"position = 0":"online = 1");
 	if (.Options&2) set .@str$,gettimestr("%B %d, %Y",21);
 	freeloop(1);
-	for(set .@i,0; .@i<30; set .@i,.@i+1)
+	for(set .@i,0; .@i<30; set .@i,.@i+1) {
 		if (getarg(0)&(1<<.@i)) {
-			set .@GID, getcastledata(.Castles$[.@i],1);
-			if (!.@GID) continue;
-			set .@size, query_sql("SELECT account_id,char_id FROM `guild_member` WHERE guild_id = '"+.@GID+"' AND "+.@sql$,.@aid,.@cid);
+			set .@gid, getcastledata(.Castles$[.@i],1);
+			if (!.@gid) continue;
+			set .@size, query_sql("SELECT account_id,char_id FROM `guild_member` WHERE guild_id = '"+.@gid+"' E "+.@sql$,.@aid,.@cid);
 			for(set .@j,0; .@j<.@size; set .@j,.@j+1) {
-				if (.Options&8 && !(.Options&4)) {
+				if ((.Options&8) && !(.Options&4)) {
 					set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
 					if (getd(".@ip_"+.@i+"_"+.@ip$)) continue;
 					setd ".@ip_"+.@i+"_"+.@ip$,1;
 				}
 				if (.Options&2) {
-					query_sql("INSERT INTO `mail` (send_name,dest_id,title,message,nameid,amount,identify,zeny,time) VALUES ("+
-					          "'Não-Responda',"+.@cid[.@j]+",'** Siege Reward: "+getcastlename(.Castles$[.@i])+" **',"+
-					          "'Bravo,% % Parabéns!% Sua aliança ocupou com sucesso% território na Guerra do Emperium em% "+.@str$+".% % % % % [ Sua recompensa está liberada. ]',"+
-					          .Reward[0]+","+.Reward[1]+",0,"+.Reward[2]+",UNIX_TIMESTAMP(NOW()))");
-					if (!getd(".@str_"+.@cid[.@j]) && isloggedin(.@aid[.@j],.@cid[.@j])) {
+					.@charid = .@cid[.@j];
+					.@sender$ = "'Não-Responda',";
+					.@title$ = "** Siege Reward: "+getcastlename(.Castles$[.@i])+" **";
+					.@body$ = "Bravo,\r\n \r\n Parabéns!\r\n Sua aliança ocupou com sucesso\r\n território na Guerra do Emperium em\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ Sua recompensa está liberada. ]";
+
+					if (.reward_id_size)
+						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny, .reward_id, .reward_amount;
+					else
+						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny;
+
+					if (PACKETVER < 20150513 && !getd(".@str_"+.@cid[.@j]) && isloggedin(.@aid[.@j],.@cid[.@j])) {
 						setd ".@str_"+.@cid[.@j],1;
-						message rid2name(.@aid[.@j]),"Você tem uma mensagem! Por favor, relogue para atualizar sua lista de endereços.";
+						message rid2name(.@aid[.@j]),"Você tem uma mensagem!";
 					}
 				} else if (isloggedin(.@aid[.@j])) {
-					for(set .@k,0; .@k<getarraysize(.Reward); set .@k,.@k+2)
-						getitem .Reward[.@k], .Reward[.@k+1], .@aid[.@j];
-					message rid2name(.@aid[.@j]),"Você foi recompensado por conquistar o castelo "+getcastlename(.Castles$[.@i])+".";
+					.@name$ = rid2name(.@aid[.@j]);
+					.@castle_name$ = getcastlename(.Castles$[.@i]);
+					for ( .@k = 0; .@k < .reward_id_size; .@k++ ) {
+						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
+							getitem .reward_id[.@k], .reward_amount[.@k], .@aid[.@j];
+						else
+							message .@name$, "Você não pode receber a recompensa" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " por conquistar o castelo " + .@castle_name$ + " porque você está acima do peso.";
+					}
+					Zeny += .reward_zeny;
+					message .@name$, "Você foi recompensado por conquistar o castelo " + .@castle_name$ + ".";
 				}
 			}
 		}
-	if (.Options&2) query_sql("UPDATE `mail` SET message = REPLACE(message,'%',CHAR(13)) WHERE send_name = 'Não-Responda'");
+	}
 	return;
 
 OnPCLoadMapEvent:
@@ -231,11 +233,11 @@ OnPCLoadMapEvent:
 
 OnMenu:
 while(1) {
-	mes "[ Informações da WOE ]";
+	mes "[Informações da WOE]";
 	if (agitcheck() || agitcheck2()) {
 		if (.Active[0]) {
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-				if (gettime(4) == $WOE_CONTROL[.@i] && gettime(3) >= $WOE_CONTROL[.@i+1] && gettime(3) < $WOE_CONTROL[.@i+2]) {
+				if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) >= $WOE_CONTROL[.@i+1] && gettime(DT_HOUR) < $WOE_CONTROL[.@i+2]) {
 					set .@i, $WOE_CONTROL[.@i+2];
 					break;
 				}
@@ -244,10 +246,10 @@ while(1) {
 			for(set .@i,0; .@i<6; set .@i,.@i+1)
 				if (.Active[1]&(1<<(.@i+1))) mes " > ^777777"+.Regions$[.@i]+"^000000";
 		} else
-			mes "A Guerra do Emperium esta ^0055FFativa^000000.";
+			mes "A Guerra do Emperium está ^0055FFativa^000000.";
 	} else {
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-			if ((gettime(4) == $WOE_CONTROL[.@i] && gettime(3) <= $WOE_CONTROL[.@i+1]) || gettime(4) < $WOE_CONTROL[.@i]) {
+			if ((gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) <= $WOE_CONTROL[.@i+1]) || gettime(DT_DAYOFWEEK) < $WOE_CONTROL[.@i]) {
 				setarray .@time[0],$WOE_CONTROL[.@i],$WOE_CONTROL[.@i+1];
 				break;
 			}
@@ -261,24 +263,24 @@ while(1) {
 		}
 	}
 	next;
-	switch(select(""+((.CastleWarp || .Active[1])?"Ir para os castelo":"")+":Conferir Horários:Verificar castelos:"+((getgroupid()<.GMAccess || !getgroupid())?"":"Configurar Castelos")+":^777777Cancelar^000000")) {
+	switch(select(""+((.CastleWarp || .Active[1])?" - Ir para os castelo...":"")+": - Conferir Horários.: - Verificar castelos...:"+((getgmlevel()<.GMAccess || !getgmlevel())?"":" - Configurar Castelos...")+": - ^777777Cancelar.^000000")) {
 	case 1:
 		if (.CastleWarp) set .@clr$,"^0055FF";
 		set .@menu$,"";
 		for(set .@i,0; .@i<6; set .@i,.@i+1) {
 			if (.CastleWarp || .Active[1]&(1<<(.@i+1)))
-				set .@menu$, .@menu$+" ~ "+((.Active[1]&(1<<(.@i+1)))?.@clr$:"^777777")+.Regions$[.@i]+" castelo^000000";
+				set .@menu$, .@menu$+" - "+((.Active[1]&(1<<(.@i+1)))?.@clr$:"^777777")+.Regions$[.@i]+" Castelos^000000";
 			set .@menu$, .@menu$+":";
 		}
 		set .@i, select(.@menu$)-1;
 		set .@menu$,"";
 		for(set .@j,.@i*5; .@j<(.@i*5)+5; set .@j,.@j+1) {
 			if (.CastleWarp || .Active[0]&(1<<.@j))
-				set .@menu$, .@menu$+" ~ "+((.Active[0]&(1<<.@j))?.@clr$:"^777777")+getcastlename(.Castles$[.@j])+"^000000";
+				set .@menu$, .@menu$+" - "+((.Active[0]&(1<<.@j))?.@clr$:"^777777")+getcastlename(.Castles$[.@j])+"^000000";
 			set .@menu$, .@menu$+":";
 		}
 		set .@j, select(.@menu$)-1;
-		warp .map$[.@i],.mapx[(.@i*5)+.@j],.mapy[(.@i*5)+.@j];
+		warp .Map$[.@i],.MapX[(.@i*5)+.@j],.MapY[(.@i*5)+.@j];
 		close;
 	case 2:
 		mes "[Schedule]";
@@ -287,22 +289,22 @@ while(1) {
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4) {
 				mes "> ^FF0000"+.Days$[$WOE_CONTROL[.@i]]+" ("+Add_Zero($WOE_CONTROL[.@i+1])+"-"+Add_Zero($WOE_CONTROL[.@i+2])+")^000000";
 				for(set .@j,0; .@j<30; set .@j,.@j+1)
-					if ($WOE_CONTROL[.@i+3]&(1<<.@j)) mes "  ~ "+getcastlename(.Castles$[.@j])+" ^777777("+.Castles$[.@j]+")^000000";
+					if ($WOE_CONTROL[.@i+3]&(1<<.@j)) mes "  - "+getcastlename(.Castles$[.@j])+" ^777777("+.Castles$[.@j]+")^000000";
 				if (.@i+4 < .Size) mes " ";
 			}
 			freeloop(0);
 		} else
-			mes "Nenhum vezes são configurados.";
+			mes "Nenhum horário está configurado.";
 		next;
 		break;
 	case 3:
-		mes "[Castelo de propriedade]";
+		mes "[Propriedade do Castelo]";
 		for(set .@i,0; .@i<6; set .@i,.@i+1) {
 			set .@k, .@i*5;
 			mes "> ^FF0000"+.Regions$[.@i]+"^000000";
-			for(set .@j,.@k; .@j<(.@k+5); set .@j,.@j+1) {
+			for(set .@j,.@k; .@j<(.@k+5); set .@j,.@j+1) { 
 				set .@t, getcastledata(.Castles$[.@j],1);
-				mes "  ~ "+getcastlename(.Castles$[.@j])+": "+((.@t)?"^0055FF"+getguildname(.@t):"^777777Desocupado")+"^000000";
+				mes "  - "+getcastlename(.Castles$[.@j])+": "+((.@t)?"^0055FF"+getguildname(.@t):"^777777desocupado")+"^000000";
 			}
 			if (.@i < 5) mes " ";
 		}
@@ -311,12 +313,12 @@ while(1) {
 	case 4:
 	while(1) {
 		mes "[Gerenciar Castelo]";
-		mes "Existe"+(.Size/4 ==1? "":"m")+" ^0055FF"+(.Size/4)+" Grupo"+(.Size/4 ==1? "":"s")+"^000000 configurado"+(.Size/4 ==1? "":"s")+".";
+		mes "Existem ^0055FF"+(.Size/4)+" seções(s)^000000 configuradas.";
 		mes "O que você gostaria de fazer?";
 		next;
-		switch(select("Adicionar Grupo:Deletar Grupo:Atualizar:"+((agitcheck() || agitcheck2())?"Encerrar a guerra atual":"")+":^777777Volta^000000")) {
+		switch(select(" - Adicionar uma sessão...: - Excluir uma sessão...: - Recarregar configurações...:"+((agitcheck() || agitcheck2())?" - Terminar sessão WOE...":"")+": - ^777777Voltar.^000000")) {
 		case 1:
-			mes "[Novo Grupo]";
+			mes "[Nova Sessão]";
 			if (.Size > 127) {
 				mes "Você já atingiu o máximo de 32 castelos.";
 				next;
@@ -324,67 +326,67 @@ while(1) {
 			}
 			mes "Escolha um dia.";
 			next;
-			set .@day, select(" ~ "+implode(.Days$,": ~ "))-1;
-			mes "[Novo Grupo]";
-			mes "Selecione a hora de início ^0055FF"+.Days$[.@day]+"^000000.";
+			set .@Day, select(" - "+implode(.Days$,": - "))-1;
+			mes "[Nova Sessão]";
+			mes "Selecione a hora de início ^0055FF"+.Days$[.@Day]+"^000000.";
 			next;
 			set .@menu$,"";
 			for(set .@i,0; .@i<23; set .@i,.@i+1)
-				set .@menu$, .@menu$+" ~ "+Add_Zero(.@i,1)+":";
-			set .@start, select(.@menu$)-1;
-			mes "[Novo Grupo]";
-			mes "Escolha um horário de término para ^0055FF"+.Days$[.@day]+"^000000.";
+				set .@menu$, .@menu$+" - "+Add_Zero(.@i,1)+":";
+			set .@Start, select(.@menu$)-1;
+			mes "[Nova Sessão]";
+			mes "Escolha um horário de término para ^0055FF"+.Days$[.@Day]+"^000000.";
 			next;
 			set .@menu$,"";
-			for(set .@i,.@start+1; .@i<24; set.@i,.@i+1)
-				set .@menu$, .@menu$+" ~ "+Add_Zero(.@i,1)+":";
-			set .@end, select(.@menu$)+.@start;
+			for(set .@i,.@Start+1; .@i<24; set.@i,.@i+1)
+				set .@menu$, .@menu$+" - "+Add_Zero(.@i,1)+":";
+			set .@End, select(.@menu$)+.@Start;
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-				if (.@day == $WOE_CONTROL[.@i] &&
-				   ((.@start >= $WOE_CONTROL[.@i+1] && .@start < $WOE_CONTROL[.@i+2]) ||
-				    (.@end > $WOE_CONTROL[.@i+1] && .@end <= $WOE_CONTROL[.@i+2]) ||
-				    (.@start <= $WOE_CONTROL[.@i+1] && .@end >= $WOE_CONTROL[.@i+2]))) {
-					mes "[Novo Grupo]";
+				if (.@Day == $WOE_CONTROL[.@i] &&
+				   ((.@Start >= $WOE_CONTROL[.@i+1] && .@Start < $WOE_CONTROL[.@i+2]) ||
+				    (.@End > $WOE_CONTROL[.@i+1] && .@End <= $WOE_CONTROL[.@i+2]) ||
+				    (.@Start <= $WOE_CONTROL[.@i+1] && .@End >= $WOE_CONTROL[.@i+2]))) {
+					mes "[Nova Sessão]";
 					mes "As configurações de horário coincidem com outras.";
 					next;
 					set .@d,1;
 					break;
 				}
 			if (.@d) { set .@d,0; break; }
-			set .@castle,0;
+			set .@Castle,0;
 			while(1) {
-				mes "[Novo Grupo]";
-				mes "^0055FF"+.Days$[.@day]+" ("+Add_Zero(.@start)+"-"+Add_Zero(.@end)+")^000000";
-				mes " > Castelo:";
-				if (!.@castle)
-					mes "   ~ ^777777(Nenhum Selecionado)^000000";
+				mes "[Nova Sessão]";
+				mes "^0055FF"+.Days$[.@Day]+" ("+Add_Zero(.@Start)+"-"+Add_Zero(.@End)+")^000000";
+				mes " > Castelos:";
+				if (!.@Castle)
+					mes "   - ^777777(Nenhum Selecionado)^000000";
 				else for(set .@i,0; .@i<30; set .@i,.@i+1)
-					if (.@castle&(1<<.@i)) mes "   ~ "+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")";
+					if (.@Castle&(1<<.@i)) mes "   - "+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")";
 				next;
-				set .@menu$,((.@castle)?" ~ ^FF0000Finalizar escolha...^000000":"")+":";
+				set .@menu$,((.@Castle)?" - ^FF0000Finalizar...^000000":"")+":";
 				for(set .@i,0; .@i<30; set .@i,.@i+1)
-					set .@menu$, .@menu$+" ~ "+((.@castle&(1<<.@i))?"^0055FF":"")+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")^000000:";
+					set .@menu$, .@menu$+" - "+((.@Castle&(1<<.@i))?"^0055FF":"")+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")^000000:";
 				set .@i, select(.@menu$)-1;
 				if (.@i)
-					set .@castle, .@castle^(1<<(.@i-1));
+					set .@Castle, .@Castle^(1<<(.@i-1));
 				else {
-					mes "[Novo Grupo]";
+					mes "[Nova Sessão]";
 					mes "Você tem certeza?";
 					next;
-					switch(select("^0055FFSalvar Grupo.^000000:Continuar selecionando castelos...:^777777Cancelar^000000")) {
+					switch(select(" - ^0055FFAdicionar Sessão...^000000: - Continuar selecionando castelos...: - ^777777Cancelar.^000000")) {
 					case 1:
 						for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-							if ((.@day == $WOE_CONTROL[.@i] && .@end <= $WOE_CONTROL[.@i+1]) || .@day < $WOE_CONTROL[.@i]) {
+							if ((.@Day == $WOE_CONTROL[.@i] && .@End <= $WOE_CONTROL[.@i+1]) || .@Day < $WOE_CONTROL[.@i]) {
 								set .@d,1;
 								break;
 							}
 						if (!.@d) { set .@d,1; set .@i,.Size; }
 						copyarray $WOE_CONTROL[.@i+4], $WOE_CONTROL[.@i], .Size-.@i;
-						setarray $WOE_CONTROL[.@i], .@day, .@start, .@end, .@castle;
+						setarray $WOE_CONTROL[.@i], .@Day, .@Start, .@End, .@Castle;
 						set .Size, getarraysize($WOE_CONTROL);
 					case 3:
-						mes "[Novo Grupo]";
-						mes ((.@d)?"Grupo adicionado.":"Cancelado.");
+						mes "[Nova Sessão]";
+						mes ((.@d)?"Sessão adicionada.":"Cancelada.");
 						next;
 						set .@d,1;
 					case 2:
@@ -395,31 +397,32 @@ while(1) {
 			}
 			break;
 		case 2:
-			mes "[Remover Grupo]";
+			mes "[Remover Sessão]";
 			if (!.Size) {
-				mes "Não há grupo configurado.";
+				mes "Não há sessão configurada.";
 				next;
 				break;
 			}
-			mes "Selecione um grupo para remover.";
+			mes "Selecione a sessão para remover.";
 			next;
 			set .@menu$,"";
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-				set .@menu$, .@menu$+" ~ "+.Days$[$WOE_CONTROL[.@i]]+" ("+Add_Zero($WOE_CONTROL[.@i+1],1)+"-"+Add_Zero($WOE_CONTROL[.@i+2],1)+"):";
-			set .@menu$, .@menu$+" ~ ^777777Cancelar^000000";
+				set .@menu$, .@menu$+" - "+.Days$[$WOE_CONTROL[.@i]]+" ("+Add_Zero($WOE_CONTROL[.@i+1],1)+"-"+Add_Zero($WOE_CONTROL[.@i+2],1)+"):";
+			set .@menu$, .@menu$+" - ^777777Cancelar.^000000";
 			set .@i, select(.@menu$)-1;
 			if (.@i == (.Size/4)) break;
-			mes "[Remover Grupo]";
-			mes "Deletar o grupo de ^0055FF"+.Days$[$WOE_CONTROL[.@i*4]]+"^000000?";
+			mes "[Remover Sessão]";
+			mes "Deletar ^0055FF"+.Days$[$WOE_CONTROL[.@i*4]]+"'s^000000 sessões?";
+			mes "Essa ação não pode ser desfeita.";
 			next;
-			set .@j, select(" ~ ^FF0000Deletar grupo...^000000: ~ ^777777Cancelar^000000");
-			mes "[Grupo Removido]";
+			set .@j, select(" - ^FF0000Deletar Sessões...^000000: - ^777777Cancelar.^000000");
+			mes "[Remover Sessão]";
 			if (.@j == 2)
 				mes "Cancelado.";
 			else {
 				deletearray $WOE_CONTROL[.@i*4],4;
 				set .Size, getarraysize($WOE_CONTROL);
-				mes "Grupo Deletado.";
+				mes "Sessão Deletada.";
 			}
 			next;
 			break;
@@ -431,9 +434,9 @@ while(1) {
 				mes "Esteja ciente de que isso vai atrapalhar a WOE atual.";
 			}
 			next;
-			set .@i, select("^0055FFAtualizar Configuraçõees...^000000:^777777Cancelar^000000");
-			mes "[Configurações atualizadas]";
-			if (.@i == 2) mes "Cancelado.";
+			set .@i, select(" - ^0055FFAtualizar Configuraçõees...^000000: - ^777777Cancelar.^000000");
+			mes "[Atualizar Configurações]";
+			if (.@i == 2) mes "Cancelada.";
 			else {
 				set .Init,1;
 				donpcevent "WOE_CONTROL::OnMinute00";
@@ -442,7 +445,7 @@ while(1) {
 			next;
 			break;
 		case 4:
-			mes "[Force Agit End]";
+			mes "[Guerra do Emperium encerrada]";
 			if (!agitcheck() && !agitcheck2())  {
 				mes "WOE já terminou.";
 				next;
@@ -452,7 +455,7 @@ while(1) {
 			mes " ";
 			mes "Encerrar a WOE atual?";
 			next;
-			set .@i, select("^FF0000Encerrar WoE^000000:"+((.Options&1)?"^FF0000Encerrar WoE sem recompensas^000000":"")+": ~ ^777777Cancelar^000000");
+			set .@i, select(" - ^FF0000Encerrar WoE...^000000:"+((.Options&1)?" - ^FF0000Encerrar WoE sem recompensas...^000000":"")+": - ^777777Cancelar.^000000");
 			mes "[Guerra do Emperium encerrada]";
 			if (.@i == 3)
 				mes "Cancelado.";

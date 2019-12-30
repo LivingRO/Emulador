@@ -1,9 +1,11 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Collection of episode 13.2 quests.
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.8
+//= 2.9
+//===== Compatible With: =====================================
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Cat Hand Addition. (Leads to 13.2 areas)
@@ -31,7 +33,7 @@
 //= 1.7 Added daily quest 'Dragon Egg collection.'
 //= 1.7a Fixed a translation typo. Tabb -> Taab.
 //= 1.8 Added a missing " in the GM only NPC.
-//= 1.9 Added Monster Suppression, Bradium Collection, and
+//= 1.9 Added Monster Suppression, Bradium Collection, and 
 //=     Laphine Craftsman quests.
 //= 2.0 Added missing global var check in Yggdrasil Dungeon
 //=     floor 2 puzzle. Fixed a typo. Commented out untranslated
@@ -47,11 +49,12 @@
 //= 2.7 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.7a Added Izlude RE coordinates. [Euphy]
 //= 2.8 Added GM management function. [Euphy]
-//============================================================
+//= 2.9 Added custom weight check. Fixes issue #910. [Jeybla]
+//============================================================ 
 
 // Cat Hand Addition :: cat_enhance
-//============================================================
-spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
+//============================================================ 
+spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 	function Catwarp;
 	if (ep13_yong1 < 3) {
 		mes "[Cat Hand Agent]";
@@ -69,8 +72,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -89,15 +92,15 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Hand Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -106,7 +109,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 				close;
 			}
 			else if (Zeny >= 60) {
-				Zeny -= 60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
@@ -136,15 +139,15 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Hand Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -153,7 +156,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 				close;
 			}
 			else if (Zeny >= 60) {
-				Zeny -= 60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
@@ -257,15 +260,15 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Hand Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -274,7 +277,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	4_M_BOSSCAT,{
 				close;
 			}
 			else if (Zeny >= 60) {
-				Zeny -= 60;
+				set Zeny, Zeny-60;
 				mes "[Cat Hand Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
@@ -395,11 +398,11 @@ function Catwarp {
 		close;
 	}
 	close2;
-	Zeny -= getarg(0);
+	set Zeny, Zeny-getarg(0);
 	switch(getarg(1)) {
 		case 1: warp "alberta",117,56; end;
 		case 2: warp "prontera",116,72; end;
-		case 3: if (RENEWAL) warp "izlude",128,98; else warp "izlude",91,105; end;
+		case 3: if (checkre(0)) warp "izlude",128,98; else warp "izlude",91,105; end;
 		case 4: warp "geffen",120,39; end;
 		case 5: warp "payon",161,58; end;
 		case 6: warp "morocc",156,46; end;
@@ -413,13 +416,13 @@ function Catwarp {
 	}
 }
 }
-man_fild02,132,47,4	duplicate(Cat Hand Agent#spl)	Cat Hand Agent#man	4_M_BOSSCAT
+man_fild02,132,47,4	duplicate(Cat Hand Agent#spl)	Cat Hand Agent#man	421
 
 -	script	Mysterious Rock#30::manukrock2	-1,{
-	if (countitem(6048) < 3 && !questprogress(12062,PLAYTIME)) {
+	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
 		specialeffect2 EF_REPAIRWEAPON;
 		progressbar "ffff00",10;
-		.@rhea_ran = rand(1,20);
+		set .@rhea_ran,rand(1,20);
 		if (.@rhea_ran < 13) getitem 7049,1; //Stone
 		else if (.@rhea_ran == 13) getitem 990,1; //Boody_Red
 		else if (.@rhea_ran == 14) getitem 991,1; //Crystal_Blue
@@ -444,44 +447,44 @@ OnTimer120000:
 	end;
 }
 
-man_fild02,146,81,0	duplicate(manukrock2)	Mysterious Rock#31	CLEAR_NPC
-man_fild02,140,148,0	duplicate(manukrock2)	Mysterious Rock#32	CLEAR_NPC
-man_fild02,88,263,0	duplicate(manukrock2)	Mysterious Rock#33	CLEAR_NPC
-man_fild02,146,365,0	duplicate(manukrock2)	Mysterious Rock#34	CLEAR_NPC
-man_fild02,336,305,0	duplicate(manukrock2)	Mysterious Rock#35	CLEAR_NPC
-man_fild02,248,124,0	duplicate(manukrock2)	Mysterious Rock#36	CLEAR_NPC
-man_fild02,285,115,0	duplicate(manukrock2)	Mysterious Rock#37	CLEAR_NPC
-man_fild02,346,116,0	duplicate(manukrock2)	Mysterious Rock#38	CLEAR_NPC
-man_fild02,358,174,0	duplicate(manukrock2)	Mysterious Rock#39	CLEAR_NPC
-man_fild02,241,227,0	duplicate(manukrock2)	Mysterious Rock#40	CLEAR_NPC
+man_fild02,146,81,0	duplicate(manukrock2)	Mysterious Rock#31	844
+man_fild02,140,148,0	duplicate(manukrock2)	Mysterious Rock#32	844
+man_fild02,88,263,0	duplicate(manukrock2)	Mysterious Rock#33	844
+man_fild02,146,365,0	duplicate(manukrock2)	Mysterious Rock#34	844
+man_fild02,336,305,0	duplicate(manukrock2)	Mysterious Rock#35	844
+man_fild02,248,124,0	duplicate(manukrock2)	Mysterious Rock#36	844
+man_fild02,285,115,0	duplicate(manukrock2)	Mysterious Rock#37	844
+man_fild02,346,116,0	duplicate(manukrock2)	Mysterious Rock#38	844
+man_fild02,358,174,0	duplicate(manukrock2)	Mysterious Rock#39	844
+man_fild02,241,227,0	duplicate(manukrock2)	Mysterious Rock#40	844
 
-spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	CLEAR_NPC,{
-	if (!questprogress(12060,PLAYTIME) && countitem(6039) < 20) {
+spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	844,{
+	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
 		specialeffect2 EF_BUBBLE;
 		specialeffect2 EF_INVENOM;
-		.@fcast = 15;
+		set .@fcast,15;
 		if (isequipped(2550)) //Fisher's_Muffler
-			.@fcast -= 2;
+			set .@fcast,.@fcast - 2;
 		if (isequipped(2443)) //Fish_Shoes
-			.@fcast -= 2;
+			set .@fcast,.@fcast - 2;
 		if (isequipped(2764)) //Small_Fishing_Rod
-			.@fcast -= 3;
+			set .@fcast,.@fcast - 3;
 		if (isequipped(2775)) //Lure
-			.@fcast -= 1;
+			set .@fcast,.@fcast - 1;
 		if (isequipped(1599)) //Ahura_Mazda
-			.@fcast -= 3;
+			set .@fcast,.@fcast - 3;
 		if (isequipped(2199)) //Angra_Manyu
-			.@fcast -= 4;
+			set .@fcast,.@fcast - 4;
 		progressbar "ffff00",.@fcast;
 		if (ep13_1_rhea == 13) {
 			if (rand(1,20) == 2) {
 				getitem 6037,1; //Rough_File
-				ep13_1_rhea = 14;
+				set ep13_1_rhea,14;
 				specialeffect2 EF_BUBBLE;
 				mapannounce strcharinfo(3),strcharinfo(0) + " has caught a Loose File.",bc_map,"0xff77ff";
 			}
 		}
-		.@rhea_ran = rand(1,70);
+		set .@rhea_ran,rand(1,70);
 		if (.@rhea_ran < 20) getitem 6039,1; //Piece_Of_Fish
 		else if (.@rhea_ran == 20) getitem 908,1; //Spawn
 		else if (.@rhea_ran == 21) getitem 909,1; //Jellopy
@@ -497,17 +500,17 @@ spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	CLEAR_NPC,{
 			mes "Nothing was caught.";
 			close;
 		}
-		.@rhea_ran5 = rand(1,200);
+		set .@rhea_ran5,rand(1,200);
 		if (.@rhea_ran5 == 3) {
 			getitem 644,1; //Gift_Box
 			mapannounce strcharinfo(3),strcharinfo(0) + " has caught a Gift Box.",bc_map,"0x00ffff";
 		}
-		.@rhea_ran3 = rand(1,500);
+		set .@rhea_ran3,rand(1,500);
 		if (.@rhea_ran3 == 3) {
 			getitem 603,1; //Old_Blue_Box
 			mapannounce strcharinfo(3),strcharinfo(0) + " has caught an Old Blue Box.",bc_map,"0x00ffff";
 		}
-		.@rhea_ran4 = rand(1,3000);
+		set .@rhea_ran4,rand(1,3000);
 		if (.@rhea_ran4 == 3) {
 			getitem 617,1; //Old_Violet_Box
 			mapannounce strcharinfo(3),strcharinfo(0) + " has caught an Old Purple Box.",bc_map,"0x44ff44";
@@ -519,19 +522,19 @@ spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	CLEAR_NPC,{
 	}
 	end;
 }
-spl_fild03,268,230,0	duplicate(FishingHole_spl3)	School of Fish#6	CLEAR_NPC
-spl_fild03,293,253,0	duplicate(FishingHole_spl3)	School of Fish#7	CLEAR_NPC
-spl_fild03,165,100,0	duplicate(FishingHole_spl3)	School of Fish#8	CLEAR_NPC
-spl_fild03,317,190,0	duplicate(FishingHole_spl3)	School of Fish#9	CLEAR_NPC
-spl_fild01,41,118,0	duplicate(FishingHole_spl3)	School of Fish#10	CLEAR_NPC
-spl_fild01,317,361,0	duplicate(FishingHole_spl3)	School of Fish#11	CLEAR_NPC
-spl_fild01,55,269,0	duplicate(FishingHole_spl3)	School of Fish#12	CLEAR_NPC
-spl_fild01,332,131,0	duplicate(FishingHole_spl3)	School of Fish#13	CLEAR_NPC
-spl_fild01,170,74,0	duplicate(FishingHole_spl3)	School of Fish#14	CLEAR_NPC
+spl_fild03,268,230,0	duplicate(FishingHole_spl3)	School of Fish#6	844
+spl_fild03,293,253,0	duplicate(FishingHole_spl3)	School of Fish#7	844
+spl_fild03,165,100,0	duplicate(FishingHole_spl3)	School of Fish#8	844
+spl_fild03,317,190,0	duplicate(FishingHole_spl3)	School of Fish#9	844
+spl_fild01,41,118,0	duplicate(FishingHole_spl3)	School of Fish#10	844
+spl_fild01,317,361,0	duplicate(FishingHole_spl3)	School of Fish#11	844
+spl_fild01,55,269,0	duplicate(FishingHole_spl3)	School of Fish#12	844
+spl_fild01,332,131,0	duplicate(FishingHole_spl3)	School of Fish#13	844
+spl_fild01,170,74,0	duplicate(FishingHole_spl3)	School of Fish#14	844
 
 // Two Tribes :: ep13_2_msg
 //============================================================
-spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
+spl_in01,32,306,3	script	Splendide Guard#ep13md01	447,2,2,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -574,7 +577,7 @@ spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
 				mes "[Arc]";
 				mes "Now I clearly understand that you are not sent by the giants of Manuk.";
 				mes "Thank you for telling me these interesting stories.";
-				ep13_mdrama = 1;
+				set ep13_mdrama,1;
 				close;
 			case 2:
 				mes "[Arc]";
@@ -661,7 +664,7 @@ spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
 					mes "[Arc]";
 					mes "Remember " + strcharinfo(0) + "... you must keep this to yourself...";
 					mes "Please, find her.";
-					ep13_mdrama = 2;
+					set ep13_mdrama,2;
 					setquest 7056;
 					close;
 				case 2:
@@ -755,7 +758,7 @@ spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
 			mes "Terra!!";
 			next;
 			mes "- Arc suddenly began gathering up his gear. -";
-			ep13_mdrama = 8;
+			set ep13_mdrama,8;
 			close;
 		}
 		else if (ep13_mdrama == 8) {
@@ -788,7 +791,7 @@ spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
 			mes "The higher ups won't just remain still...";
 			mes "I'm sorry to ask you but...";
 			mes "Please go and bring her back here...";
-			ep13_mdrama = 9;
+			set ep13_mdrama,9;
 			changequest 7058,7059;
 			close;
 		}
@@ -841,7 +844,7 @@ spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
 			mes "[Arc]";
 			mes "Sometimes you can find Yggdrasilberries around there.";
 			mes "Go find few more and bring them with you. Hurry!";
-			ep13_mdrama = 14;
+			set ep13_mdrama,14;
 			getitem 607,3; //Yggdrasilberry
 			changequest 7062,7063;
 			close;
@@ -880,7 +883,7 @@ spl_in01,32,306,3	script	Splendide Guard#ep13md01	4_M_FAIRYSOLDIER,2,2,{
 			mes "Terra's Yai.";
 			mes "Which is her Private Residence... It's located at the Southeast direction from here.";
 			mes "I would like to hear a detailed account of what happened.";
-			ep13_mdrama = 26;
+			set ep13_mdrama,26;
 			changequest 7070,7071;
 			close;
 		}
@@ -949,7 +952,7 @@ OnTouch:
 	end;
 }
 
-spl_fild02,45,214,0	script	????#ep13_mdplant01	CLEAR_NPC,{
+spl_fild02,45,214,0	script	????#ep13_mdplant01	844,{
 	if (ep13_mdrama == 2) {
 		cutin "ep13_plant01",2;
 		mes "Weeds are easy to find around here...";
@@ -957,13 +960,13 @@ spl_fild02,45,214,0	script	????#ep13_mdplant01	CLEAR_NPC,{
 		mes "It looks like this is Terra's trace that Arc told me about.";
 		next;
 		mes "A knotted leaf is pointing toward the^4d4dff Southern^000000 direction.";
-		ep13_mdrama = 3;
+		set ep13_mdrama,3;
 		changequest 7056,7057;
 		close2;
 	}
 	else if (ep13_mdrama > 2) {
 		mes "This is a marking Terra left to remember the way back home.";
-		mes "A knotted leaf is pointing^4d4ff South^000000.";
+		mes "A knotted leaf is pointing^4d4dff South^000000.";
 		close2;
 	}
 	else {
@@ -975,7 +978,7 @@ spl_fild02,45,214,0	script	????#ep13_mdplant01	CLEAR_NPC,{
 	end;
 }
 
-spl_fild02,122,106,0	script	????#ep13_mdplant02	CLEAR_NPC,{
+spl_fild02,122,106,0	script	????#ep13_mdplant02	844,{
 	if (ep13_mdrama > 2) {
 		cutin "ep13_plant01",2;
 		mes "Weeds are easy to find around here...";
@@ -994,7 +997,7 @@ spl_fild02,122,106,0	script	????#ep13_mdplant02	CLEAR_NPC,{
 	end;
 }
 
-spl_fild02,329,191,0	script	????#ep13_mdplant03	CLEAR_NPC,{
+spl_fild02,329,191,0	script	????#ep13_mdplant03	844,{
 	if (ep13_mdrama > 2) {
 	cutin "ep13_plant01",2;
 		mes "Weeds are easy to find around here...";
@@ -1013,14 +1016,14 @@ spl_fild02,329,191,0	script	????#ep13_mdplant03	CLEAR_NPC,{
 	end;
 }
 
-spl_fild02,328,323,0	script	????#ep13_mdplant04	CLEAR_NPC,{
+spl_fild02,328,323,0	script	????#ep13_mdplant04	844,{
 	if (ep13_mdrama == 3) {
 		mes "There are footprints here as well as signs that someone has fallen.";
 		mes "It looks like someone was fighting here?";
 		mes "But who?";
 		next;
 		mes "There are footprints heading ^4d4dffNorth^000000.";
-		ep13_mdrama = 4;
+		set ep13_mdrama,4;
 		close;
 	}
 	else if (ep13_mdrama > 3) {
@@ -1034,13 +1037,13 @@ spl_fild02,328,323,0	script	????#ep13_mdplant04	CLEAR_NPC,{
 	}
 }
 
-spl_fild01,341,109,0	script	????#ep13_mdplant05	CLEAR_NPC,{
+spl_fild01,341,109,0	script	????#ep13_mdplant05	844,{
 	if (ep13_mdrama == 4) {
 		mes "There's evidence that there was a fight here too.";
 		mes "These footsteps can't be a Laphine's...";
 		next;
 		mes "There are footprints that lead to^4d4dff the Root of a huge tree^000000.";
-		ep13_mdrama = 5;
+		set ep13_mdrama,5;
 		close;
 	}
 	else if (ep13_mdrama > 4) {
@@ -1064,7 +1067,7 @@ OnTouch:
 		switch(select("Follow the trace.:Looks dangerous... head back.")) {
 		case 1:
 			mes "You take a one step forward carefully through the muddy roots and slip.";
-			ep13_mdrama = 6;
+			set ep13_mdrama,6;
 			close2;
 			percentheal -30,0;
 			warp "nyd_dun01",72,125;
@@ -1097,7 +1100,7 @@ OnTouch:
 	}
 }
 
-nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
+nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	844,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -1133,7 +1136,7 @@ nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Could it be... Terra was fighting this Giant?";
-		ep13_mdrama = 7;
+		set ep13_mdrama,7;
 		changequest 7057,7058;
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1163,7 +1166,7 @@ nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "I can't just go back to Arc without anything... he'd be so disappointed...";
 		mes "Hmm, Should I go to the Sapha's village?";
-		ep13_mdrama = 10;
+		set ep13_mdrama,10;
 		changequest 7059,7060;
 		close;
 	}
@@ -1205,7 +1208,7 @@ nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
 			case 3:
 				mes "You pick up a fragment of Bradium scattered on the ground.";
 				mes "This should be enough.";
-				ep13_mdrama = 22;
+				set ep13_mdrama,22;
 				getitem 6085,1; //Shaggy_Muffler
 				getitem 6084,1; //Bradium_Fragments
 				changequest 7066,7067;
@@ -1227,7 +1230,7 @@ nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
 				mes "You carefully strip a worn muffler off of the Sapha's neck.";
 				mes "We will see if this muffler belongs to Ogen or not...";
 				mes "This should be enough.";
-				ep13_mdrama = 22;
+				set ep13_mdrama,22;
 				getitem 6085,1; //Shaggy_Muffler
 				getitem 6084,1; //Bradium_Fragments
 				changequest 7066,7067;
@@ -1295,7 +1298,7 @@ nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
 			donpcevent "Snorren#ep13md17::OnDisable";
 			mes "- Snorren stood up with a bitter smile...";
 			mes "...I should go back too... I'm worried about Terra. -";
-			ep13_mdrama = 24;
+			set ep13_mdrama,24;
 			changequest 7068,7069;
 			close;
 		}
@@ -1317,7 +1320,7 @@ nyd_dun01,58,223,0	script	Petrified Sapha#ep13md03	CLEAR_NPC,{
 	}
 }
 
-nyd_dun01,55,223,5	script	Snorren#ep13md17	4_MAN_PIOM,{
+nyd_dun01,55,223,5	script	Snorren#ep13md17	454,{
 	disablenpc "Snorren#ep13md17";
 	end;
 
@@ -1331,7 +1334,7 @@ OnEnable:
 	end;
 }
 
-nyd_dun01,62,233,0	script	Trunk of a Tree#ep13	CLEAR_NPC,2,2,{
+nyd_dun01,62,233,0	script	Trunk of a Tree#ep13	844,2,2,{
 	mes "The trunk of a Tree moderately stretched upward.";
 	mes "There are big thorns here that should be enough to use as footholds to climb up.";
 	close;
@@ -1349,7 +1352,7 @@ OnTouch:
 			close;
 	}
 }
-manuk,278,177,5	script	Villager#ep13_11	4_MAN_PIOM,{
+manuk,278,177,5	script	Villager#ep13_11	454,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -1390,7 +1393,7 @@ manuk,278,177,5	script	Villager#ep13_11	4_MAN_PIOM,{
 				next;
 				mes "- The Sapha people are not willing to tell you anything. But the";
 				mes "captured Fairy may be Terra. -";
-				ep13_mdrama = 11;
+				set ep13_mdrama,11;
 				changequest 7060,7061;
 				close;
 			case 2:
@@ -1417,7 +1420,7 @@ manuk,278,177,5	script	Villager#ep13_11	4_MAN_PIOM,{
 				next;
 				mes "- Fortunately, Sapha had thought I could not understand them,";
 				mes "but they must be talking about Terra... -";
-				ep13_mdrama = 11;
+				set ep13_mdrama,11;
 				changequest 7060,7061;
 				close;
 			}
@@ -1447,7 +1450,7 @@ manuk,278,177,5	script	Villager#ep13_11	4_MAN_PIOM,{
 	}
 }
 
-manuk,281,177,3	script	Villager#ep13_12	4_MAN_BENKUNI,{
+manuk,281,177,3	script	Villager#ep13_12	449,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -1488,7 +1491,7 @@ manuk,281,177,3	script	Villager#ep13_12	4_MAN_BENKUNI,{
 				next;
 				mes "- The Sapha people are not willing to tell you anything. But the";
 				mes "captured Fairy may be Terra. -";
-				ep13_mdrama = 11;
+				set ep13_mdrama,11;
 				changequest 7060,7061;
 				close;
 			case 2:
@@ -1515,7 +1518,7 @@ manuk,281,177,3	script	Villager#ep13_12	4_MAN_BENKUNI,{
 				next;
 				mes "- Fortunately, Sapha had thought I could not understand them,";
 				mes "but they must be talking about Terra... -";
-				ep13_mdrama = 11;
+				set ep13_mdrama,11;
 				changequest 7060,7061;
 				close;
 			}
@@ -1549,7 +1552,7 @@ manuk,281,177,3	script	Villager#ep13_12	4_MAN_BENKUNI,{
 	}
 }
 
-man_in01,175,59,5	script	Snorren#ep13_13	4_MAN_PIOM,{
+man_in01,175,59,5	script	Snorren#ep13_13	454,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -1679,7 +1682,7 @@ man_in01,175,59,5	script	Snorren#ep13_13	4_MAN_PIOM,{
 				mes "Yeah?!";
 				mes "Then just wait here for a sec!";
 				mes "I will go and ask Luik about this!";
-				ep13_mdrama = 12;
+				set ep13_mdrama,12;
 				close;
 			case 2:
 				mes "[Snorren]";
@@ -1739,7 +1742,7 @@ man_in01,175,59,5	script	Snorren#ep13_13	4_MAN_PIOM,{
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "(I think I have no choice but to go back and ask Arc....)";
-			ep13_mdrama = 13;
+			set ep13_mdrama,13;
 			changequest 7061,7062;
 			close;
 		}
@@ -1758,9 +1761,9 @@ man_in01,175,59,5	script	Snorren#ep13_13	4_MAN_PIOM,{
 				next;
 				mes "[Snorren]";
 				mes "I will take everything you've brought with you!";
-				.@temp_ig = countitem(607);
+				set .@temp_ig,countitem(607);
 				delitem 607,.@temp_ig; //Yggdrasilberry
-				ep13_mdrama = 18;
+				set ep13_mdrama,18;
 				next;
 				mes "[Snorren]";
 				mes "Now, Let's go inside!";
@@ -1833,7 +1836,7 @@ man_in01,175,59,5	script	Snorren#ep13_13	4_MAN_PIOM,{
 			mes "[Snorren]";
 			mes "Come back anytime...";
 			mes "Ok?";
-			ep13_mdrama = 25;
+			set ep13_mdrama,25;
 			getitem 6080,15; //Manuk_Coin
 			changequest 7069,7070;
 			close;
@@ -1861,7 +1864,7 @@ man_in01,175,59,5	script	Snorren#ep13_13	4_MAN_PIOM,{
 	}
 }
 
-man_in01,183,58,0	script	to_in013ep13mdwarp01	WARPNPC,1,1,{
+man_in01,183,58,0	script	to_in013ep13mdwarp01	45,1,1,{
 OnTouch:
 	if ((ep13_mdrama > 17) && (ep13_mdrama < 24)) {
 		warp "man_in01",13,125;
@@ -1881,7 +1884,7 @@ OnTouch:
 man_in01,10,125,0	warp	to_out1#ep13mdwarp02	1,1,man_in01,179,58
 man_in01,65,125,0	warp	to_out2#ep13mdwarp03	1,1,man_in01,179,58
 
-man_in01,22,126,3	script	Captured Laphine#ep13md	4_F_FAIRYKID6,{
+man_in01,22,126,3	script	Captured Laphine#ep13md	441,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -1964,7 +1967,7 @@ man_in01,22,126,3	script	Captured Laphine#ep13md	4_F_FAIRYKID6,{
 				mes "[Luik]";
 				mes "Why did she break down like that? What did she say?";
 				mes "Tell me what she said!!!";
-				ep13_mdrama = 20;
+				set ep13_mdrama,20;
 				close;
 			case 2:
 				mes "[Terra]";
@@ -2011,7 +2014,7 @@ man_in01,22,126,3	script	Captured Laphine#ep13md	4_F_FAIRYKID6,{
 				mes "[Luik]";
 				mes "Why did she break down like that? What did she say?";
 				mes "Tell me what she said!!!";
-				ep13_mdrama = 20;
+				set ep13_mdrama,20;
 				close;
 			}
 		}
@@ -2056,7 +2059,7 @@ man_in01,22,126,3	script	Captured Laphine#ep13md	4_F_FAIRYKID6,{
 	}
 }
 
-man_in01,17,128,5	script	Snorren#ep13md_15	4_MAN_PIOM,{
+man_in01,17,128,5	script	Snorren#ep13md_15	454,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2079,7 +2082,7 @@ man_in01,17,128,5	script	Snorren#ep13md_15	4_MAN_PIOM,{
 			mes "Yeah, Right.";
 			mes "" + strcharinfo(0) + ", you should try talking to that Laphine...";
 			mes "Let's hear her story.";
-			ep13_mdrama = 19;
+			set ep13_mdrama,19;
 			changequest 7064,7065;
 			close;
 		}
@@ -2147,7 +2150,7 @@ man_in01,17,128,5	script	Snorren#ep13md_15	4_MAN_PIOM,{
 				mes "Please save Ogen.";
 				delitem 6085,1; //Shaggy_Muffler
 				delitem 6084,1; //Bradium_Fragments
-				ep13_mdrama = 23;
+				set ep13_mdrama,23;
 				changequest 7067,7068;
 				close;
 			}
@@ -2186,7 +2189,7 @@ man_in01,17,128,5	script	Snorren#ep13md_15	4_MAN_PIOM,{
 	}
 }
 
-man_in01,19,126,3	script	Luik#ep13md16	4_MAN_GALTUN,{
+man_in01,19,126,3	script	Luik#ep13md16	450,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2264,7 +2267,7 @@ man_in01,19,126,3	script	Luik#ep13md16	4_MAN_GALTUN,{
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "Don't you dare...try to do any harm to Terra.";
-			ep13_mdrama = 21;
+			set ep13_mdrama,21;
 			changequest 7065,7066;
 			close;
 		}
@@ -2317,7 +2320,7 @@ man_in01,19,126,3	script	Luik#ep13md16	4_MAN_GALTUN,{
 				mes "Please save Ogen.";
 				delitem 6085,1; //Shaggy_Muffler
 				delitem 6084,1; //Bradium_Fragments
-				ep13_mdrama = 23;
+				set ep13_mdrama,23;
 				changequest 7067,7068;
 				close;
 			}
@@ -2363,7 +2366,7 @@ OnTouch:
 	close;
 }
 
-spl_in02,236,92,5	script	Arc#ep13md_l02	4_M_FAIRYSOLDIER,{
+spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2385,7 +2388,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	4_M_FAIRYSOLDIER,{
 			mes "[Arc]";
 			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
 			mes "Terra. This is who saved you...";
-			mes "You should thank "+((Sex)?"him.":"her.");
+			mes "You should thank "+((Sex == SEX_MALE)?"him.":"her.");
 			next;
 			mes "[Terra]";
 			mes "Thank you...";
@@ -2456,9 +2459,9 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	4_M_FAIRYSOLDIER,{
 			next;
 			mes "[Arc]";
 			mes "I'm sorry this is all I can give you for now.";
-			ep13_mdrama = 27;
+			set ep13_mdrama,27;
 			getitem 6081,25; //Splendide_Coin
-			if (RENEWAL_EXP)
+			if (checkre(3))
 				getexp 120000,10000;
 			else
 				getexp 1200000,100000;
@@ -2485,7 +2488,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	4_M_FAIRYSOLDIER,{
 			mes "["+strnpcinfo(1)+"]";
 			if (strnpcinfo(1) == "Arc") mes "That's what Terra wants too.";
 			mes "It might be cramped, but you are always welcome to visit us.";
-			ep13_mdrama = 28;
+			set ep13_mdrama,28;
 			close;
 		}
 		else if (ep13_mdrama > 27) {
@@ -2532,10 +2535,10 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	4_M_FAIRYSOLDIER,{
 		close;
 	}
 }
-spl_in02,239,93,3	duplicate(Arc#ep13md_l02)	Terra#ep13md_l03	4_F_FAIRYKID6
+spl_in02,239,93,3	duplicate(Arc#ep13md_l02)	Terra#ep13md_l03	441
 
-splendide,287,140,0	script	terrashome_in	WARPNPC,1,1,{
-OnTouch:
+splendide,287,140,0	script	terrashome_in	45,1,1,{
+OnTouch_:
 	if (ep13_mdrama > 25) {
 		warp "spl_in02",237,89;
 		end;
@@ -2548,7 +2551,7 @@ OnTouch:
 
 spl_in02,236,86,0	warp	terrashome_out	1,1,splendide,285,139
 
-spl_fild01,357,44,0	script	???#ep13mdf01	CLEAR_NPC,{
+spl_fild01,357,44,0	script	???#ep13mdf01	844,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2561,7 +2564,7 @@ spl_fild01,357,44,0	script	???#ep13mdf01	CLEAR_NPC,{
 		mes "There's some kind of fruit lying on the ground.";
 		mes "I see a small berry inside of a big outer shell...";
 		mes "It is a Yggdrasil!";
-		ep13_mdrama = 15;
+		set ep13_mdrama,15;
 		getitem 607,1; //Yggdrasilberry
 		getitem 522,1; //Fruit_Of_Mastela
 		close;
@@ -2569,7 +2572,7 @@ spl_fild01,357,44,0	script	???#ep13mdf01	CLEAR_NPC,{
 	else if (ep13_mdrama == 15) {
 		mes "I've already pulled out a Yggdradsil... but is there anyting else..?";
 		next;
-		.@apple = rand(1,100);
+		set .@apple,rand(1,100);
 		if (.@apple < 50) {
 			mes "I've been bitten by an unknown insect.";
 			mes "It hurts!";
@@ -2597,7 +2600,7 @@ spl_fild01,357,44,0	script	???#ep13mdf01	CLEAR_NPC,{
 	}
 }
 
-spl_fild01,312,79,0	script	???#ep13mdf02	CLEAR_NPC,{
+spl_fild01,312,79,0	script	???#ep13mdf02	844,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2610,7 +2613,7 @@ spl_fild01,312,79,0	script	???#ep13mdf02	CLEAR_NPC,{
 		mes "There's some kind of fruit lying on the ground.";
 		mes "I see a small berry inside of a big outer shell...";
 		mes "It is a Yggdrasil!";
-		ep13_mdrama = 16;
+		set ep13_mdrama,16;
 		getitem 607,1; //Yggdrasilberry
 		getitem 522,1; //Fruit_Of_Mastela
 		close;
@@ -2618,7 +2621,7 @@ spl_fild01,312,79,0	script	???#ep13mdf02	CLEAR_NPC,{
 	else if (ep13_mdrama == 16) {
 		mes "I've already pulled out a Yggdradsil... but is there anyting else..?";
 		next;
-		.@apple = rand(1,100);
+		set .@apple,rand(1,100);
 		if (.@apple < 50) {
 			mes "I've been bitten by an unknown insect.";
 			mes "It hurts!";
@@ -2646,7 +2649,7 @@ spl_fild01,312,79,0	script	???#ep13mdf02	CLEAR_NPC,{
 	}
 }
 
-spl_fild01,329,29,0	script	???#ep13mdf03	CLEAR_NPC,{
+spl_fild01,329,29,0	script	???#ep13mdf03	844,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2659,7 +2662,7 @@ spl_fild01,329,29,0	script	???#ep13mdf03	CLEAR_NPC,{
 		mes "There's some kind of fruit lying on the ground.";
 		mes "I see a small berry inside of a big outer shell...";
 		mes "It is a Yggdrasil!";
-		ep13_mdrama = 17;
+		set ep13_mdrama,17;
 		getitem 607,1; //Yggdrasilberry
 		getitem 522,1; //Fruit_Of_Mastela
 		changequest 7063,7064;
@@ -2673,7 +2676,7 @@ spl_fild01,329,29,0	script	???#ep13mdf03	CLEAR_NPC,{
 	else if (ep13_mdrama == 17) {
 		mes "I've already pulled out a Yggdradsil... but is there anyting else..?";
 		next;
-		.@apple = rand(1,100);
+		set .@apple,rand(1,100);
 		if (.@apple < 50) {
 			mes "I've been bitten by an unknown insect.";
 			mes "It hurts!";
@@ -2703,7 +2706,7 @@ spl_fild01,329,29,0	script	???#ep13mdf03	CLEAR_NPC,{
 
 // Monster Suppression :: ep13_2_dayquest
 //============================================================
-manuk,252,116,3	script	Manuk Galtun#ep13_2day	4_MAN_GALTUN,{
+manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2747,7 +2750,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	4_MAN_GALTUN,{
 					mes "[Strom]";
 					mes "There're monsters called ^4d4dffRata^000000 and ^4d4dffDueyrr^000000.";
 					mes "If you terminate them, I would regard you as a decent and strong person.";
-					ep13_2_days01 = 1;
+					set ep13_2_days01,1;
 					setquest 7074;
 					setquest 7075;
 					close;
@@ -2767,7 +2770,9 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	4_MAN_GALTUN,{
 			}
 		}
 		else if (ep13_2_days01 == 1) {
-			if (questprogress(7074,HUNTING) == 2 && questprogress(7075,HUNTING) == 2) {
+			set .@qst_cpl01,checkquest(7074,HUNTING);
+			set .@qst_cpl02,checkquest(7075,HUNTING);
+			if ((.@qst_cpl01 == 2) && (.@qst_cpl02 == 2)) {
 				mes "[Strom]";
 				mes "Sure enough... I, the Sapha Galtun, Strom, apologize to you. I should not have been so quick to despise you.";
 				mes "I admit that you are a brave soldier, please feel free to visit Manuk.";
@@ -2777,8 +2782,8 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	4_MAN_GALTUN,{
 				mes "If you need to buy something, you can use them.";
 				completequest 7074;
 				completequest 7075;
-				ep13_2_days01 = 2;
-				if (RENEWAL_EXP)
+				set ep13_2_days01,2;
+				if (checkre(3))
 					getexp 50000,30000;
 				else
 					getexp 500000,300000;
@@ -2817,7 +2822,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	4_MAN_GALTUN,{
 // - Laphine Craftsman
 // - Draco Egg Collection (NPC includes 'Wanted' quest)
 //============================================================
-man_in01,378,276,3	script	Manuk Engineer#ep13_2	4_MAN_NITT,{
+man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2827,8 +2832,10 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	4_MAN_NITT,{
 		close;
 	}
 	if ((isequipped(2782) == 1) && (ep13_2_rhea > 99)) {
-		if (questprogress(7080) == 1) {
-			if (questprogress(7080,PLAYTIME) != 2) {
+		set .@alba,checkquest(7080);
+		if ((.@alba == 0) || (.@alba == 1)) {
+			set .@time_chek,checkquest(7080,PLAYTIME);
+			if (.@time_chek != 2) {
 				mes "[Manuk Engineer]";
 				mes "Thank you for collecting the Enriched Bradium for me, it was very helpful.";
 				mes "We've got more than enough for now though.";
@@ -2843,7 +2850,8 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	4_MAN_NITT,{
 			}
 		}
 		else {
-			if (questprogress(7079) == 1) {
+			set .@alba2,checkquest(7079);
+			if ((.@alba2 == 0) || (.@alba2 == 1)) {
 				if (countitem(6090) > 19) {
 					mes "[Manuk Engineer]";
 					mes "Oh, that will do very well.";
@@ -2921,7 +2929,7 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	4_MAN_NITT,{
 	}
 }
 
-spl_in01,97,313,3	script	Laphine Craftsman#ep13	4_M_FAIRYKID5,{
+spl_in01,97,313,3	script	Laphine Craftsman#ep13	446,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -2932,8 +2940,10 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	4_M_FAIRYKID5,{
 	}
 	if ((isequipped(2782) == 1) && (ep13_2_rhea > 99)) {
 		if (ep13_mdrama > 5) {
-			if (questprogress(7082) == 1) {
-				if (questprogress(7082,PLAYTIME) == 1) {
+			set .@alba,checkquest(7082);
+			if (.@alba == 1) {
+				set .@time_chek,checkquest(7082,PLAYTIME);
+				if ((.@time_chek == 0) || (.@time_chek == 1)) {
 					mes "[Laphine craftsman]";
 					mes "Thank you for collecting those items for me.";
 					mes "That should be sufficient for the time being.";
@@ -2945,7 +2955,8 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	4_M_FAIRYKID5,{
 				erasequest 7082;
 				close;
 			}
-			if (questprogress(7081) == 1) {
+			set .@alba2,checkquest(7081);
+			if ((.@alba2 == 0) || (.@alba2 == 1)) {
 				if ((countitem(7326) > 14) && (countitem(6075) > 14)) {
 					mes "[Laphine craftsman]";
 					mes "Oh, fantastic.";
@@ -3037,7 +3048,7 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	4_M_FAIRYKID5,{
 	close;
 }
 
-mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
+mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
 		mes "You have too many items.";
@@ -3094,7 +3105,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 	next;
 	if (select("Notice for criminal report:Cute pet investigation.") == 1) {
 		if (ep13_2_wanted == 1) {
-			if (questprogress(7076,HUNTING) == 2) {
+			if (checkquest(7076,HUNTING) == 2) {
 				mes "[Pinedel]";
 				mes "Have you hunted the Runaway Dandelion?";
 				mes "Ok, I accept you.";
@@ -3104,7 +3115,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 				mes "This is Rin's cherished treasure box...";
 				mes "This is enough payment, right?";
 				completequest 7076;
-				ep13_2_wanted = 2;
+				set ep13_2_wanted,2;
 				getitem 7444,1; //Treasure_Box
 				close;
 			}
@@ -3142,7 +3153,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 			delitem 6093,10; //Egg_Of_Draco
 			erasequest 7077;
 			setquest 7078;
-			ep13_2_dayegg = 2;
+			set ep13_2_dayegg,2;
 			getexp 40000,40000;
 			getitem 6081,1; //Splendide_Coin
 			getitem 6080,1; //Manuk_Coin
@@ -3157,14 +3168,14 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 		mes "[Pinedel]";
 		mes "Those eggs are about to hatch now.";
 		mes "I will investigate those back home.";
-		.@alba_check = questprogress(7078,PLAYTIME);
-		if (!.@alba_check) {
+		set .@alba_check,checkquest(7078,PLAYTIME);
+		if (.@alba_check == -1) {
 			close2;
 			erasequest 7078;
-			ep13_2_dayegg = 3;
+			set ep13_2_dayegg,3;
 			end;
 		}
-		else if (.@alba_check == 1) {
+		else if ((.@alba_check == 0) || (.@alba_check == 1)) {
 			mes "For now I still need more time.";
 			next;
 			mes "[Pinedel]";
@@ -3173,7 +3184,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 		}
 		close2;
 		erasequest 7078;
-		ep13_2_dayegg = 3;
+		set ep13_2_dayegg,3;
 		end;
 	}
 	else if (ep13_2_dayegg == 3) {
@@ -3184,7 +3195,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 		if (select("Sure.:Sorry, I can't.") == 1) {
 			mes "[Pinedel]";
 			mes "Please collect 10 Draco Eggs.";
-			ep13_2_dayegg = 1;
+			set ep13_2_dayegg,1;
 			setquest 7077;
 			close;
 		}
@@ -3209,7 +3220,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 		mes "[Pinedel]";
 		mes "Please collect 10 Draco Eggs.";
 		mes "Let's work together to make them as pets.";
-		ep13_2_dayegg = 1;
+		set ep13_2_dayegg,1;
 		setquest 7077;
 		close;
 	}
@@ -3226,7 +3237,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	4_F_SCIENCE,{
 	close;
 }
 
-mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	4_BOARD3,{
+mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
 	if (ep13_mdrama > 5) {
 		mes "[Wanted]";
 		mes " ";
@@ -3253,7 +3264,7 @@ mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	4_BOARD3,{
 			mes "Do you accept Rin's request?";
 			if (select("I accept that request.:No, I can't.") == 1) {
 				mes "I accepted Rin's request.";
-				ep13_2_wanted = 1;
+				set ep13_2_wanted,1;
 				setquest 7076;
 				close;
 			}
@@ -3295,14 +3306,14 @@ OnDisable:
 	end;
 }
 
-nyd_dun01,258,134,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg01	4_DRAGON_EGG
-nyd_dun01,100,210,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg02	4_DRAGON_EGG
-nyd_dun01,74,68,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg03	4_DRAGON_EGG
-nyd_dun01,98,142,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg04	4_DRAGON_EGG
-nyd_dun01,244,157,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg05	4_DRAGON_EGG
-nyd_dun01,59,185,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg06	4_DRAGON_EGG
+nyd_dun01,258,134,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg01	463
+nyd_dun01,100,210,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg02	463
+nyd_dun01,74,68,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg03	463
+nyd_dun01,98,142,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg04	463
+nyd_dun01,244,157,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg05	463
+nyd_dun01,59,185,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg06	463
 
-nyd_dun02,68,256,0	script	Dragon Egg#ep13_degg_1	4_DRAGON_EGG,{
+nyd_dun02,68,256,0	script	Dragon Egg#ep13_degg_1	463,{
 	if (checkweight(1201,2) == 0) {
 		mes "- You're carrying too many items. -";
 		close;
@@ -3329,11 +3340,11 @@ OnDisable:
 	disablenpc strnpcinfo(0);
 	end;
 }
-nyd_dun02,68,256,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg11	4_DRAGON_EGG
-nyd_dun02,202,166,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg12	4_DRAGON_EGG
-nyd_dun02,200,165,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg13	4_DRAGON_EGG
+nyd_dun02,68,256,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg11	463
+nyd_dun02,202,166,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg12	463
+nyd_dun02,200,165,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg13	463
 
-nyd_dun02,201,166,0	script	Dragon Egg#ep13_degg_2	4_DRAGON_EGG,{
+nyd_dun02,201,166,0	script	Dragon Egg#ep13_degg_2	463,{
 	if (checkweight(1201,2) == 0) {
 		mes "- You're carrying too many items. -";
 		close;
@@ -3360,11 +3371,11 @@ OnDisable:
 	disablenpc strnpcinfo(0);
 	end;
 }
-nyd_dun02,201,166,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg16	4_DRAGON_EGG
-nyd_dun02,203,167,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg17	4_DRAGON_EGG
-nyd_dun02,201,164,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg18	4_DRAGON_EGG
+nyd_dun02,201,166,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg16	463
+nyd_dun02,203,167,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg17	463
+nyd_dun02,201,164,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg18	463
 
-nyd_dun02,201,157,5	script	Egg Keeper Draco#13_1	DRACO,3,3,{
+nyd_dun02,201,157,5	script	Egg Keeper Draco#13_1	2013,3,3,{
 
 OnEnable:
 	enablenpc "Egg Keeper Draco#13_1";
@@ -3374,13 +3385,13 @@ OnDisable:
 	disablenpc "Egg Keeper Draco#13_1";
 	end;
 
-OnTouch:
+OnTouch_:
 	disablenpc "Egg Keeper Draco#13_1";
 	monster "nyd_dun02",201,157,"Egg Keeper Draco",2013,1,"Egg Keeper Draco#13_3::OnMyMobDead";
 	end;
 }
 
-nyd_dun02,206,157,3	script	Egg Keeper Draco#13_2	DRACO,3,3,{
+nyd_dun02,206,157,3	script	Egg Keeper Draco#13_2	2013,3,3,{
 	end;
 
 OnEnable:
@@ -3391,7 +3402,7 @@ OnDisable:
 	disablenpc "Egg Keeper Draco#13_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	disablenpc "Egg Keeper Draco#13_2";
 	monster "nyd_dun02",206,157,"Egg Keeper Draco",2013,1,"Egg Keeper Draco#13_4::OnMyMobDead";
 	end;
@@ -3423,7 +3434,7 @@ OnTimer180000:
 	end;
 }
 
-nyd_dun02,144,103,3	script	Stranger#ep13_2_dan01	4_M_DSTMAN,3,3,{
+nyd_dun02,144,103,3	script	Stranger#ep13_2_dan01	456,3,3,{
 	end;
 
 OnEnable:
@@ -3442,15 +3453,15 @@ OnReset:
 	killmonster "nyd_dun02","Stranger#ep13_2_dan03::OnMyMobDead";
 	end;
 
-OnTouch:
-	emotion e_gasp,1;
-	emotion e_omg;
+OnTouch_:
+	emotion ET_SURPRISE, playerattached();
+	emotion ET_HUK;
 	disablenpc "Stranger#ep13_2_dan01";
 	donpcevent "Stranger#ep13_2_dan02::OnCall";
 	end;
 }
 
-nyd_dun02,206,114,5	script	Stranger#ep13_2_dan02	4_M_DSTMAN,3,3,{
+nyd_dun02,206,114,5	script	Stranger#ep13_2_dan02	456,3,3,{
 	end;
 
 OnInit:
@@ -3470,9 +3481,9 @@ OnReset:
 	killmonster "nyd_dun02","Stranger#ep13_2_dan04::OnMyMobDead";
 	end;
 
-OnTouch:
-	emotion e_gasp,1;
-	emotion e_omg;
+OnTouch_:
+	emotion ET_SURPRISE, playerattached();
+	emotion ET_HUK;
 	disablenpc "Stranger#ep13_2_dan02";
 	donpcevent "Stranger#ep13_2_dan01::OnCall";
 	end;
@@ -3507,8 +3518,14 @@ OnTimer300000:
 }
 
 // Otherworld language :: ep13_2_rhea
-//============================================================
-mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	4_M_LGTMAN,{
+//============================================================ 
+mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
+	if( !checkweight(2782,1)) { // Custom weight check.
+		mes "[Mechanic Engineer Dorance]";
+		mes "It looks like you're carrying too many things.";
+		mes "Why not put some of your items in storage and come back?";
+		close;
+	}
 	if (ep13_1_edq > 2 || ep13_start == 100) {
 		if (ep13_2_rhea < 1) {
 			mes "[Mechanic Engineer Dorance]";
@@ -3529,7 +3546,7 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	4_M_LGTMAN,{
 			mes "[Mechanic Engineer Dorance]";
 			mes "The ^0000ff Arunafeltz Linguist^000000 should be on the second floor of the Alliance Headquarters.";
 			setquest 8243;
-			ep13_2_rhea = 1;
+			set ep13_2_rhea,1;
 			close;
 		}
 		else if ((ep13_2_rhea > 0) && (ep13_2_rhea < 7)) {
@@ -3582,7 +3599,7 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	4_M_LGTMAN,{
 			mes "While you are gone, I be here organizing these documents.";
 			completequest 8248;
 			setquest 8249;
-			ep13_2_rhea = 8;
+			set ep13_2_rhea,8;
 			close;
 		}
 		else if ((ep13_2_rhea > 7) && (ep13_2_rhea < 11)) {
@@ -3626,11 +3643,12 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	4_M_LGTMAN,{
 			mes "With all preperation done, allow me about one hour to finish this thing.";
 			completequest 8252;
 			setquest 8253;
-			ep13_2_rhea = 12;
+			set ep13_2_rhea,12;
 			close;
 		}
 		else if (ep13_2_rhea == 12) {
-			if (questprogress(8253,PLAYTIME) == 2) {
+			set .@trs_time01,checkquest(8253,PLAYTIME);
+			if (.@trs_time01 == 2) {
 				mes "[Mechanic Engineer Dorance]";
 				mes "Sigh, What should I do now?!";
 				next;
@@ -3694,8 +3712,8 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	4_M_LGTMAN,{
 				mes "Thank you for helping us out.";
 				mes "I hope this ring would be a big help for your journey through the other world.";
 				completequest 8253;
-				ep13_2_rhea = 100;
-				if (RENEWAL_EXP)
+				set ep13_2_rhea,100;
+				if (checkre(3))
 					getexp 200000,5000;
 				else
 					getexp 1000000,300000;
@@ -3740,7 +3758,7 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	4_M_LGTMAN,{
 	}
 }
 
-mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
+mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
 	if (ep13_2_rhea < 1) {
 		mes "[Linguist Dictionary]";
 		mes "Language distinguishes humans from animals. Every single intellectual life form has their own language.";
@@ -3805,7 +3823,9 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 		mes "[Linguist Dictionary]";
 		mes "Have you met the other world's people by any chance?";
 		next;
-		if (!questprogress(2158) && !questprogress(2159)) {
+		set .@check_splque00,checkquest(2158);
+		set .@check_manque00,checkquest(2159);
+		if ((.@check_splque00 == 0) && (.@check_manque00 == 0)) {
 			// custom translation
 			mes "[Linguist Dictionary]";
 			mes "Looks like you haven't encountered them yet.";
@@ -3829,7 +3849,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 			mes "Do me a favor and go outside of the camp, find the fairies and wooden giants, and remember everything that they are saying, word for word so that I can hear what their language sounds like.";
 			completequest 8243;
 			setquest 8244;
-			ep13_2_rhea = 2;
+			set ep13_2_rhea,2;
 			close;
 		}
 		else {
@@ -3855,12 +3875,14 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 			mes "Do me a favor and go outside of the camp, find the fairies and wooden giants, and remember everything that they are saying, word for word so that I can hear what their language sounds like.";
 			completequest 8243;
 			setquest 8244;
-			ep13_2_rhea = 2;
+			set ep13_2_rhea,2;
 			close;
 		}
 	}
 	else if (ep13_2_rhea == 2) {
-		if (questprogress(2158) && questprogress(2159)) {
+		set .@check_splque00,checkquest(2158);
+		set .@check_manque00,checkquest(2159);
+		if ((.@check_splque00 > 0) && (.@check_manque00 > 0)) {
 			mes "[Linguist Dictionary]";
 			mes "You are back!";
 			next;
@@ -3871,45 +3893,45 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 			mes "[Linguist Dictionary]";
 			mes "Now, let's start with the Fairies! What is the fairy's language like? Please write them down here sentence by sentence!";
 			next;
-			.@spl_score00 = 0;
+			set .@spl_score00,0;
 			input .@input$;
 			if (.@input$ == "RLGHLRXLA TKANTLFDMS") {
 				mes "[Linguist Dictionary]";
 				mes ""+ .@input$ +"....";
 				mes "And?";
-				.@spl_score01 = .@spl_score00+1;
+				set .@spl_score01,.@spl_score00+1;
 				next;
 			}
 			else {
 				mes ""+ .@input$ +"....";
 				mes "Mmm... Hmm...?";
-				.@spl_score01 = .@spl_score00;
+				set .@spl_score01,.@spl_score00;
 				next;
 			}
 			input .@input$;
 			if (.@input$ == "WJACK TNAHRDNJSDMFH") {
 				mes ""+ .@input$ +"....";
 				mes "And?";
-				.@spl_score02 = .@spl_score01+1;
+				set .@spl_score02,.@spl_score01+1;
 				next;
 			}
 			else {
 				mes ""+ .@input$ +"....";
 				mes "I see...?";
-				.@spl_score02 = .@spl_score01;
+				set .@spl_score02,.@spl_score01;
 				next;
 			}
 			input .@input$;
 			if ((.@input$ == "WLSGHKWND !!") || (.@input$ == "WLSGHKWND")) {
 				mes ""+ .@input$ +"....";
 				mes "Is that all?";
-				.@spl_score03 = .@spl_score02+1;
+				set .@spl_score03,.@spl_score02+1;
 				next;
 			}
 			else {
 				mes ""+ .@input$ +"....";
 				mes "Is that all?";
-				.@spl_score03 = .@spl_score02;
+				set .@spl_score03,.@spl_score02;
 				next;
 			}
 			if (.@spl_score03 > 2) {
@@ -3936,45 +3958,45 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 			mes "[Linguist Dictionary]";
 			mes "Good. then next is the Wooden Giants! What's their language like? Write them down sentence by sentence just as you did with the Fairy's.";
 			next;
-			.@man_score00 = 0;
+			set .@man_score00,0;
 			input .@input$;
 			if (.@input$ == "TJDTMFJDNS CJFDI") {
 				mes "[Linguist Dictionary]";
 				mes ""+ .@input$ +"....";
 				mes "And?";
-				.@man_score01 = .@man_score00+1;
+				set .@man_score01,.@man_score00+1;
 				next;
 			}
 			else {
 				mes ""+ .@input$ +"....";
 				mes "And?";
-				.@man_score01 = .@man_score00;
+				set .@man_score01,.@man_score00;
 				next;
 			}
 			input .@input$;
 			if (.@input$ == "TKADLFDMF QKATOS") {
 				mes ""+ .@input$ +"....";
 				mes "And?";
-				.@man_score02 = .@man_score01+1;
+				set .@man_score02,.@man_score01+1;
 				next;
 			}
 			else {
 				mes ""+ .@input$ +"....";
 				mes "And?";
-				.@man_score02 = .@man_score01;
+				set .@man_score02,.@man_score01;
 				next;
 			}
 			input .@input$;
 			if ((.@input$ == "EKDTLSDML DLFMADMS..") || (.@input$ == "EKDTLSDML DLFMADMS")) {
 				mes ""+ .@input$ +"....";
 				mes "This is it?";
-				.@man_score03 = .@man_score02+1;
+				set .@man_score03,.@man_score02+1;
 				next;
 			}
 			else {
 				mes ""+ .@input$ +"....";
 				mes "Is that all?";
-				.@man_score03 = .@man_score02;
+				set .@man_score03,.@man_score02;
 				next;
 			}
 			if (.@man_score03 > 2) {
@@ -4005,7 +4027,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 			mes "....Ummmm...";
 			next;
 			mes "- Dictionary stared at the paper intently. -";
-			ep13_2_rhea = 3;
+			set ep13_2_rhea,3;
 			close;
 		}
 		else {
@@ -4084,7 +4106,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 		mes "It's difficult to continue on a research without some more samples of language. Please do my favor.";
 		completequest 8244;
 		setquest 8245;
-		ep13_2_rhea = 4;
+		set ep13_2_rhea,4;
 		close;
 	}
 	else if ((ep13_2_rhea > 3) && (ep13_2_rhea < 6)) {
@@ -4119,7 +4141,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 		mes "I wonder what the Mechanic Engineer from the Schwaltzvalt Republic would think... Would you be kind to go ask him?";
 		completequest 8247;
 		setquest 8248;
-		ep13_2_rhea = 7;
+		set ep13_2_rhea,7;
 		close;
 	}
 	else if ((ep13_2_rhea > 6) && (ep13_2_rhea < 13)) {
@@ -4162,7 +4184,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	4_M_TRAINEE,{
 	}
 }
 
-mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
+mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
 	if (ep13_2_rhea < 4) {
 		mes "[Magician Whisper]";
 		mes "To store a tremendous amount of information, well, it's impossible with existing technology.";
@@ -4239,11 +4261,13 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 		mes "Assassins installed a trap to protect Gems as they bury them.";
 		completequest 8245;
 		setquest 8246;
-		ep13_2_rhea = 5;
+		set ep13_2_rhea,5;
 		close;
 	}
 	else if (ep13_2_rhea == 5) {
-		if (questprogress(8241) && questprogress(8242)) {
+		set .@check_spljew00,checkquest(8241);
+		set .@check_manjew00,checkquest(8242);
+		if ((.@check_spljew00 > 0) && (.@check_manjew00 > 0)) {
 			if (countitem(7575) > 0) && (countitem(7576) > 0) {
 				mes "[Magician Whisper]";
 				mes "Wow, You are back already!";
@@ -4270,7 +4294,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 				setquest 8247;
 				delitem 7575,1; //Red_Jewel_
 				delitem 7576,1; //Blue_Jewel_
-				ep13_2_rhea = 6;
+				set ep13_2_rhea,6;
 				close;
 			}
 			else {
@@ -4333,7 +4357,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 		mes "While you are gone, I will organize the data to put into the Gem.";
 		completequest 8249;
 		setquest 8250;
-		ep13_2_rhea = 9;
+		set ep13_2_rhea,9;
 		close;
 	}
 	else if (ep13_2_rhea == 9) {
@@ -4357,7 +4381,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 			mes "Lumos Nox Densaugeo Dissendium Diffindo Engorgio Mobiliarbus Expecto patronum!!!!";
 			next;
 			specialeffect EF_FLASHER; // 99 : "Rune Midgarts Magician#ep132_rhea03" EF_FLASHER
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Magician Whisper]";
 			mes "Wow!!! Th, This is unbelievable!";
 			next;
@@ -4370,7 +4394,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 			completequest 8250;
 			setquest 8251;
 			delitem 6048,1; //Unidentified_Mineral
-			ep13_2_rhea = 10;
+			set ep13_2_rhea,10;
 			close;
 		}
 		else {
@@ -4408,7 +4432,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 			mes "- ^0000ff from Whisper !!^000000 -";
 			completequest 8251;
 			setquest 8252;
-			ep13_2_rhea = 11;
+			set ep13_2_rhea,11;
 			close;
 		}
 		else {
@@ -4453,16 +4477,18 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	4_M_JOB_WIZARD,{
 }
 
 function	script	jewel_13_2	{
+	.@color$ = getarg(0);
 	if (ep13_2_rhea < 5) {
 		mes "- Under a round pile of earth, -";
-		mes "- there's a "+getarg(0)+" Gem -";
+		mes "- there's a "+ .@color$ +" Gem -";
 		mes "- half-buried. -";
 		close;
 	}
 	else if (ep13_2_rhea == 5) {
-		if (!questprogress(8240+getarg(1))) {
+		.@num = getarg(1);
+		if (checkquest(8240+.@num) == -1) {
 			mes "- Under a round pile of earth, -";
-			mes "- there's a "+getarg(0)+" Gem -";
+			mes "- there's a "+ .@color$ +" Gem -";
 			mes "- half-buried. -";
 			next;
 			if(select("Dig out the Gem:Leave it alone")==2) {
@@ -4475,15 +4501,15 @@ function	script	jewel_13_2	{
 			}
 			if (rand(1,4) == 2) {
 				mes "- You dug up a pile of earth -";
-				mes "- and pulled out the "+getarg(0)+" Gem -";
-				setquest 8240+getarg(1);
-				getitem 7574+getarg(1),1;
+				mes "- and pulled out the "+ .@color$ +" Gem -";
+				setquest 8240+.@num;
+				getitem 7574+.@num,1;
 				close;
 			}
 			else {
 				mes "- As you dug up a pile of earth, -";
 				mes "- a Thief Bug attacks you! -";
-				donpcevent "Half-buried Gem#"+getarg(1)+"::OnDisable";
+				donpcevent "Half-buried Gem#"+ .@num +"::OnDisable";
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "What the heck is this?!?!?!";
@@ -4492,19 +4518,19 @@ function	script	jewel_13_2	{
 		}
 		else {
 			mes "- Small pile of earth -";
-			mes "- which you dug up the "+getarg(0)+" Gem -";
+			mes "- which you dug up the "+ .@color$ +" Gem -";
 			close;
 		}
 	}
 	else {
 		mes "- Small pile of earth -";
-		mes "- which you dug up the "+getarg(0)+" Gem -";
+		mes "- which you dug up the "+ .@color$ +" Gem -";
 		close;
 	}
 	end;
 }
 
-spl_fild02,27,218,0	script	Half-buried Gem#1	CLEAR_NPC,{
+spl_fild02,27,218,0	script	Half-buried Gem#1	844,{
 	callfunc "jewel_13_2","Red",1;
 
 OnInit:
@@ -4536,7 +4562,7 @@ OnTimer300000:
 	end;
 }
 
-man_fild03,227,109,0	script	Half-buried Gem#2	CLEAR_NPC,{
+man_fild03,227,109,0	script	Half-buried Gem#2	844,{
 	callfunc "jewel_13_2","Blue",2;
 
 OnInit:
@@ -4568,12 +4594,12 @@ OnTimer300000:
 	end;
 }
 
-mid_camp,7,3,0	script	Translator Preparation#1	4_M_PAY_SOLDIER,{
+mid_camp,7,3,0	script	Translator Preparation#1	708,{
 	callfunc "F_GM_NPC";
 	mes "[EP13 Translator Quest Preparation]";
 	mes "First, you must confirm that you are my master.";
 	next;
-	.@i = callfunc("F_GM_NPC",1854,0);
+	set .@i, callfunc("F_GM_NPC",1854,0);
 	if (.@i == -1) {
 		mes "[EP 13 Translator Quest Preparation]";
 		mes "Cancelled";
@@ -4604,7 +4630,7 @@ mid_camp,7,3,0	script	Translator Preparation#1	4_M_PAY_SOLDIER,{
 			}
 			mes "[EP 13 Translator Quest Preparation]";
 			mes "Episode 13.1 - The Report Quest Reward Item Received.";
-			ep13_1_edq = 14;
+			set ep13_1_edq,14;
 			close;
 		case 2:
 			mes "[EP 13 Translator Quest Preparation]";
@@ -4630,8 +4656,8 @@ mid_camp,7,3,0	script	Translator Preparation#1	4_M_PAY_SOLDIER,{
 // Daily Quests :: ep13_2_tre
 // - Midgard Ore
 // - Alfheim Perfume
-//============================================================
-man_in01,372,221,5	script	Scientist#lifeguard	4_MAN_BENKUNI,{
+//============================================================ 
+man_in01,372,221,5	script	Scientist#lifeguard	449,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		mes "[Dr. Lifeguard]";
 		if (ep13_2_tre == 0) {
@@ -4692,7 +4718,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	4_MAN_BENKUNI,{
 			mes "[Dr. Lifeguard]";
 			mes "I'll draw a result that can";
 			mes "satisfy his lead!";
-			ep13_2_tre = 1;
+			set ep13_2_tre,1;
 			close;
 		}
 		else if ((ep13_2_tre == 1) || (ep13_2_tre == 100)) {
@@ -4701,7 +4727,8 @@ man_in01,372,221,5	script	Scientist#lifeguard	4_MAN_BENKUNI,{
 				mes "Why not put some of your items in storage and come back?";
 				close;
 			}
-			if (questprogress(2182,PLAYTIME) == 1) {
+			set .@dayq_chk,checkquest(2182,PLAYTIME);
+			if ((.@dayq_chk == 0) || (.@dayq_chk == 1)) {
 				mes "The future of the Sapha is up to you.";
 				mes "I do not have any need of your help right now.";
 				close;
@@ -4749,7 +4776,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	4_MAN_BENKUNI,{
 				mes "Take it, it shold be";
 				mes "helpful in collecting";
 				mes "the minerals I need.";
-				ep13_2_tre = atoi(.@rand_dayq$[2]);
+				set ep13_2_tre,atoi(.@rand_dayq$[2]);
 				setquest 2179+(atoi(.@rand_dayq$[2])-2);
 				getitem 6076,1; //Portable_Toolbox
 				close;
@@ -4770,15 +4797,15 @@ man_in01,372,221,5	script	Scientist#lifeguard	4_MAN_BENKUNI,{
 				mes "[Dr. Lifeguard]";
 				mes "If you want to help my study for the sake of the Sapha, come to me at any time.";
 				mes "I will be very happy for any help you can give.";
-				.@stone_chk = countitem(6077);
-				.@stoneelse_chk = countitem(6078);
+				set .@stone_chk,countitem(6077);
+				set .@stoneelse_chk,countitem(6078);
 				delitem 6077,.@stone_chk; //Rough_Mineral
 				delitem 6078,.@stoneelse_chk; //Stone_Fragments
 				delitem 6076,1; //Portable_Toolbox
 				getitem 6080,3; //Manuk_Coin
-				getexp 0,RENEWAL_EXP?50000:700000; //unconfirmed (RE)
+				//getexp 0,(checkre(3))?70000:700000; //iRO only
 				changequest 2179+(ep13_2_tre-2),2182;
-				ep13_2_tre = 100;
+				set ep13_2_tre,100;
 				close;
 			}
 			else {
@@ -4805,11 +4832,11 @@ man_in01,372,221,5	script	Scientist#lifeguard	4_MAN_BENKUNI,{
 
 function	script	find_13_2	{
 	switch (getarg(0)) {
-		case 0: setarray .@check[0],2,10; .@str$ = "Mt. Mjolnir"; break;
-		case 1: setarray .@check[0],3,5;  .@str$ = "Abyss Lake"; break;
-		case 2: setarray .@check[0],4,5;  .@str$ = "Thor Volcano"; break;
+		case 0: setarray .@Check[0],2,10; set .@str$,"Mt. Mjolnir"; break;
+		case 1: setarray .@Check[0],3,5; set .@str$,"Abyss Lake"; break;
+		case 2: setarray .@Check[0],4,5; set .@str$,"Thor Volcano"; break;
 	}
-	if (ep13_2_tre != .@check[0] || countitem(6076) != 1 || countitem(6077) >= .@check[1]) end;
+	if (ep13_2_tre != .@Check[0] || countitem(6076) != 1 || countitem(6077) >= .@Check[1]) end;
 	mes "- Just arrived at "+.@str$+". I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
 	next;
 	switch(select("Check current location.:Do nothing.")) {
@@ -4831,7 +4858,7 @@ function	script	find_13_2	{
 -	script	mjo_no_find	-1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,0;
 	end;
 }
@@ -4877,8 +4904,8 @@ mjolnir_12,220,37,0	duplicate(mjo_no_find)	#mj12_find_3	-1,5,5
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					.@stst = rand(1,5);
+					emotion ET_AHA, playerattached();
+					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,1; //Rough_Mineral
 					else getitem 6077,2; //Rough_Mineral
@@ -4903,32 +4930,32 @@ OnInit:
 	enablenpc strnpcinfo(0);
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_2_tre == 2 && countitem(6076) == 1 && countitem(6077) < 10)
 		specialeffect EF_COUPLECASTING;
 	end;
 }
 
-mjolnir_01,32,309,3	duplicate(mjo_find)	#mj01_01	HIDDEN_NPC,7,7
-mjolnir_01,217,34,3	duplicate(mjo_find)	#mj01_02	HIDDEN_NPC,7,7
-mjolnir_02,90,195,3	duplicate(mjo_find)	#mj02_01	HIDDEN_NPC,5,10
-mjolnir_02,206,187,3	duplicate(mjo_find)	#mj02_02	HIDDEN_NPC,7,7
-mjolnir_04,125,380,3	duplicate(mjo_find)	#mj04_01	HIDDEN_NPC,7,7
-mjolnir_04,220,130,3	duplicate(mjo_find)	#mj04_02	HIDDEN_NPC,7,7
-mjolnir_09,229,214,3	duplicate(mjo_find)	#mj09_01	HIDDEN_NPC,10,10
-mjolnir_10,188,260,3	duplicate(mjo_find)	#mj10_01	HIDDEN_NPC,10,10
+mjolnir_01,32,309,3	duplicate(mjo_find)	#mj01_01	111,7,7
+mjolnir_01,217,34,3	duplicate(mjo_find)	#mj01_02	111,7,7
+mjolnir_02,90,195,3	duplicate(mjo_find)	#mj02_01	111,5,10
+mjolnir_02,206,187,3	duplicate(mjo_find)	#mj02_02	111,7,7
+mjolnir_04,125,380,3	duplicate(mjo_find)	#mj04_01	111,7,7
+mjolnir_04,220,130,3	duplicate(mjo_find)	#mj04_02	111,7,7
+mjolnir_09,229,214,3	duplicate(mjo_find)	#mj09_01	111,10,10
+mjolnir_10,188,260,3	duplicate(mjo_find)	#mj10_01	111,10,10
 
 mjolnir_01,364,256,0	script	#mj01_find	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,32,309,1,0x00FF00;
 	viewpoint 1,217,34,2,0x00FF00;
 	close;
 }
 
-mjolnir_01,1,1,3	script	#mj01_01_t	HIDDEN_NPC,{
+mjolnir_01,1,1,3	script	#mj01_01_t	111,{
 	end;
 
 OnEnable:
@@ -4941,7 +4968,7 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_01,1,1,3	script	#mj01_02_t	HIDDEN_NPC,{
+mjolnir_01,1,1,3	script	#mj01_02_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4955,7 +4982,7 @@ OnTimer60000:
 mjolnir_02,313,289,0	script	#mj02_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,90,195,1,0x00FF00;
 	viewpoint 1,206,187,2,0x00FF00;
@@ -4965,7 +4992,7 @@ OnTouch:
 mjolnir_02,78,258,0	script	#mj02_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,90,195,1,0x00FF00;
 	viewpoint 1,206,187,2,0x00FF00;
@@ -4973,7 +5000,7 @@ OnTouch:
 }
 
 
-mjolnir_02,1,1,3	script	#mj02_01_t	HIDDEN_NPC,{
+mjolnir_02,1,1,3	script	#mj02_01_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4984,7 +5011,7 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_02,1,1,3	script	#mj02_02_t	HIDDEN_NPC,{
+mjolnir_02,1,1,3	script	#mj02_02_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4998,7 +5025,7 @@ OnTimer60000:
 mjolnir_04,147,208,0	script	#mj04_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,125,380,1,0x00FF00;
 	viewpoint 1,220,130,2,0x00FF00;
@@ -5008,7 +5035,7 @@ OnTouch:
 mjolnir_04,160,77,0	script	#mj04_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,125,380,1,0x00FF00;
 	viewpoint 1,220,130,2,0x00FF00;
@@ -5018,14 +5045,14 @@ OnTouch:
 mjolnir_04,361,174,0	script	#mj04_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,125,380,1,0x00FF00;
 	viewpoint 1,220,130,2,0x00FF00;
 	close;
 }
 
-mjolnir_04,1,1,3	script	#mj04_01_t	HIDDEN_NPC,{
+mjolnir_04,1,1,3	script	#mj04_01_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5036,7 +5063,7 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_04,1,1,3	script	#mj04_02_t	HIDDEN_NPC,{
+mjolnir_04,1,1,3	script	#mj04_02_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5050,7 +5077,7 @@ OnTimer60000:
 mjolnir_09,201,355,0	script	#mj09_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5059,7 +5086,7 @@ OnTouch:
 mjolnir_09,38,243,0	script	#mj09_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5068,7 +5095,7 @@ OnTouch:
 mjolnir_09,106,36,0	script	#mj09_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5077,7 +5104,7 @@ OnTouch:
 mjolnir_09,306,36,0	script	#mj09_find_4	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5086,13 +5113,13 @@ OnTouch:
 mjolnir_09,369,279,0	script	#mj09_find_5	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
 }
 
-mjolnir_09,1,1,3	script	#mj09_01_t	HIDDEN_NPC,{
+mjolnir_09,1,1,3	script	#mj09_01_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5106,7 +5133,7 @@ OnTimer60000:
 mjolnir_10,201,355,0	script	#mj10_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5115,7 +5142,7 @@ OnTouch:
 mjolnir_10,374,215,0	script	#mj10_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5124,7 +5151,7 @@ OnTouch:
 mjolnir_10,272,20,0	script	#mj10_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5133,7 +5160,7 @@ OnTouch:
 mjolnir_10,75,22,0	script	#mj10_find_4	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5142,13 +5169,13 @@ OnTouch:
 mjolnir_10,27,258,0	script	#mj10_find_5	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
 }
 
-mjolnir_10,1,1,3	script	#mj10_01_t	HIDDEN_NPC,{
+mjolnir_10,1,1,3	script	#mj10_01_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5162,7 +5189,7 @@ OnTimer60000:
 hu_fild05,335,152,0	script	#hu_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5175,7 +5202,7 @@ OnTouch:
 hu_fild05,89,52,0	script	#hu_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5188,7 +5215,7 @@ OnTouch:
 hu_fild05,42,205,0	script	#hu_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5201,7 +5228,7 @@ OnTouch:
 hu_fild05,276,349,0	script	#hu_find_4	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5228,8 +5255,8 @@ OnTouch:
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					.@stst = rand(1,5);
+					emotion ET_AHA, playerattached();
+					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
 					else getitem 6077,1; //Rough_Mineral
@@ -5253,19 +5280,19 @@ OnInit:
 	enablenpc strnpcinfo(0);
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_2_tre == 3 && countitem(6076) == 1 && countitem(6077) < 5)
 		specialeffect EF_COUPLECASTING;
 	end;
 }
 
-hu_fild05,251,345,3	duplicate(hu_find)	#hu_01	HIDDEN_NPC,10,10
-hu_fild05,134,322,3	duplicate(hu_find)	#hu_02	HIDDEN_NPC,10,10
-hu_fild05,72,104,3	duplicate(hu_find)	#hu_03	HIDDEN_NPC,10,10
-hu_fild05,65,99,3	duplicate(hu_find)	#hu_04	HIDDEN_NPC,10,10
-hu_fild05,323,84,3	duplicate(hu_find)	#hu_05	HIDDEN_NPC,10,10
+hu_fild05,251,345,3	duplicate(hu_find)	#hu_01	111,10,10
+hu_fild05,134,322,3	duplicate(hu_find)	#hu_02	111,10,10
+hu_fild05,72,104,3	duplicate(hu_find)	#hu_03	111,10,10
+hu_fild05,65,99,3	duplicate(hu_find)	#hu_04	111,10,10
+hu_fild05,323,84,3	duplicate(hu_find)	#hu_05	111,10,10
 
-hu_fild05,1,1,3	script	#hu_01_t	HIDDEN_NPC,{
+hu_fild05,1,1,3	script	#hu_01_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5276,7 +5303,7 @@ OnTimer60000:
 	end;
 }
 
-hu_fild05,1,1,3	script	#hu_02_t	HIDDEN_NPC,{
+hu_fild05,1,1,3	script	#hu_02_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5287,7 +5314,7 @@ OnTimer60000:
 	end;
 }
 
-hu_fild05,1,1,3	script	#hu_03_t	HIDDEN_NPC,{
+hu_fild05,1,1,3	script	#hu_03_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5298,7 +5325,7 @@ OnTimer60000:
 	end;
 }
 
-hu_fild05,1,1,3	script	#hu_04_t	HIDDEN_NPC,{
+hu_fild05,1,1,3	script	#hu_04_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5309,7 +5336,7 @@ OnTimer60000:
 	end;
 }
 
-hu_fild05,1,1,3	script	#hu_05_t	HIDDEN_NPC,{
+hu_fild05,1,1,3	script	#hu_05_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5323,7 +5350,7 @@ OnTimer60000:
 ve_fild03,351,219,0	script	#ve_find_1	-1,3,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",2,1;
 	viewpoint 1,152,134,1,0x00FF00;
 	viewpoint 1,256,228,2,0x00FF00;
@@ -5335,7 +5362,7 @@ OnTouch:
 ve_fild03,223,51,0	script	#ve_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",2,1;
 	viewpoint 1,152,134,1,0x00FF00;
 	viewpoint 1,256,228,2,0x00FF00;
@@ -5361,8 +5388,8 @@ OnTouch:
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					.@stst = rand(1,5);
+					emotion ET_AHA, playerattached();
+					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
 					else getitem 6077,1; //Rough_Mineral
@@ -5386,18 +5413,18 @@ OnInit:
 	enablenpc strnpcinfo(0);
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_2_tre == 4 && countitem(6076) == 1 && countitem(6077) < 5)
 		specialeffect EF_COUPLECASTING;
 	end;
 }
 
-ve_fild03,152,134,3	duplicate(ve_find)	#ve_01	HIDDEN_NPC,10,10
-ve_fild03,256,228,3	duplicate(ve_find)	#ve_02	HIDDEN_NPC,10,10
-ve_fild03,85,189,3	duplicate(ve_find)	#ve_03	HIDDEN_NPC,10,10
-ve_fild03,282,268,3	duplicate(ve_find)	#ve_04	HIDDEN_NPC,10,10
+ve_fild03,152,134,3	duplicate(ve_find)	#ve_01	111,10,10
+ve_fild03,256,228,3	duplicate(ve_find)	#ve_02	111,10,10
+ve_fild03,85,189,3	duplicate(ve_find)	#ve_03	111,10,10
+ve_fild03,282,268,3	duplicate(ve_find)	#ve_04	111,10,10
 
-ve_fild03,1,1,3	script	#ve_01_t	HIDDEN_NPC,{
+ve_fild03,1,1,3	script	#ve_01_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5408,7 +5435,7 @@ OnTimer40000:
 	end;
 }
 
-ve_fild03,1,1,3	script	#ve_02_t	HIDDEN_NPC,{
+ve_fild03,1,1,3	script	#ve_02_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5419,7 +5446,7 @@ OnTimer40000:
 	end;
 }
 
-ve_fild03,1,1,3	script	#ve_03_t	HIDDEN_NPC,{
+ve_fild03,1,1,3	script	#ve_03_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5430,7 +5457,7 @@ OnTimer40000:
 	end;
 }
 
-ve_fild03,1,1,3	script	#ve_04_t	HIDDEN_NPC,{
+ve_fild03,1,1,3	script	#ve_04_t	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5441,7 +5468,7 @@ OnTimer40000:
 	end;
 }
 
-spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
+spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (checkweight(1201,1) == 0) {
 			mes "[Grenouille]";
@@ -5449,11 +5476,12 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 			mes "Why not put some of your items in storage and come back?";
 			close;
 		}
-		.@dayq_chk = questprogress(2186,PLAYTIME);
-		if (!.@dayq_chk || .@dayq_chk == 2) {
+		set .@dayq_chk,checkquest(2186,PLAYTIME);
+		if ((.@dayq_chk == -1) || (.@dayq_chk == 2)) {
 			if ((ep13_2_tre1 < 1) || (ep13_2_tre1 == 6)) {
-				erasequest 2186;
-				ep13_2_tre1 = 0;
+				if (.@dayq_chk == 2)
+					erasequest 2186;
+				set ep13_2_tre1,0;
 				mes "[Grenouille]";
 				mes "I've heard that some strangers from Rune Midgard are around here, it must be you.";
 				mes "I'm Grenouille, a scientist.";
@@ -5531,7 +5559,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 				mes "depending on the Splendide device,";
 				mes "but ^FF0000the way^000000 can fill";
 				mes "Splendide by it's scent like it never falls!";
-				ep13_2_tre1 = 1;
+				set ep13_2_tre1,1;
 				setquest 2183;
 				close;
 			}
@@ -5544,13 +5572,13 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 			}
 			else if (ep13_2_tre1 == 3) {
 				if (countitem(6079) == 1) {
-					emotion e_swt;
-					emotion e_swt,1;
+					emotion ET_SWEAT;
+					emotion ET_SWEAT, playerattached();
 					mes "[Grenouille]";
 					mes "Hoo, this is one of the";
 					mes "most common kinds of flowers.";
 					next;
-					emotion e_heh;
+					emotion ET_SMILE;
 					mes "[Grenouille]";
 					mes "Haha, Don't worry.";
 					mes "Common flowers like this can bring the familiarity of home back to the soldiers.";
@@ -5563,7 +5591,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 					mes "[Grenouille]";
 					mes "Would you please wait a while?";
 					changequest 2183,2184;
-					ep13_2_tre1 = 4;
+					set ep13_2_tre1,4;
 					delitem 6079,1; //Flower_Of_Alfheim
 					close;
 				}
@@ -5574,7 +5602,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 				}
 			}
 			else if (ep13_2_tre1 == 4) {
-				.@ttalk = rand(1,10);
+				set .@ttalk,rand(1,10);
 				if (.@ttalk < 8) {
 					mes "- clitter-clatter -";
 					next;
@@ -5616,7 +5644,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 					mes "Here, I'll give you this perfume,";
 					mes "help the exhausted soldiers and";
 					mes "let me know the result, please!";
-					ep13_2_tre1 = 5;
+					set ep13_2_tre1,5;
 					getitem 6082,5; //Spirit_Of_Alfheim
 					changequest 2184,2185;
 					close;
@@ -5640,11 +5668,10 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 					mes "This is my reward for you.";
 					mes "I hope this will be helpful to you.";
 					mes "If you have something to talk to me about, come to me whenever. Nice to meet you, human from Rune Midgard.";
-					ep13_2_tre1 = 6;
+					set ep13_2_tre1,6;
 					changequest 2185,2186;
 					getitem 6081,3; //Splendide_Coin
-					if (RENEWAL_EXP == 0)
-						getexp 0,RENEWAL_EXP?50000:700000; //unconfirmed (RE)
+					//getexp 0,(checkre(3))?70000:700000; //iRO only
 					close;
 				}
 				else {
@@ -5675,7 +5702,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	4_M_FAIRYKID5,{
 	}
 }
 
-spl_in02,139,65,3	script	Middle-Ranked Laphine#la	4_F_FAIRYKID3,{
+spl_in02,139,65,3	script	Middle-Ranked Laphine#la	438,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (checkweight(1201,1) == 0) {
 			mes "[Flowery]";
@@ -5701,16 +5728,16 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	4_F_FAIRYKID3,{
 			mes "but sometimes he help others well! Huhu!";
 			next;
 			mes "- rummaging -";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "- rummaging -";
 			mes "- rummaging -";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "- rummaging -";
 			mes "- rummaging -";
 			mes "- rummaging -";
-			emotion e_ic;
+			emotion ET_AHA;
 			next;
 			mes "[Flowery]";
 			mes "Wow! Come here!";
@@ -5727,7 +5754,7 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	4_F_FAIRYKID3,{
 			mes "Umm.. But I don't have";
 			mes "any other seed of flower..";
 			mes "So, just bring this, here you are~";
-			ep13_2_tre1 = 2;
+			set ep13_2_tre1,2;
 			getitem 7193,1; //Germinating_Sprout
 			close;
 		}
@@ -5743,6 +5770,7 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	4_F_FAIRYKID3,{
 			mes "Can you believe that right in front of us is a battle field? Though it's very silent and peaceful at the moment. So do I~";
 			close;
 		}
+		
 	}
 	else {
 		mes "[Middle-Ranked Laphine]";
@@ -5766,7 +5794,7 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	4_F_FAIRYKID3,{
 			mes "a big flower of Alfheim was lied";
 			mes "in your hand, instead of the seed. -";
 			delitem 7193,1; //Germinating_Sprout
-			ep13_2_tre1 = 3;
+			set ep13_2_tre1,3;
 			getitem 6079,1; //Flower_Of_Alfheim
 			close;
 		}
@@ -5779,14 +5807,14 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	4_F_FAIRYKID3,{
 	end;
 }
 
-splendide,160,265,3	duplicate(Purifier)	Purifier#1	CLEAR_NPC
-splendide,262,262,3	duplicate(Purifier)	Purifier#2	CLEAR_NPC
-splendide,262,187,3	duplicate(Purifier)	Purifier#3	CLEAR_NPC
-splendide,164,82,3	duplicate(Purifier)	Purifier#4	CLEAR_NPC
-splendide,171,116,3	duplicate(Purifier)	Purifier#5	CLEAR_NPC
-splendide,134,280,3	duplicate(Purifier)	Purifier#6	CLEAR_NPC
+splendide,160,265,3	duplicate(Purifier)	Purifier#1	844
+splendide,262,262,3	duplicate(Purifier)	Purifier#2	844
+splendide,262,187,3	duplicate(Purifier)	Purifier#3	844
+splendide,164,82,3	duplicate(Purifier)	Purifier#4	844
+splendide,171,116,3	duplicate(Purifier)	Purifier#5	844
+splendide,134,280,3	duplicate(Purifier)	Purifier#6	844
 
-splendide,205,139,5	script	Exhausted Soldier#1	4_M_FAIRYSOLDIER,{
+splendide,205,139,5	script	Exhausted Soldier#1	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -5805,7 +5833,7 @@ splendide,205,139,5	script	Exhausted Soldier#1	4_M_FAIRYSOLDIER,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feeling much better!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_1::OnEnable";
@@ -5835,7 +5863,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_1	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_1	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5846,7 +5874,7 @@ OnTimer60000:
 	end;
 }
 
-splendide,181,135,5	script	Exhausted Soldier#2	4_M_FAIRYSOLDIER,{
+splendide,181,135,5	script	Exhausted Soldier#2	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -5862,7 +5890,7 @@ splendide,181,135,5	script	Exhausted Soldier#2	4_M_FAIRYSOLDIER,{
 					mes "What happen?";
 					mes "Feel better suddenly! I'm so happy now!";
 					mes "Let's go to work!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_2::OnEnable";
@@ -5892,7 +5920,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_2	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_2	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5903,7 +5931,7 @@ OnTimer60000:
 	end;
 }
 
-splendide,139,178,5	script	Exhausted Soldier#3	4_M_FAIRYSOLDIER,{
+splendide,139,178,5	script	Exhausted Soldier#3	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -5922,7 +5950,7 @@ splendide,139,178,5	script	Exhausted Soldier#3	4_M_FAIRYSOLDIER,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Let's beat Sapha and go back home!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_3::OnEnable";
@@ -5952,7 +5980,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_3	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_3	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -5963,7 +5991,7 @@ OnTimer60000:
 	end;
 }
 
-splendide,164,188,5	script	Exhausted Soldier#4	4_M_FAIRYSOLDIER,{
+splendide,164,188,5	script	Exhausted Soldier#4	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -5982,7 +6010,7 @@ splendide,164,188,5	script	Exhausted Soldier#4	4_M_FAIRYSOLDIER,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feels like at home!!";
-					emotion e_sob;
+					emotion ET_CRY;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_4::OnEnable";
@@ -6012,7 +6040,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_4	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_4	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -6023,7 +6051,7 @@ OnTimer60000:
 	end;
 }
 
-splendide,177,257,5	script	Exhausted Soldier#5	4_M_FAIRYSOLDIER,{
+splendide,177,257,5	script	Exhausted Soldier#5	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -6042,7 +6070,7 @@ splendide,177,257,5	script	Exhausted Soldier#5	4_M_FAIRYSOLDIER,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feeling much better!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_5::OnEnable";
@@ -6072,7 +6100,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_5	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_5	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -6083,7 +6111,7 @@ OnTimer60000:
 	end;
 }
 
-splendide,124,212,5	script	Exhausted Soldier#6	4_M_FAIRYSOLDIER,{
+splendide,124,212,5	script	Exhausted Soldier#6	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -6102,7 +6130,7 @@ splendide,124,212,5	script	Exhausted Soldier#6	4_M_FAIRYSOLDIER,{
 					mes "[Exhausted Soldier]";
 					mes "Yes, Splendide also a part of Alfheim!";
 					mes "Go Laphines!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_6::OnEnable";
@@ -6132,7 +6160,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_6	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_6	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -6143,7 +6171,7 @@ OnTimer60000:
 	end;
 }
 
-splendide,196,153,5	script	Exhausted Soldier#7	4_M_FAIRYSOLDIER,{
+splendide,196,153,5	script	Exhausted Soldier#7	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		if (ep13_2_tre1 == 5) {
 			if (countitem(6082) > 0) {
@@ -6162,7 +6190,7 @@ splendide,196,153,5	script	Exhausted Soldier#7	4_M_FAIRYSOLDIER,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feeling much better!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_7::OnEnable";
@@ -6192,7 +6220,7 @@ OnInit:
 	end;
 }
 
-splendide,1,1,1	script	#tukare_7	HIDDEN_NPC,{
+splendide,1,1,1	script	#tukare_7	111,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -6204,8 +6232,8 @@ OnTimer60000:
 }
 
 // Secret note of Bazett :: ep13_2_dailybs
-//============================================================
-mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
+//============================================================ 
+mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 	if (checkweight(1201,1) == 0) {
 		mes " - Hold on!! -";
 		mes " - You are carrying too many different items - ";
@@ -6219,7 +6247,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 		mes "Hu~~";
 		mes "That's pretty interesting...";
 		mes "I will take note of it in my research papers.";
-		emotion e_ic,"Bazett Teablack#ep13bs";
+		emotion ET_AHA;
 		next;
 		mes "[Industrious Man]";
 		mes "write...write...";
@@ -6239,7 +6267,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 			mes "Hu~~";
 			mes "That's pretty interesting...";
 			mes "I will take note of it in my research papers.";
-			emotion e_ic,"Bazett Teablack#ep13bs";
+			emotion ET_AHA;
 			next;
 			mes "[Industrious Man]";
 			mes "write...write...";
@@ -6256,7 +6284,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 			mes "Auch!!!";
 			mes "Who...who are you?!";
 			mes "How long have you been standing there?";
-			emotion e_omg,"Bazett Teablack#ep13bs";
+			emotion ET_HUK;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Uh, I'm just passing by.";
@@ -6264,7 +6292,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "See you~!!";
-			emotion e_swt2,1;
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			next;
 			mes "[Industrious Man]";
 			mes "Uh!! Wait!!";
@@ -6278,12 +6306,12 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 			next;
 			mes "[Industrious Man]";
 			mes "My research is not going so well. The god of fate must have sent you to me. I'm sure of it!!";
-			emotion e_no1,"Bazett Teablack#ep13bs";
+			emotion ET_BEST;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "......";
 			mes "......What?!";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Industrious Man]";
 			mes "Would you like to help me with my search?";
@@ -6325,7 +6353,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 					next;
 					mes "[Bazett]";
 					mes "Hopefully I can find what I am looking for with the information you can find.";
-					ep13_2_busut = 2;
+					set ep13_2_busut,2;
 					setquest 11101;
 					close;
 				case 2:
@@ -6335,11 +6363,11 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 					mes ".............";
 					mes ".............";
 					mes "...........Why!!!!!";
-					emotion e_sob,"Bazett Teablack#ep13bs";
+					emotion ET_CRY;
 					next;
 					mes "[Industrious Man]";
 					mes "Well if you decide to change your mind, come back to me.";
-					ep13_2_busut = 1;
+					set ep13_2_busut,1;
 					close;
 				}
 				break;
@@ -6366,7 +6394,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 				next;
 				mes "[Bazett]";
 				mes "Hopefully I can find what I am looking for with the information you can find.";
-				ep13_2_busut = 2;
+				set ep13_2_busut,2;
 				setquest 11101;
 				close;
 			case 3:
@@ -6394,11 +6422,11 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 				mes ".............";
 				mes ".............";
 				mes "...........Why!!!!!";
-				emotion e_sob,"Bazett Teablack#ep13bs";
+				emotion ET_CRY;
 				next;
 				mes "[Industrious Man]";
 				mes "Well if you decide to change your mind, come back to me.";
-				ep13_2_busut = 1;
+				set ep13_2_busut,1;
 				close;
 			}
 		}
@@ -6474,14 +6502,14 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 			next;
 			mes "[Bazett]";
 			mes "Hopefully I can find what I am looking for with the information you can find.";
-			ep13_2_busut = 2;
+			set ep13_2_busut,2;
 			setquest 11101;
 			close;
 		case 2:
 			mes "[Industrious Man]";
 			mes ".............";
 			mes "Well if you decide to change your mind, come back to me.";
-			emotion e_sob,"Bazett Teablack#ep13bs";
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -6499,11 +6527,11 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 		next;
 		mes "[Bazett]";
 		mes "Got it? Ok take care and see you soon.";
-		ep13_2_busut = 3;
-		ep13_2_bs1 = 1;
-		ep13_2_bs2 = 1;
-		ep13_2_bs3 = 1;
-		ep13_2_bs4 = 1;
+		set ep13_2_busut,3;
+		set ep13_2_bs1,1;
+		set ep13_2_bs2,1;
+		set ep13_2_bs3,1;
+		set ep13_2_bs4,1;
 		getitem 6074,1; //Bazett's_Order
 		changequest 11101,11102;
 		close;
@@ -6547,7 +6575,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 				mes "You must be tired, go take a rest.";
 				mes "I'll go prepare new notes.";
 				mes "You can just go investigate again for me.";
-				ep13_2_busut = 7;
+				set ep13_2_busut,7;
 				erasequest 11102;
 				setquest 11104;
 				close;
@@ -6580,7 +6608,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 				mes "Ah... this isn't much, but it's a coin that the giants use.";
 				mes "Maybe you can buy something from them with this.";
 				delitem 6074,1; //Bazett's_Order
-				ep13_2_busut = 7;
+				set ep13_2_busut,7;
 				if (ep13_2_bs1 == 3) getitem 6080,1; //Manuk_Coin
 				if (ep13_2_bs2 == 3) getitem 6080,1; //Manuk_Coin
 				if (ep13_2_bs3 == 3) getitem 6080,1; //Manuk_Coin
@@ -6604,7 +6632,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	4_M_ALCHE_D,{
 	}
 }
 
-manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
+manuk,193,135,0	script	Worker#ep13bs	454,{
 	if (isequipped(2782) == 1) {
 		if (ep13_2_busut == 3) {
 			if (ep13_2_bs1 == 1) {
@@ -6620,7 +6648,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				mes "......";
 				mes ".........";
 				mes "Nothing!!";
-				emotion e_omg,"Worker#ep13bs";
+				emotion ET_HUK;
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "What's up?";
@@ -6632,7 +6660,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Yes, sorry to startle you.";
-				emotion e_heh,1;
+				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Haha, it's ok.";
@@ -6675,8 +6703,8 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				mes "[Worker]";
 				mes "Ugh!!!";
 				mes "**Sigh**";
-				emotion e_sob,"Worker#ep13bs";
-				emotion e_sob,1;
+				emotion ET_CRY;
+				emotion ET_CRY, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Well that's that!";
@@ -6687,7 +6715,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				next;
 				mes "[Gill]";
 				mes "Sorry, again for making you do this but I will be waiting here for you.";
-				ep13_2_bs1 = 2;
+				set ep13_2_bs1,2;
 				setquest 11105;
 				close;
 			}
@@ -6701,8 +6729,8 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 					mes "It's all because of you, we are able to prevent anything disastrous.";
 					mes "^0000FFEven though you're also an alien race, but compared to the vile fairies^000000, I'm glad to have met someone like "+strcharinfo(0)+".";
 					delitem 6032,30; //Horn_Of_Hilsrion
-					ep13_2_bs1 = 3;
-					ep13_2_busut = 4;
+					set ep13_2_bs1,3;
+					set ep13_2_busut,4;
 					completequest 11105;
 					close;
 				}
@@ -6739,7 +6767,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				mes "......";
 				mes ".........";
 				mes "Nevermind. Nothing.";
-				emotion e_omg,"Worker#ep13bs";
+				emotion ET_HUK;
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "You don't have to be like this.";
@@ -6751,7 +6779,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Since I'm travelling here, so I thought I'd need it...";
-				emotion e_heh,1," ET_SMILE";
+				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Haha, is that so?";
@@ -6796,8 +6824,8 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				next;
 				mes "[Worker]";
 				mes "Ah!!!";
-				emotion e_sob,"Worker#ep13bs";
-				emotion e_sob,1;
+				emotion ET_CRY;
+				emotion ET_CRY, playerattached();
 				next;
 				mes "[Worker]";
 				mes "I can't just care about pride now.";
@@ -6809,7 +6837,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 				next;
 				mes "[Gill]";
 				mes "I'm really sorry, so please hurry.";
-				ep13_2_bs1 = 2;
+				set ep13_2_bs1,2;
 				setquest 11105;
 				close;
 			}
@@ -6823,7 +6851,7 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 					mes "It's all because of you, we are able to prevent anything disastrous.";
 					mes "^0000FFEven though you're also an alien race, but compared to the vile fairies^000000, I'm glad to have met someone like "+strcharinfo(0)+".";
 					delitem 6032,30; //Horn_Of_Hilsrion
-					ep13_2_bs1 = 3;
+					set ep13_2_bs1,3;
 					completequest 11105;
 					close;
 				}
@@ -6870,8 +6898,8 @@ manuk,193,135,0	script	Worker#ep13bs	4_MAN_PIOM,{
 }
 
 // Yggdrasil Dungeon Floor 2 puzzle :: ny_dun02_puzzle
-//============================================================
-nyd_dun02,178,255,0	script	Strange Device#ep13_out	CLEAR_NPC,3,3,{
+//============================================================ 
+nyd_dun02,178,255,0	script	Strange Device#ep13_out	844,3,3,{
 	mes "There's something strange here.";
 	mes "Maybe that device can be controlled from here.";
 	next;
@@ -6887,12 +6915,12 @@ nyd_dun02,178,255,0	script	Strange Device#ep13_out	CLEAR_NPC,3,3,{
 			close;
 	}
 
-OnTouch:
+OnTouch_:
 	specialeffect EF_LEVEL99_4;
 	end;
 }
 
-nyd_dun02,139,274,0	script	Strange Device#ep13_in	CLEAR_NPC,3,3,{
+nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
 	if ($@08_ep13nydun02_in == 1) {
 		mes "The device has already been activated.";
 		mes "You must wait for the controls to reset.";
@@ -6909,8 +6937,8 @@ nyd_dun02,139,274,0	script	Strange Device#ep13_in	CLEAR_NPC,3,3,{
 				close;
 			}
 			else {
-				$@08_ep13nydun02_in = 1;
-				.@way_loot = rand(1,2);
+				set $@08_ep13nydun02_in,1;
+				set .@way_loot,rand(1,2);
 				if (.@way_loot == 1) {
 					donpcevent "ep13_warp_s1::OnEnable";
 					donpcevent "ep13_warp_11::OnEnable";
@@ -6939,11 +6967,11 @@ nyd_dun02,139,274,0	script	Strange Device#ep13_in	CLEAR_NPC,3,3,{
 
 OnTimer70000:
 	donpcevent "ep13_nd2f_mng::OnReset";
-	$@08_ep13nydun02_in = 0;
+	set $@08_ep13nydun02_in,0;
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	specialeffect EF_LEVEL99_4;
 	end;
 }
@@ -7027,74 +7055,74 @@ OnDisable:
 }
 
 -	script	ep13_warp_w_0	-1,{
-OnTouch:
+OnTouch_:
 	warp "nyd_dun01",214,68;
 	end;
 }
 
-nyd_dun02,143,272,0	duplicate(ep13_warp_s_0)	ep13_warp_s1	HIDDEN_WARP_NPC
-nyd_dun02,143,266,0	duplicate(ep13_warp_s_0)	ep13_warp_s3	HIDDEN_WARP_NPC
-nyd_dun02,146,272,0	duplicate(ep13_warp_s_0)	ep13_warp_11	HIDDEN_WARP_NPC
-nyd_dun02,146,266,0	duplicate(ep13_warp_s_0)	ep13_warp_13	HIDDEN_WARP_NPC
-nyd_dun02,149,260,0	duplicate(ep13_warp_s_0)	ep13_warp_25	HIDDEN_WARP_NPC
-nyd_dun02,149,257,0	duplicate(ep13_warp_s_0)	ep13_warp_26	HIDDEN_WARP_NPC
-nyd_dun02,152,270,0	duplicate(ep13_warp_s_0)	ep13_warp_31	HIDDEN_WARP_NPC
-nyd_dun02,152,264,0	duplicate(ep13_warp_s_0)	ep13_warp_33	HIDDEN_WARP_NPC
-nyd_dun02,155,269,0	duplicate(ep13_warp_s_0)	ep13_warp_41	HIDDEN_WARP_NPC
-nyd_dun02,155,254,0	duplicate(ep13_warp_s_0)	ep13_warp_46	HIDDEN_WARP_NPC
-nyd_dun02,158,263,0	duplicate(ep13_warp_s_0)	ep13_warp_52	HIDDEN_WARP_NPC
-nyd_dun02,158,254,0	duplicate(ep13_warp_s_0)	ep13_warp_55	HIDDEN_WARP_NPC
-nyd_dun02,161,261,0	duplicate(ep13_warp_s_0)	ep13_warp_62	HIDDEN_WARP_NPC
-nyd_dun02,161,255,0	duplicate(ep13_warp_s_0)	ep13_warp_64	HIDDEN_WARP_NPC
-nyd_dun02,161,249,0	duplicate(ep13_warp_s_0)	ep13_warp_66	HIDDEN_WARP_NPC
-nyd_dun02,164,261,0	duplicate(ep13_warp_s_0)	ep13_warp_71	HIDDEN_WARP_NPC
-nyd_dun02,164,255,0	duplicate(ep13_warp_s_0)	ep13_warp_73	HIDDEN_WARP_NPC
-nyd_dun02,164,249,0	duplicate(ep13_warp_s_0)	ep13_warp_75	HIDDEN_WARP_NPC
-nyd_dun02,167,249,0	duplicate(ep13_warp_s_0)	ep13_warp_84	HIDDEN_WARP_NPC
-nyd_dun02,170,257,0	duplicate(ep13_warp_s_0)	ep13_warp_91	HIDDEN_WARP_NPC
-nyd_dun02,170,254,0	duplicate(ep13_warp_s_0)	ep13_warp_92	HIDDEN_WARP_NPC
-nyd_dun02,170,248,0	duplicate(ep13_warp_s_0)	ep13_warp_94	HIDDEN_WARP_NPC
-nyd_dun02,170,245,0	duplicate(ep13_warp_s_0)	ep13_warp_95	HIDDEN_WARP_NPC
+nyd_dun02,143,272,0	duplicate(ep13_warp_s_0)	ep13_warp_s1	139
+nyd_dun02,143,266,0	duplicate(ep13_warp_s_0)	ep13_warp_s3	139
+nyd_dun02,146,272,0	duplicate(ep13_warp_s_0)	ep13_warp_11	139
+nyd_dun02,146,266,0	duplicate(ep13_warp_s_0)	ep13_warp_13	139
+nyd_dun02,149,260,0	duplicate(ep13_warp_s_0)	ep13_warp_25	139
+nyd_dun02,149,257,0	duplicate(ep13_warp_s_0)	ep13_warp_26	139
+nyd_dun02,152,270,0	duplicate(ep13_warp_s_0)	ep13_warp_31	139
+nyd_dun02,152,264,0	duplicate(ep13_warp_s_0)	ep13_warp_33	139
+nyd_dun02,155,269,0	duplicate(ep13_warp_s_0)	ep13_warp_41	139
+nyd_dun02,155,254,0	duplicate(ep13_warp_s_0)	ep13_warp_46	139
+nyd_dun02,158,263,0	duplicate(ep13_warp_s_0)	ep13_warp_52	139
+nyd_dun02,158,254,0	duplicate(ep13_warp_s_0)	ep13_warp_55	139
+nyd_dun02,161,261,0	duplicate(ep13_warp_s_0)	ep13_warp_62	139
+nyd_dun02,161,255,0	duplicate(ep13_warp_s_0)	ep13_warp_64	139
+nyd_dun02,161,249,0	duplicate(ep13_warp_s_0)	ep13_warp_66	139
+nyd_dun02,164,261,0	duplicate(ep13_warp_s_0)	ep13_warp_71	139
+nyd_dun02,164,255,0	duplicate(ep13_warp_s_0)	ep13_warp_73	139
+nyd_dun02,164,249,0	duplicate(ep13_warp_s_0)	ep13_warp_75	139
+nyd_dun02,167,249,0	duplicate(ep13_warp_s_0)	ep13_warp_84	139
+nyd_dun02,170,257,0	duplicate(ep13_warp_s_0)	ep13_warp_91	139
+nyd_dun02,170,254,0	duplicate(ep13_warp_s_0)	ep13_warp_92	139
+nyd_dun02,170,248,0	duplicate(ep13_warp_s_0)	ep13_warp_94	139
+nyd_dun02,170,245,0	duplicate(ep13_warp_s_0)	ep13_warp_95	139
 
-nyd_dun02,146,263,0	duplicate(ep13_warp_s_1)	ep13_warp_14	HIDDEN_WARP_NPC
-nyd_dun02,149,272,0	duplicate(ep13_warp_s_1)	ep13_warp_21	HIDDEN_WARP_NPC
-nyd_dun02,152,258,0	duplicate(ep13_warp_s_1)	ep13_warp_35	HIDDEN_WARP_NPC
-nyd_dun02,155,266,0	duplicate(ep13_warp_s_1)	ep13_warp_42	HIDDEN_WARP_NPC
-nyd_dun02,158,251,0	duplicate(ep13_warp_s_1)	ep13_warp_56	HIDDEN_WARP_NPC
-nyd_dun02,164,258,0	duplicate(ep13_warp_s_1)	ep13_warp_72	HIDDEN_WARP_NPC
-nyd_dun02,164,246,0	duplicate(ep13_warp_s_1)	ep13_warp_76	HIDDEN_WARP_NPC
-nyd_dun02,167,255,0	duplicate(ep13_warp_s_1)	ep13_warp_82	HIDDEN_WARP_NPC
-nyd_dun02,170,251,0	duplicate(ep13_warp_s_1)	ep13_warp_93	HIDDEN_WARP_NPC
+nyd_dun02,146,263,0	duplicate(ep13_warp_s_1)	ep13_warp_14	139
+nyd_dun02,149,272,0	duplicate(ep13_warp_s_1)	ep13_warp_21	139
+nyd_dun02,152,258,0	duplicate(ep13_warp_s_1)	ep13_warp_35	139
+nyd_dun02,155,266,0	duplicate(ep13_warp_s_1)	ep13_warp_42	139
+nyd_dun02,158,251,0	duplicate(ep13_warp_s_1)	ep13_warp_56	139
+nyd_dun02,164,258,0	duplicate(ep13_warp_s_1)	ep13_warp_72	139
+nyd_dun02,164,246,0	duplicate(ep13_warp_s_1)	ep13_warp_76	139
+nyd_dun02,167,255,0	duplicate(ep13_warp_s_1)	ep13_warp_82	139
+nyd_dun02,170,251,0	duplicate(ep13_warp_s_1)	ep13_warp_93	139
 
-nyd_dun02,149,269,0	duplicate(ep13_warp_s_2)	ep13_warp_22	HIDDEN_WARP_NPC
-nyd_dun02,149,263,0	duplicate(ep13_warp_s_2)	ep13_warp_24	HIDDEN_WARP_NPC
-nyd_dun02,155,263,0	duplicate(ep13_warp_s_2)	ep13_warp_43	HIDDEN_WARP_NPC
-nyd_dun02,155,257,0	duplicate(ep13_warp_s_2)	ep13_warp_45	HIDDEN_WARP_NPC
-nyd_dun02,161,264,0	duplicate(ep13_warp_s_2)	ep13_warp_61	HIDDEN_WARP_NPC
-nyd_dun02,161,252,0	duplicate(ep13_warp_s_2)	ep13_warp_65	HIDDEN_WARP_NPC
-nyd_dun02,167,258,0	duplicate(ep13_warp_s_2)	ep13_warp_81	HIDDEN_WARP_NPC
-nyd_dun02,167,252,0	duplicate(ep13_warp_s_2)	ep13_warp_83	HIDDEN_WARP_NPC
-nyd_dun02,167,246,0	duplicate(ep13_warp_s_2)	ep13_warp_85	HIDDEN_WARP_NPC
-nyd_dun02,173,251,0	duplicate(ep13_warp_s_2)	ep13_warp_e1	HIDDEN_WARP_NPC
-nyd_dun02,173,248,0	duplicate(ep13_warp_s_2)	ep13_warp_e2	HIDDEN_WARP_NPC
-nyd_dun02,173,245,0	duplicate(ep13_warp_s_2)	ep13_warp_e3	HIDDEN_WARP_NPC
+nyd_dun02,149,269,0	duplicate(ep13_warp_s_2)	ep13_warp_22	139
+nyd_dun02,149,263,0	duplicate(ep13_warp_s_2)	ep13_warp_24	139
+nyd_dun02,155,263,0	duplicate(ep13_warp_s_2)	ep13_warp_43	139
+nyd_dun02,155,257,0	duplicate(ep13_warp_s_2)	ep13_warp_45	139
+nyd_dun02,161,264,0	duplicate(ep13_warp_s_2)	ep13_warp_61	139
+nyd_dun02,161,252,0	duplicate(ep13_warp_s_2)	ep13_warp_65	139
+nyd_dun02,167,258,0	duplicate(ep13_warp_s_2)	ep13_warp_81	139
+nyd_dun02,167,252,0	duplicate(ep13_warp_s_2)	ep13_warp_83	139
+nyd_dun02,167,246,0	duplicate(ep13_warp_s_2)	ep13_warp_85	139
+nyd_dun02,173,251,0	duplicate(ep13_warp_s_2)	ep13_warp_e1	139
+nyd_dun02,173,248,0	duplicate(ep13_warp_s_2)	ep13_warp_e2	139
+nyd_dun02,173,245,0	duplicate(ep13_warp_s_2)	ep13_warp_e3	139
 
-nyd_dun02,143,269,0	duplicate(ep13_warp_w_0)	ep13_warp_s2	HIDDEN_WARP_NPC,1,1
-nyd_dun02,143,263,0	duplicate(ep13_warp_w_0)	ep13_warp_s4	HIDDEN_WARP_NPC,1,1
-nyd_dun02,146,269,0	duplicate(ep13_warp_w_0)	ep13_warp_12	HIDDEN_WARP_NPC,1,1
-nyd_dun02,146,260,0	duplicate(ep13_warp_w_0)	ep13_warp_15	HIDDEN_WARP_NPC,1,1
-nyd_dun02,149,266,0	duplicate(ep13_warp_w_0)	ep13_warp_23	HIDDEN_WARP_NPC,1,1
-nyd_dun02,152,267,0	duplicate(ep13_warp_w_0)	ep13_warp_32	HIDDEN_WARP_NPC,1,1
-nyd_dun02,152,261,0	duplicate(ep13_warp_w_0)	ep13_warp_34	HIDDEN_WARP_NPC,1,1
-nyd_dun02,155,260,0	duplicate(ep13_warp_w_0)	ep13_warp_44	HIDDEN_WARP_NPC,1,1
-nyd_dun02,158,266,0	duplicate(ep13_warp_w_0)	ep13_warp_51	HIDDEN_WARP_NPC,1,1
-nyd_dun02,158,260,0	duplicate(ep13_warp_w_0)	ep13_warp_53	HIDDEN_WARP_NPC,1,1
-nyd_dun02,158,257,0	duplicate(ep13_warp_w_0)	ep13_warp_54	HIDDEN_WARP_NPC,1,1
-nyd_dun02,161,258,0	duplicate(ep13_warp_w_0)	ep13_warp_63	HIDDEN_WARP_NPC,1,1
-nyd_dun02,164,252,0	duplicate(ep13_warp_w_0)	ep13_warp_74	HIDDEN_WARP_NPC,1,1
-nyd_dun02,173,242,0	duplicate(ep13_warp_w_0)	ep13_warp_e4	HIDDEN_WARP_NPC,1,1
+nyd_dun02,143,269,0	duplicate(ep13_warp_w_0)	ep13_warp_s2	139,1,1
+nyd_dun02,143,263,0	duplicate(ep13_warp_w_0)	ep13_warp_s4	139,1,1
+nyd_dun02,146,269,0	duplicate(ep13_warp_w_0)	ep13_warp_12	139,1,1
+nyd_dun02,146,260,0	duplicate(ep13_warp_w_0)	ep13_warp_15	139,1,1
+nyd_dun02,149,266,0	duplicate(ep13_warp_w_0)	ep13_warp_23	139,1,1
+nyd_dun02,152,267,0	duplicate(ep13_warp_w_0)	ep13_warp_32	139,1,1
+nyd_dun02,152,261,0	duplicate(ep13_warp_w_0)	ep13_warp_34	139,1,1
+nyd_dun02,155,260,0	duplicate(ep13_warp_w_0)	ep13_warp_44	139,1,1
+nyd_dun02,158,266,0	duplicate(ep13_warp_w_0)	ep13_warp_51	139,1,1
+nyd_dun02,158,260,0	duplicate(ep13_warp_w_0)	ep13_warp_53	139,1,1
+nyd_dun02,158,257,0	duplicate(ep13_warp_w_0)	ep13_warp_54	139,1,1
+nyd_dun02,161,258,0	duplicate(ep13_warp_w_0)	ep13_warp_63	139,1,1
+nyd_dun02,164,252,0	duplicate(ep13_warp_w_0)	ep13_warp_74	139,1,1
+nyd_dun02,173,242,0	duplicate(ep13_warp_w_0)	ep13_warp_e4	139,1,1
 
-nyd_dun02,149,269,0	script	ep13_warp_22_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,149,269,0	script	ep13_warp_22_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_22_2";
@@ -7104,7 +7132,7 @@ OnEnable:
 	enablenpc "ep13_warp_22_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_31::OnEnable";
 	donpcevent "ep13_warp_41::OnEnable";
 	donpcevent "ep13_warp_42::OnEnable";
@@ -7114,12 +7142,12 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,149,263,0	script	ep13_warp_24_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,149,263,0	script	ep13_warp_24_2	139,1,1,{
 OnEnable:
 	enablenpc "ep13_warp_24_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (rand(2)) {
 		donpcevent "ep13_warp_33::OnEnable";
 		donpcevent "ep13_warp_43::OnEnable";
@@ -7138,7 +7166,7 @@ OnDisable:
 	end;
 }
 
-nyd_dun02,155,263,0	script	ep13_warp_43_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,155,263,0	script	ep13_warp_43_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_43_2";
@@ -7148,7 +7176,7 @@ OnEnable:
 	enablenpc "ep13_warp_43_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_52::OnEnable";
 	donpcevent "ep13_warp_61::OnEnable";
 	donpcevent "ep13_warp_61_2::OnEnable";
@@ -7156,7 +7184,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,155,257,0	script	ep13_warp_45_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,155,257,0	script	ep13_warp_45_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_45_2";
@@ -7166,7 +7194,7 @@ OnEnable:
 	enablenpc "ep13_warp_45_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_46::OnEnable";
 	donpcevent "ep13_warp_55::OnEnable";
 	donpcevent "ep13_warp_56::OnEnable";
@@ -7176,7 +7204,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,161,264,0	script	ep13_warp_61_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,161,264,0	script	ep13_warp_61_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_61_2";
@@ -7186,7 +7214,7 @@ OnEnable:
 	enablenpc "ep13_warp_61_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_62::OnEnable";
 	donpcevent "ep13_warp_71::OnEnable";
 	donpcevent "ep13_warp_72::OnEnable";
@@ -7196,12 +7224,12 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,161,252,0	script	ep13_warp_65_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,161,252,0	script	ep13_warp_65_2	139,1,1,{
 OnEnable:
 	enablenpc "ep13_warp_65_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (rand(2)) {
 		donpcevent "ep13_warp_64::OnEnable";
 		donpcevent "ep13_warp_73::OnEnable";
@@ -7222,7 +7250,7 @@ OnDisable:
 	end;
 }
 
-nyd_dun02,167,258,0	script	ep13_warp_81_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,167,258,0	script	ep13_warp_81_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_81_2";
@@ -7232,7 +7260,7 @@ OnEnable:
 	enablenpc "ep13_warp_81_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_91::OnEnable";
 	donpcevent "ep13_warp_92::OnEnable";
 	donpcevent "ep13_warp_93::OnEnable";
@@ -7241,7 +7269,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,167,252,0	script	ep13_warp_83_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,167,252,0	script	ep13_warp_83_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_83_2";
@@ -7251,7 +7279,7 @@ OnEnable:
 	enablenpc "ep13_warp_83_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_84::OnEnable";
 	donpcevent "ep13_warp_94::OnEnable";
 	donpcevent "ep13_warp_e2::OnEnable";
@@ -7259,7 +7287,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,167,246,0	script	ep13_warp_85_2	HIDDEN_WARP_NPC,1,1,{
+nyd_dun02,167,246,0	script	ep13_warp_85_2	139,1,1,{
 OnInit:
 OnDisable:
 	disablenpc "ep13_warp_85_2";
@@ -7269,7 +7297,7 @@ OnEnable:
 	enablenpc "ep13_warp_85_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_95::OnEnable";
 	donpcevent "ep13_warp_e3::OnEnable";
 	donpcevent "ep13_warp_85_2::OnEnable";
@@ -7279,7 +7307,7 @@ OnTouch:
 nyd_dun01,255,142,0	warp	nynm_dun1f_to_2f	1,1,nyd_dun02,61,265
 nyd_dun02,56,264,0	warp	nynm_dun2f_to_1f	1,1,nyd_dun01,249,143
 
-nyd_dun02,1,1,0	script	ep13_nd2f_mng	CLEAR_NPC,{
+nyd_dun02,1,1,0	script	ep13_nd2f_mng	844,{
 	callfunc "F_GM_NPC";
 	mes "Enter password.";
 	next;
@@ -7289,7 +7317,7 @@ nyd_dun02,1,1,0	script	ep13_nd2f_mng	CLEAR_NPC,{
 		switch(select("Yes:No")) {
 		case 1:
 			donpcevent "ep13_nd2f_mng::OnReset";
-			$@08_ep13nydun02_in = 0;
+			set $@08_ep13nydun02_in,0;
 			mes "Done.";
 			close;
 		case 2:

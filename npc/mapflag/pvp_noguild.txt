@@ -1,13 +1,15 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Mapflag: Ignore guilds.
 //===== By: ==================================================
-//= Hercules Dev Team
+//= rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.1
-//===== Description: =========================================
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
 //= Ignores guild alliances on GvG-enabled maps.
-//===== Additional Comments: =================================
-//= 1.0 - Initial script.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
 //============================================================
 
 // PvP Arenas =================

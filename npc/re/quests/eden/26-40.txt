@@ -1,19 +1,23 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Eden Group Quests - Mission [26 - 40]
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
 //===== Description: =========================================
 //= Repetable Quests for Players between Baselevel 26 - 40.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Some little optimization here and there. [Masao]
 //= 1.2 Optimized. [Euphy]
+//= 1.3 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.4 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
-moc_para01,38,38,3	script	Mission [26 - 40]	4_BOARD3,{
-	if (countitem(6219) < 1) {
+moc_para01,38,38,3	script	Mission [26 - 40]	857,{
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "You are not a qualified member. You can not use the bulletin board.";
 		close;
 	}
@@ -69,11 +73,12 @@ moc_para01,38,38,3	script	Mission [26 - 40]	4_BOARD3,{
 	end;
 L_Quest:
 	//QuestID,ReqLvl,Quest,Client,Loc,Desc
+	.@string$ = getarg(2);
 	if (BaseLevel < getarg(1,26)) {
-		mes "Your level doesn't meet the requirements. You can't take the '"+getarg(2)+"' mission.";
+		mes "Your level doesn't meet the requirements. You can't take the '"+ .@string$ +"' mission.";
 		close;
 	}
-	mes "["+getarg(2)+" !!]";
+	mes "["+ .@string$ +" !!]";
 	mes "Client : "+getarg(3);
 	mes "Client Location : "+getarg(4);
 	mes "Requested Mission : "+getarg(5);
@@ -81,13 +86,13 @@ L_Quest:
 	mes "Will you accept this mission?";
 	next;
 	if(select("No, I won't accept it.:Yes, I will accept it.") == 1) {
-		mes "You have declined the "+getarg(2)+" mission.";
+		mes "You have declined the "+ .@string$ +" mission.";
 		close;
 	}
-	if (questprogress(getarg(0))) mes "You are already doing this mission.";
+	if (checkquest(getarg(0)) > -1) mes "You are already doing this mission.";
 	else {
 		setquest getarg(0);
-		mes "You have accepted the "+getarg(2)+" mission.";
+		mes "You have accepted the "+ .@string$ +" mission.";
 	}
 	mes "You can get a reward from the client after you finish the mission.";
 	next;
@@ -95,7 +100,7 @@ L_Quest:
 	close;
 }
 
-geffen,103,42,5	script	Sponiac	4W_M_03,{
+geffen,103,42,5	script	Sponiac	99,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 3500) {
 		mes "[Sponiac]";
 		mes "Why are you carrying so many items?";
@@ -109,7 +114,7 @@ geffen,103,42,5	script	Sponiac	4W_M_03,{
 	mes "[Sponiac]";
 	mes "Wow, you must be a beginner, right?";
 	mes "What an innocent face! Ha~ hahaha.";
-	emotion e_gg;
+	emotion ET_KIK;
 	next;
 	mes "[Sponiac]";
 	mes "Why don't you do some hunting outside instead of walking around and wasting your time?";
@@ -134,8 +139,9 @@ geffen,103,42,5	script	Sponiac	4W_M_03,{
 	end;
 L_Quest:
 	//QuestID,Quest,BExp,JExp,PotionAmt,Desc
-	if (questprogress(getarg(0)) == 1) {
-		if (questprogress(getarg(0),HUNTING) == 2) {
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id) == 1) {
+		if (checkquest(.@quest_id,HUNTING) == 2) {
 			mes "[Sponiac]";
 			mes getarg(1)+"!";
 			mes "Wow, I didn't expect you would do that mission. I was just about to give up. But you did good job. I appreciate it!";
@@ -148,7 +154,7 @@ L_Quest:
 			mes "Here it is. Thank you very much. God bless you!";
 			getitem 569,getarg(4); //Novice_Potion
 			getexp getarg(2),getarg(3);
-			erasequest getarg(0);
+			erasequest .@quest_id;
 			close;
 		}
 		mes "[Sponiac]";
@@ -175,7 +181,7 @@ L_Quest:
 	close;
 }
 
-moc_ruins,173,55,3	script	Dieshin Man	4_M_ORIENT02,{
+moc_ruins,173,55,3	script	Dieshin Man	89,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 3500) {
 		mes "[Dieshin Man]";
 		mes "Why are you carrying so many items?";
@@ -209,7 +215,7 @@ moc_ruins,173,55,3	script	Dieshin Man	4_M_ORIENT02,{
 	}
 	end;
 L_Quest:
-	if (questprogress(getarg(0)) != 1) {
+	if (checkquest(getarg(0)) != 1) {
 		mes "[Dieshin Man]";
 		mes "Huh? Are you sure? Something is wrong...";
 		next;
@@ -259,7 +265,7 @@ L_Quest:
 	close;
 }
 
-pay_fild07,83,89,7	script	Zoologist	4_M_ORIENT02,{
+pay_fild07,83,89,7	script	Zoologist	89,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 3500) {
 		mes "[Zoologist]";
 		mes "Why are you carrying so many items?";
@@ -281,7 +287,7 @@ pay_fild07,83,89,7	script	Zoologist	4_M_ORIENT02,{
 		mes "Oh, I need an Insecticide to continue the study.";
 		close;
 	}
-	if (questprogress(8271) != 1) {
+	if (checkquest(8271) != 1) {
 		mes "[Zoologist]";
 		mes "Huh?";
 		mes "You are not Dieshin's delivery man?";
@@ -324,7 +330,7 @@ pay_fild07,83,89,7	script	Zoologist	4_M_ORIENT02,{
 	close;
 }
 
-prt_fild03,30,254,3	script	Entomologist	4_M_01,{
+prt_fild03,30,254,3	script	Entomologist	83,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 3500) {
 		mes "[Entomologist]";
 		mes "Why are you carrying so many items?";
@@ -346,7 +352,7 @@ prt_fild03,30,254,3	script	Entomologist	4_M_01,{
 		mes "Oh, I need Honey to continue the study.";
 		close;
 	}
-	if (questprogress(8272) != 1) {
+	if (checkquest(8272) != 1) {
 		mes "[Entomologist]";
 		mes "Huh?";
 		mes "You are not Dieshin's delivery man?";
@@ -389,7 +395,7 @@ prt_fild03,30,254,3	script	Entomologist	4_M_01,{
 	close;
 }
 
-xmas_fild01,92,57,3	script	Biologist	4W_M_01,{
+xmas_fild01,92,57,3	script	Biologist	97,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 3500) {
 		mes "[Biologist]";
 		mes "Why are you carrying so many items?";
@@ -411,7 +417,7 @@ xmas_fild01,92,57,3	script	Biologist	4W_M_01,{
 		mes "Huh, whatever. But be careful! It's very slippery here.";
 		close;
 	}
-	if (questprogress(8273) != 1) {
+	if (checkquest(8273) != 1) {
 		mes "[Biologist]";
 		mes "Huh?";
 		mes "You are not Dieshin's delivery man?";
@@ -454,7 +460,7 @@ xmas_fild01,92,57,3	script	Biologist	4W_M_01,{
 	close;
 }
 
-payon,179,66,3	script	Dashia	4_M_RACHMAN1,{
+payon,179,66,3	script	Dashia	931,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 3500) {
 		mes "[Dashia]";
 		mes "Why are you carrying so many items?";
@@ -645,7 +651,7 @@ payon,179,66,3	script	Dashia	4_M_RACHMAN1,{
 	mes "Anyway, I will be here waiting for you. Please come back when you finish the mission!";
 	close;
 L_Quest:
-	if (questprogress(getarg(0)) != 1) {
+	if (checkquest(getarg(0)) != 1) {
 		mes "[Dashia]";
 		mes "Huh? Are you sure? Something is wrong...";
 		next;
@@ -661,7 +667,7 @@ L_Reward:
 	next;
 	mes "[Dashia]";
 	mes "Thank you very much. God bless you!";
-	emotion e_heh;
+	emotion ET_SMILE;
 	next;
 	mes "[Dashia]";
 	mes "Ha~! Ha~!";

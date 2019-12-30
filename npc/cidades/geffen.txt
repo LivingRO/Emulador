@@ -1,28 +1,31 @@
-//    ________________________________________________________
-//   /                                                        \
-//   |       _           _   _   _                            |
-//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
-//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
-//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
-//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
-//   |                                                        |
-//   |                    brAthena Script                     |
-//   |--------------------------------------------------------|
-//   | Nome do Script: geffen.txt                             |
-//   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
-//   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 2.0/2.0/2.0/1.0                |
-//   |--------------------------------------------------------|
-//   | Descrição: NPCs da Cidade de Geffen.                   |
-//   |--------------------------------------------------------|
-//   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
-//   |--------------------------------------------------------|
-//   | - Anotações                                            |
-//   \________________________________________________________/
+//===== rAthena Script =======================================
+//= Geffen Town
+//===== By: ==================================================
+//= Everybody mentioned in the comments
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Geffen Town NPCs
+//===== Additional Comments: =================================
+//= Fully working
+//= 1.1 Spell Checked [massdriller]
+//= 1.2 Fixed more typos [Nexon]
+//= 1.3 added a Level 4 weapon quest related NPC [MasterOfMuppets]
+//= 1.4 Removed Duplicates [Silent]
+//= 1.5 Fixed some typos and coordinates [Musashiden]
+//= 1.5a Fixed a small typo [Evera]
+//= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6a Small bug fix. (end -> next) care of Lesbian. [L0ne_W0lf]
+//= 1.7 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.8 Fixed character's name and swapped gender dialogues [Lupus]
+//= 1.9 Replaced effect numerics with constants. [Samuray22]
+//= 2.0 Bug fixes (bugreport:7928) [DeadlySilence]
+//============================================================
 
-geffen,59,143,0	script	Meera	4_F_02,{
+geffen,59,143,0	script	Meera	91,{
 	mes "[Meera]";
 	mes "Bem vindo a Geffen,";
 	mes "a Cidade da Magia!";
@@ -45,7 +48,7 @@ geffen,59,143,0	script	Meera	4_F_02,{
 	close;
 }
 
-geffen,156,190,0	script	Orwalk	4_KID01,{
+geffen,156,190,0	script	Orwalk	82,{
 	mes "[Orwalk]";
 	mes "...Interessante.";
 	mes "Muito intrigante.";
@@ -63,7 +66,7 @@ geffen,156,190,0	script	Orwalk	4_KID01,{
 	close;
 }
 
-geffen_in,164,109,0	script	Wizard Stanza	1_M_WIZARD,{
+geffen_in,164,109,0	script	Wizard Stanza	64,{
 	mes "[Stanza]";
 	mes "Eu senti a presença de um espírito poderoso. Pode ser você...?";
 	next;
@@ -91,7 +94,7 @@ geffen_in,164,109,0	script	Wizard Stanza	1_M_WIZARD,{
 	close;
 }
 
-geffen,147,26,0	script	Ralphie	4W_M_01,{
+geffen,147,26,0	script	Ralphie	97,{
 	mes "[Ralphie]";
 	mes "Em algum lugar neste mundo, há uma equipe rara que pode transformar energia psíquica em vigor físico, dotando seu dono com ^990000poder destrutivo^000000...";
 	next;
@@ -99,7 +102,7 @@ geffen,147,26,0	script	Ralphie	4W_M_01,{
 	mes "Com isso, qualquer um poderia ser forte como Hercules... Mesmo um fracote como eu! Hahahahahah,";
 	mes "Tenho que ter isso!";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Ralphie]";
 	mes "...Céus!";
 	mes "Desde quando";
@@ -121,14 +124,14 @@ geffen,147,26,0	script	Ralphie	4W_M_01,{
 	close;
 }
 
-geffen,111,48,0	script	Stacey	4W_F_01,{
-	if (getequipid(1) == 2299) {
+geffen,111,48,0	script	Stacey	101,{
+	if (getequipid(EQI_HEAD_TOP) == 2299) {
 		mes "[Stacey]";
 		mes "Oh...!";
 		mes "É um Elmo de Orc que você está vestindo?! Isso é muito legal! Wow...";
 		next;
 		mes "[Stacey]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Você parece tão...";
 			mes "Robusto e viril~";
 		}
@@ -138,7 +141,7 @@ geffen,111,48,0	script	Stacey	4W_F_01,{
 		}
 		close;
 	}
-	else if (getequipid(1) == 5094) {
+	else if (getequipid(EQI_HEAD_TOP) == 5094) {
 		mes "[Stacey]";
 		mes "Oh...";
 		mes "Wow...";
@@ -149,11 +152,11 @@ geffen,111,48,0	script	Stacey	4W_F_01,{
 		mes "de orc Herói!";
 		next;
 		mes "[Stacey]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Isto...";
 			mes "É como se você estivesse cercado por uma aurea masculina! Oooh~! Você deve ser irresistível para todas as garotas!";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Stacey]";
 			mes "E eu não sou exceção.";
 		}
@@ -167,10 +170,7 @@ geffen,111,48,0	script	Stacey	4W_F_01,{
 		mes "[Stacey]";
 		mes "Olá~!";
 		mes "Oh, você não é";
-		if (Sex)
 		mes "um aventureiro?";
-		else
-		mes "uma aventureira?";
 		next;
 		mes "[Stacey]";
 		mes "Você já viu alguns Orcs da tribo de Demi-Human? Se você descer para o sul a partir daqui, eu acho que você pode encontrar Orcs na floresta profunda.";
@@ -184,7 +184,7 @@ geffen,111,48,0	script	Stacey	4W_F_01,{
 	}
 }
 
-geffen_in,34,170,0	script	Theodoro	1_M_01,{
+geffen_in,34,170,0	script	Theodore	47,{
 	mes "[Theodoro]";
 	mes "Olá!";
 	mes "Não está um";
@@ -216,17 +216,17 @@ geffen_in,34,170,0	script	Theodoro	1_M_01,{
 	close;
 }
 
-geffen,146,148,4	script	Cara Suspeito	4W_M_03,6,6,{
+geffen,146,148,4	script	Cara Suspeito	99,6,6,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[?]";
 	mes "^333333*Psssst!*";
 	mes "E-Ei você!";
 	mes "Você quer começar suar mãos em algo grande? Venha aqui!^000000";
 	next;
 	mes "[Cara Suspeito]";
-	if (Sex)
+	if (Sex == SEX_MALE)
 		mes "Ei cara forte. Você parece suficientemente inteligente para reconhecer uma pechincha quando ele está bem na frente de seus olhos.";
 	else
 		mes "Ora, ora, ora. Você não é uma garota bonita. Hoje é apenas o seu dia de sorte!";
@@ -261,7 +261,7 @@ OnTouch:
 			input .@input;
 			if (.@input == 0) {
 				mes "[Cara Suspeito]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Ah caaara~ Você está partindo meu coração! Quer dizer, a estes preços, eu estou praticamente realizando caridade!";
 				else
 					mes "E-espeeeere! Você não deixou-me dizer a parte sobre como as Poções Vermelhas pode ajudá-lo a perder e ganhar peso em todos os lugares certos! Espeeeere!";
@@ -276,7 +276,7 @@ OnTouch:
 			else
 				break;
 		}
-		.@Red_potion_hap = .@input * 500;
+		set .@Red_potion_hap,.@input * 500;
 		if (Zeny < .@Red_potion_hap) {
 			mes "[Cara Suspeito]";
 			mes "Ahh~";
@@ -288,12 +288,12 @@ OnTouch:
 			mes "^333333Agora eu tenho que encontrar algum outro otário para despejar este lixo!^000000 *Ahem* Quero dizer, vamos novamente!";
 			close;
 		}
-		Zeny -= .@Red_potion_hap;
+		set Zeny, Zeny-.@Red_potion_hap;
 		getitem 501,.@input; //Red_Potion
 		break;
 	case 2:
 		mes "[Cara Suspeito]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "O que um cara forte quer com uma faca? Aquilo só irá romper com a força de seus balanços incrivelmente poderosos!";
 			next;
 			mes "[Cara Suspeito]";
@@ -346,19 +346,19 @@ OnTouch:
 			else
 				break;
 		}
-		.@Main_gauche_hap = .@input * 9400;
+		set .@Main_gauche_hap,.@input * 9400;
 		if (Zeny < .@Main_gauche_hap) {
 			mes "[Cara Suspeito]";
 			mes "Sem dinheiro?";
 			mes "Quando o melhor negócio da sua vida seria fechado? Trágico, realmente trágico...";
 			close;
 		}
-		Zeny -= .@Main_gauche_hap;
+		set Zeny, Zeny-.@Main_gauche_hap;
 		getitem 1207,.@input; //Main_Gauche
 		break;
 	case 3:
 		mes "[Cara Suspeito]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Um manto? Que besteira! Existe algo muito melhor em matéria de armaduras!";
 		else
 			mes "Por que uma menina tão bonita usaria algo tão fora de moda? Sabe o que te deixaria ainda mais bela?";
@@ -398,14 +398,14 @@ OnTouch:
 			else
 				break;
 		}
-		.@Hood__hap = .@input * 930;
+		set .@Hood__hap,.@input * 930;
 		if (Zeny < .@Hood__hap) {
 			mes "[Cara Suspeito]";
 			mes "Ah...";
 			mes "Sem dinheiro, não é?";
 			close;
 		}
-		Zeny -= .@Hood__hap;
+		set Zeny, Zeny-.@Hood__hap;
 		getitem 2501,.@input; //Hood
 		break;
 	case 4:
@@ -425,7 +425,7 @@ OnTouch:
 	close;
 }
 
-geffen_in,22,125,1	script	Crumpler	1_M_HOF,{
+geffen_in,22,125,1	script	Crumpler	52,{
 	mes "[Crumpler]";
 	mes "Ooooh~!";
 	mes "Você está bem vestido, maguinho,";
@@ -460,7 +460,7 @@ geffen_in,22,125,1	script	Crumpler	1_M_HOF,{
 			mes "[Crumpler]";
 			mes "Ooooooooh";
 			mes "droooooga!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Crumpler]";
 			mes "Socorrooooo!";
@@ -498,7 +498,7 @@ geffen_in,22,125,1	script	Crumpler	1_M_HOF,{
 		mes "[Crumpler]";
 		mes "Um...";
 		mes "Sábio?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Crumpler]";
 		mes "Não sei o que é isso. Mas suponho que não pode ser tão ruim quanto um Mago.";
@@ -523,7 +523,7 @@ geffen_in,22,125,1	script	Crumpler	1_M_HOF,{
 	}
 }
 
-geffen_in,59,61,1	script	Skyler	1_M_PUBMASTER,{
+geffen_in,59,61,1	script	Skyler	61,{
 	mes "[Skyler]";
 	mes "Olá, olá.";
 	mes "Você não está procurando";
@@ -548,7 +548,7 @@ geffen_in,59,61,1	script	Skyler	1_M_PUBMASTER,{
 	close;
 }
 
-geffen_in,27,134,5	script	Garçonete#elen	4_F_02,{
+geffen_in,27,134,5	script	Garçonete#elen	91,{
 	mes "[Elenore]";
 	mes "Esse lugar...";
 	mes "Tem uma atmosfera";
@@ -612,7 +612,7 @@ geffen_in,27,134,5	script	Garçonete#elen	4_F_02,{
 		mes "Ouvi dizer que tem uma pessoa em Rune-Midgard...";
 		next;
 		mes "[Elenore]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Você ouviu falar de "+strcharinfo(0)+"? Ele é supostamente o herói mais lindo da região!";
 		else
 			mes "Você ouviu falar de"+strcharinfo(0)+"? Dizem que ela é uma das meninas mais bonitas de Rune-Midgard!";
@@ -652,7 +652,7 @@ geffen_in,27,134,5	script	Garçonete#elen	4_F_02,{
 			mes "^990000Ei, seu maníaco sexual!!! Pare de olhar pra minha filha desse jeito, antes que eu arranque seus olhos e os coma com macarrão!^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Huh...?";
 				mes "D-de novo?";
 				next;
@@ -687,7 +687,7 @@ geffen_in,27,134,5	script	Garçonete#elen	4_F_02,{
 	close;
 }
 
-geffen_in,70,67,3	script	Garçonete#elise	4_F_01,{
+geffen_in,70,67,3	script	Garçonete#elise	90,{
 	mes "[Elisa]";
 	mes "Olá~";
 	mes "Posso te ajudar";
@@ -768,7 +768,7 @@ geffen_in,70,67,3	script	Garçonete#elise	4_F_01,{
 			mes "^990000Sai de perto da minha filha, ou eu vou estourar seus miolos! Elisa vai casar com um médico! Ou um advogado.^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "S-s-s-sim, senhor!";
 				next;
 				mes "^3355FFIsso foi assustador...!";
@@ -808,7 +808,7 @@ geffen_in,70,67,3	script	Garçonete#elise	4_F_01,{
 	close;
 }
 
-geffen_in,79,76,2	script	Mercador Daven	2_M_PHARMACIST,{
+geffen_in,79,76,2	script	Mercador Daven	120,{
 	mes "[Mercador Daven]";
 	mes "Eu lembro de Geffen";
 	mes "quando ainda era chata. ";
@@ -875,7 +875,7 @@ geffen_in,79,76,2	script	Mercador Daven	2_M_PHARMACIST,{
 	close;
 }
 
-geffen_in,114,73,5	script	Hadenheim	4_M_SEAMAN,{
+geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "[Hans Hadenheim]";
 	mes "Cara, o continente de Rune-Midgard é tão grande! Como vai você, jovem?";
 	next;
@@ -921,7 +921,7 @@ geffen_in,114,73,5	script	Hadenheim	4_M_SEAMAN,{
 	close;
 }
 
-geffen_in,39,127,2	script	Vidente	4_M_BIBI,{
+geffen_in,39,127,2	script	Vidente	704,{
 	mes "[Vidente]";
 	mes "Ah...";
 	mes "Não diga! Você veio saber seu futuro, não? Eu sei...";
@@ -1039,12 +1039,12 @@ geffen_in,39,127,2	script	Vidente	4_M_BIBI,{
 			break;
 		case 3:
 			mes "Um...";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "A menina com quem você";
 			else
 				mes "O menino com quem você";
-			mes "está saindo agora";
-			mes "é ideal para você!";
+				mes "está saindo agora";
+				mes "é ideal para você!";
 			next;
 			switch(select("Como você sabe?:Você está errado!:Estou solteiro!")) {
 			case 1:
@@ -1057,11 +1057,11 @@ geffen_in,39,127,2	script	Vidente	4_M_BIBI,{
 				mes "Você não me deixou terminar a frase.";
 				next;
 				mes "[Vidente]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "A menina com quem você";
 				else
 					mes "O menino com quem você";
-				mes "está saindo agora é ideal para você, se você quiser passar o resto da vida infeliz!";
+					mes "está saindo agora é ideal para você, se você quiser passar o resto da vida infeliz!";
 				next;
 				mes "[Vidente]";
 				mes "Mas se você for terminar, faça isso logo e tente manter a amizade.";
@@ -1076,7 +1076,7 @@ geffen_in,39,127,2	script	Vidente	4_M_BIBI,{
 				mes "As vezes eu misturo o presente e o futuro. Você entende não é, já que estou sempre prevendo o futuro...";
 				next;
 				mes "[Vidente]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "O que eu quis dizer na verdade foi que";
 					mes "^3355FFvocê encontrará a mulher perfeita em breve^000000. Sim, foi isso que eu quis dizer!";
 				}
@@ -1116,7 +1116,7 @@ geffen_in,39,127,2	script	Vidente	4_M_BIBI,{
 			next;
 			break;
 		case 2:
-		mes "Ah sim. Entrarei em contato com os espíritos. Eles normalmentes dão bons conselhos financeiros, mesmo não tendo nenhum tipo de economia lá.";
+			mes "Ah sim. Entrarei em contato com os espíritos. Eles normalmentes dão bons conselhos financeiros, mesmo não tendo nenhum tipo de economia lá.";
 			next;
 			mes "[Vidente]";
 			mes "Primeiro, controle seu dinheiro e só gaste o que puder. Quer uma dica? De cada dez zenys que você ganhar, guarde um para investir ou deixar de reserva.";
@@ -1338,7 +1338,7 @@ geffen_in,39,127,2	script	Vidente	4_M_BIBI,{
 	}
 }
 
-geffen_in,109,72,2	script	Professor de Monstros	4_F_01,{
+geffen_in,109,72,2	script	Professor de Monstros	90,{
 	mes "[Estheres]";
 	mes "Olá, sou o especialista em Monstros daqui de Geffen. Você gostaria de saber alguma coisa?";
 	next;

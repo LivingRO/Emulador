@@ -1,9 +1,11 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Juperos Dungeon Quests
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.9
+//= 2.0
+//===== Compatible With ======================================
+//= rAthena Project
 //===== Description ==========================================
 //= [Partial Official Conversion]
 //= Juperos Ruins related Quests/Events
@@ -22,9 +24,11 @@
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Updated RE/Pre-RE EXP. [Euphy]
 //= 1.9 Added GM management NPC. [Euphy]
+//= 2.0 Added Juperos Ruins History quest logs. [Capuche]
 //============================================================
 
-yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
+yuno_in04,190,125,4	script	Scholar	700,{
+function Func_JupHist;
 	switch(yuno_hist) {
 	case 0:
 		mes "[Scholar]";
@@ -143,7 +147,8 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 			mes "service of his royal majesty,";
 			mes "the wise and benevolent";
 			mes "King Tristram III.";
-			yuno_hist = 2;
+			set yuno_hist,2;
+			setquest 11017;
 			next;
 			mes "[Fayruz]";
 			mes "Well, "+strcharinfo(0)+",";
@@ -163,7 +168,7 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 			close;
 		}
 	case 2:
-		if ((countitem(7352)) || (countitem(7353)) || (countitem(7354)) || (countitem(7355))) {
+		if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
 			mes "[Fayruz]";
 			mes "Ah, it's you! Listen,";
 			mes "I just found a record of";
@@ -246,7 +251,8 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 			mes "''You will see him, the one";
 			mes "who was vain and extravagant,";
 			mes "with your own eyes at the place where the light passes through.";
-			yuno_hist = 4;
+			set yuno_hist,4;
+			changequest 11018,11019;
 			next;
 			mes "[Fayruz]";
 			mes "Ah, usually, descriptions";
@@ -291,7 +297,7 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 			mes "sometimes, you know?";
 			close;
 		case 2:
-			if ((countitem(7352)) || (countitem(7353)) || (countitem(7354)) || (countitem(7355))) {
+			if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
 				mes "[Fayruz]";
 				mes "Oh, really?!";
 				mes "That's great news!";
@@ -313,10 +319,10 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 				next;
 				switch(select("Please, be my guest.:No way, you can't have it.")) {
 				case 1:
-					if (countitem(7352)) callfunc "Func_JupHist",7352,1;
-					else if (countitem(7353)) callfunc "Func_JupHist",7353,2;
-					else if (countitem(7354)) callfunc "Func_JupHist",7354,4;
-					else if (countitem(7355)) callfunc "Func_JupHist",7352,8;
+					if (countitem(7352)) Func_JupHist(7352,1);
+					else if (countitem(7353)) Func_JupHist(7353,2);
+					else if (countitem(7354)) Func_JupHist(7354,4);
+					else if (countitem(7355)) Func_JupHist(7352,8);
 				case 2:
 					mes "[Fayruz]";
 					mes "Mm? Are you serious?";
@@ -376,10 +382,10 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 		switch(select("Take a look at this.:Oh, I'm sorry...")) {
 		case 1:
 			switch(jupe_hist) {
-				case 1: callfunc "Func_JupHist",7353,7354,7355,7352;
-				case 2: callfunc "Func_JupHist",7352,7354,7355,7353;
-				case 4: callfunc "Func_JupHist",7352,7353,7355,7354;
-				case 8: callfunc "Func_JupHist",7352,7353,7354,7355;
+				case 1: Func_JupHist(7353,7354,7355,7352);
+				case 2: Func_JupHist(7352,7354,7355,7353);
+				case 4: Func_JupHist(7352,7353,7355,7354);
+				case 8: Func_JupHist(7352,7353,7354,7355);
 			}
 		case 2:
 			mes "[Fayruz]";
@@ -407,7 +413,7 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 		mes "last time is really helping me";
 		mes "in my research. If you get the";
 		mes "chance, please bring me more!";
-		yuno_hist = 7;
+		set yuno_hist,7;
 		next;
 		mes "[Fayruz]";
 		mes "This new data is adding";
@@ -427,12 +433,12 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 		switch(select("Yeah, take a look at this.:No, I'm sorry...")) {
 		case 1:
 			switch(jupe_hist) {
-				case 3: callfunc "Func_JupHist",7354,7355,7352,7353;
-				case 5: callfunc "Func_JupHist",7353,7355,7352,7354;
-				case 6: callfunc "Func_JupHist",7352,7355,7353,7354;
-				case 9: callfunc "Func_JupHist",7353,7354,7352,7355;
-				case 10: callfunc "Func_JupHist",7352,7354,7353,7355;
-				case 12: callfunc "Func_JupHist",7352,7353,7354,7355;
+				case 3: Func_JupHist(7354,7355,7352,7353);
+				case 5: Func_JupHist(7353,7355,7352,7354);
+				case 6: Func_JupHist(7352,7355,7353,7354);
+				case 9: Func_JupHist(7353,7354,7352,7355);
+				case 10: Func_JupHist(7352,7354,7353,7355);
+				case 12: Func_JupHist(7352,7353,7354,7355);
 			}
 		case 2:
 			mes "[Fayruz]";
@@ -458,7 +464,7 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 		mes "Alright. Okay. Yes.";
 		mes "Yes! Of course, how";
 		mes "could I not see it before!";
-		yuno_hist = 9;
+		set yuno_hist,9;
 		next;
 		mes "[Fayruz]";
 		mes "I'll be with you";
@@ -476,10 +482,10 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 		switch(select("Actually, I did find this...:I'm sorry, I haven't...")) {
 		case 1:
 			switch(jupe_hist) {
-				case 7: callfunc "Func_JupHist",7355,7352,7353,7354;
-				case 11: callfunc "Func_JupHist",7354,7352,7353,7355;
-				case 13: callfunc "Func_JupHist",7353,7352,7354,7355;
-				case 14: callfunc "Func_JupHist",7352,7353,7354,7355;
+				case 7: Func_JupHist(7355,7352,7353,7354);
+				case 11: Func_JupHist(7354,7352,7353,7355);
+				case 13: Func_JupHist(7353,7352,7354,7355);
+				case 14: Func_JupHist(7352,7353,7354,7355);
 			}
 		case 2:
 			mes "[Fayruz]";
@@ -507,7 +513,7 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 		next;
 		switch(select("I found another Transparent Plate.:Just visiting, really.")) {
 		case 1:
-			if ((countitem(7352)) || (countitem(7353)) || (countitem(7354)) || (countitem(7355))) {
+			if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
 				mes "[Fayruz]";
 				mes "Hmm, well, we've made as";
 				mes "much headway as we can";
@@ -549,9 +555,9 @@ yuno_in04,190,125,4	script	Scholar	8_F_GIRL,{
 			close;
 		}
 	}
-}
 
-function	script	Func_JupHist	{
+function Func_JupHist {
+	setarray .@arg[0], getarg(0), getarg(1), getarg(2,0), getarg(3,0);
 	switch(yuno_hist) {
 	case 4:
 		mes "[Fayruz]";
@@ -575,10 +581,11 @@ function	script	Func_JupHist	{
 		mes "tale eventually comes to an end";
 		mes "and you awaken from the trance,";
 		mes "gently brought back to reality.^000000";
-		delitem getarg(0),1;
-		yuno_hist = 5;
-		jupe_hist = getarg(1);
-		getexp RENEWAL_EXP?10000:100000,0;
+		delitem .@arg[0],1;
+		set yuno_hist,5;
+		jupe_hist = .@arg[1];
+		getexp (checkre(3))?10000:100000,0;
+		changequest 11019,11020;
 		next;
 		mes "[Fayruz]";
 		mes "Everyone can relate";
@@ -596,7 +603,7 @@ function	script	Func_JupHist	{
 		mes "then, I'll see you, adventurer~";
 		close;
 	case 5:
-		if ((countitem(getarg(0))) || (countitem(getarg(1))) || (countitem(getarg(2)))) {
+		if (countitem(.@arg[0]) || countitem(.@arg[1]) || countitem(.@arg[2])) {
 			mes "[Fayruz]";
 			mes "Oh, that's unexpected.";
 			mes "This Transparent Plate";
@@ -638,23 +645,24 @@ function	script	Func_JupHist	{
 			mes "I think you'd agree that";
 			mes "it contains a truth about";
 			mes "mankind that can't be ignored.";
-			if (countitem(getarg(0))) {
-				delitem getarg(0),1;
-				if (getarg(0) == 7352) jupe_hist += 1;
-				else jupe_hist += 2;
+			if (countitem(.@arg[0])) {
+				delitem .@arg[0],1;
+				if (.@arg[0] == 7352) set jupe_hist,jupe_hist +1;
+				else set jupe_hist,jupe_hist +2;
 			}
-			else if (countitem(getarg(1))) {
-				delitem getarg(1),1;
-				if (getarg(1) == 7353) jupe_hist += 2;
-				else jupe_hist += 4;
+			else if (countitem(.@arg[1])) {
+				delitem .@arg[1],1;
+				if (.@arg[1] == 7353) set jupe_hist,jupe_hist +2;
+				else set jupe_hist,jupe_hist +4;
 			}
 			else {
-				delitem getarg(2),1;
-				if (getarg(2) == 7354) jupe_hist += 4;
-				else jupe_hist += 8;
+				delitem .@arg[2],1;
+				if (.@arg[2] == 7354) set jupe_hist,jupe_hist +4;
+				else set jupe_hist,jupe_hist +8;
 			}
-			yuno_hist = 6;
-			getexp RENEWAL_EXP?10000:100000,0;
+			set yuno_hist,6;
+			changequest 11020,11021;
+			getexp (checkre(3))?10000:100000,0;
 			next;
 			mes "[Fayruz]";
 			mes "By now I'm sure you've";
@@ -672,7 +680,7 @@ function	script	Func_JupHist	{
 			mes "story with you, "+strcharinfo(0)+".";
 			close;
 		}
-		else if (countitem(getarg(3))) {
+		else if (countitem(.@arg[3])) {
 			mes "[Fayruz]";
 			mes "Oh, this one seems";
 			mes "to have been created";
@@ -687,7 +695,7 @@ function	script	Func_JupHist	{
 			mes "won't be as making progress";
 			mes "as quickly as I had projected.";
 			mes "Please, I'd like you to take this as a token of my gratitude.";
-			delitem getarg(3),1;
+			delitem .@arg[3],1;
 			getitem 644,1;
 			next;
 			mes "[Fayruz]";
@@ -708,7 +716,7 @@ function	script	Func_JupHist	{
 			close;
 		}
 	case 7:
-		if ((countitem(getarg(0))) || (countitem(getarg(1)))) {
+		if (countitem(.@arg[0]) || countitem(.@arg[1])) {
 			mes "[Fayruz]";
 			mes "Is this another";
 			mes "Transparent Plate?";
@@ -765,20 +773,21 @@ function	script	Func_JupHist	{
 			mes "or another. Scary stories are";
 			mes "appealing because we actually";
 			mes "like the strange and grotesque.";
-			if (countitem(getarg(0))) {
-				delitem getarg(0),1;
-				if (getarg(0) == 7352) jupe_hist += 1;
-				else if (getarg(0) == 7353) jupe_hist += 2;
-				else jupe_hist += 4;
+			if (countitem(.@arg[0])) {
+				delitem .@arg[0],1;
+				if (.@arg[0] == 7352) set jupe_hist,jupe_hist +1;
+				else if (.@arg[0] == 7353) set jupe_hist,jupe_hist +2;
+				else set jupe_hist,jupe_hist +4;
 			}
-			else if (countitem(getarg(1))) {
-				delitem getarg(1),1;
-				if (getarg(1) == 7353) jupe_hist += 2;
-				else if (getarg(1) == 7354) jupe_hist += 4;
-				else jupe_hist += 8;
+			else if (countitem(.@arg[1])) {
+				delitem .@arg[1],1;
+				if (.@arg[1] == 7353) set jupe_hist,jupe_hist +2;
+				else if (.@arg[1] == 7354) set jupe_hist,jupe_hist +4;
+				else set jupe_hist,jupe_hist +8;
 			}
-			yuno_hist = 8;
-			getexp RENEWAL_EXP?10000:100000,0;
+			set yuno_hist,8;
+			changequest 11021,11022;
+			getexp (checkre(3))?10000:100000,0;
 			next;
 			mes "[Fayruz]";
 			mes "Well... That's just my";
@@ -789,7 +798,7 @@ function	script	Func_JupHist	{
 			mes "to me, alright? See you later~";
 			close;
 		}
-		else if ((countitem(getarg(2))) || (countitem(getarg(3)))) {
+		else if (countitem(.@arg[2]) || countitem(.@arg[3])) {
 			mes "[Fayruz]";
 			mes "Oh, this one seems";
 			mes "to have been created";
@@ -811,8 +820,8 @@ function	script	Func_JupHist	{
 			mes "to compiling my research...";
 			mes "Thank you so much for";
 			mes "your help, "+strcharinfo(0)+".";
-			if (countitem(getarg(2))) delitem getarg(2),1;
-			else if (countitem(getarg(3))) delitem getarg(3),1;
+			if (countitem(.@arg[2])) delitem .@arg[2],1;
+			else if (countitem(.@arg[3])) delitem .@arg[3],1;
 			getitem 644,1;
 			close;
 		}
@@ -826,7 +835,7 @@ function	script	Func_JupHist	{
 			close;
 		}
 	case 9:
-		if (countitem(getarg(0))) {
+		if (countitem(.@arg[0])) {
 			mes "[Fayruz]";
 			mes "Oooh...! This one is";
 			mes "much different than the";
@@ -869,13 +878,14 @@ function	script	Func_JupHist	{
 			mes "feeling of indefatigable";
 			mes "hope and inspiration...";
 			mes "You can make it if you try!^000000";
-			if (getarg(0) == 7352) jupe_hist += 1;
-			else if (getarg(0) == 7353) jupe_hist += 2;
-			else if (getarg(0) == 7354) jupe_hist += 4;
-			else jupe_hist += 8;
-			yuno_hist = 10;
-			delitem getarg(0),1;
-			getexp RENEWAL_EXP?10000:100000,0;
+			if (.@arg[0] == 7352) set jupe_hist,jupe_hist+1;
+			else if (.@arg[0] == 7353) set jupe_hist,jupe_hist+2;
+			else if (.@arg[0] == 7354) set jupe_hist,jupe_hist+4;
+			else set jupe_hist,jupe_hist+8;
+			set yuno_hist,10;
+			completequest 11022;
+			delitem .@arg[0],1;
+			getexp (checkre(3))?10000:100000,0;
 			next;
 			mes "[Fayruz]";
 			mes "Well, that is the";
@@ -886,7 +896,7 @@ function	script	Func_JupHist	{
 			mes "research progress~";
 			close;
 		}
-		else if ((countitem(getarg(1))) || (countitem(getarg(2))) || (countitem(getarg(3)))) {
+		else if (countitem(.@arg[1]) || countitem(.@arg[2]) || countitem(.@arg[3])) {
 			mes "[Fayruz]";
 			mes "Hmm...";
 			mes "This one seems to be created in a similar time";
@@ -904,9 +914,9 @@ function	script	Func_JupHist	{
 			next;
 			mes "[Fayruz]";
 			mes "Now, excuse me. I need to go back to my research.";
-			if (countitem(getarg(1))) delitem getarg(1),1;
-			else if (countitem(getarg(2))) delitem getarg(2),1;
-			else delitem getarg(3),1;
+			if (countitem(.@arg[1])) delitem .@arg[1],1;
+			else if (countitem(.@arg[2])) delitem .@arg[2],1;
+			else delitem .@arg[3],1;
 			getitem 644,1;
 			close;
 		}
@@ -921,8 +931,9 @@ function	script	Func_JupHist	{
 		}
 	}
 }
+}
 
-yuno_in04,186,125,4	script	Bundle of Files	HIDDEN_NPC,{
+yuno_in04,186,125,4	script	Bundle of Files	111,{
 	mes "^8B6914*Thesis: The Fall of Juperos*";
 	mes "By Fayruz Khrhiyha";
 	mes "Sage Castle Researcher^000000";
@@ -1041,7 +1052,7 @@ yuno_in04,186,125,4	script	Bundle of Files	HIDDEN_NPC,{
 					mes "less clear I am on what";
 					mes "the theory actually is.";
 					mes "I don't think there is one...";
-					emotion e_swt,1;
+					emotion ET_SWEAT, playerattached();
 					close;
 				}
 				mes "^8B6914What is most unsettling";
@@ -1134,7 +1145,7 @@ yuno_in04,186,125,4	script	Bundle of Files	HIDDEN_NPC,{
 			mes "may be able to learn much";
 			mes "from that ancient city's ruins.";
 			mes "..................^000000";
-			if (!yuno_hist) yuno_hist = 1;
+			if (!yuno_hist) set yuno_hist,1;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "This...";
@@ -1190,7 +1201,7 @@ yuno_in04,186,125,4	script	Bundle of Files	HIDDEN_NPC,{
 	}
 }
 
-yuno_in04,188,118,4	script	Book#juperos	HIDDEN_NPC,{
+yuno_in04,188,118,4	script	Book#juperos	111,{
 	if (yuno_hist > 7) {
 		mes "^8B6914*Self-Honesty*";
 		mes "*'Benefits Fo' Life!'*";
@@ -1250,7 +1261,7 @@ yuno_in04,188,118,4	script	Book#juperos	HIDDEN_NPC,{
 
 // Bronze Statue - juperos_01 99 112
 
-juperos_01,99,112,4	script	Bronze Statue#1	CLEAR_NPC,{
+juperos_01,99,112,4	script	Bronze Statue#1	844,{
 	if (yuno_hist > 3) {
 		mes "^3355FF''Do you wish to see";
 		mes "the end of the madness?";
@@ -1296,7 +1307,8 @@ juperos_01,99,112,4	script	Bronze Statue#1	CLEAR_NPC,{
 				mes "Okay, I guess I'll go back";
 				mes "to the Juno Library and";
 				mes "tell her what I found.";
-				yuno_hist = 3;
+				set yuno_hist,3;
+				changequest 11017,11018;
 				close;
 			}
 			mes "["+strcharinfo(0)+"]";
@@ -1311,7 +1323,7 @@ juperos_01,99,112,4	script	Bronze Statue#1	CLEAR_NPC,{
 	}
 }
 
-yuno_in04,169,109,1	script	Ambitious Hollgrehenn	HIDDEN_NPC,{
+yuno_in04,169,109,1	script	Ambitious Hollgrehenn	111,{
 	mes "*Hollgrehenn: The Ambition*";
 	mes "By Aragham Caul*";
 	mes " ";
@@ -1336,7 +1348,7 @@ yuno_in04,169,109,1	script	Ambitious Hollgrehenn	HIDDEN_NPC,{
 	close;
 }
 
-yuno_in04,174,111,1	script	Penniless Hollgrehenn	HIDDEN_NPC,{
+yuno_in04,174,111,1	script	Penniless Hollgrehenn	111,{
 	mes "^8B6914*Penniless Hollgrehenn*";
 	mes " * Pennyless Hollgrehenn * ";
 	mes "By Hollgrehenn";
@@ -1355,7 +1367,7 @@ yuno_in04,174,111,1	script	Penniless Hollgrehenn	HIDDEN_NPC,{
 	close;
 }
 
-yuno_in04,102,106,1	script	Popular Feasts	HIDDEN_NPC,{
+yuno_in04,102,106,1	script	Popular Feasts	111,{
 	mes "^8B6914*Popular Feasts*";
 	mes "By Cabbage Pickle Community";
 	mes " ";
@@ -1400,14 +1412,14 @@ yuno_in04,102,106,1	script	Popular Feasts	HIDDEN_NPC,{
 	}
 }
 
-yuno_in04,111,108,1	script	Hamerun, Rat Hunter	HIDDEN_NPC,{
+yuno_in04,111,108,1	script	Hamerun, Rat Hunter	111,{
 	mes "["+strcharinfo(0)+"]";
 	mes "I can't...";
 	mes "reach it...!";
 	close;
 }
 
-yuno_in04,167,127,1	script	Red Book	HIDDEN_NPC,{
+yuno_in04,167,127,1	script	Red Book	111,{
 	mes "^3355FFYou find a book";
 	mes "with red binding.^000000";
 	next;
@@ -1464,7 +1476,7 @@ yuno_in04,167,127,1	script	Red Book	HIDDEN_NPC,{
 	}
 }
 
-yuno_in04,121,109,1	script	Scroll	HIDDEN_NPC,{
+yuno_in04,121,109,1	script	Scroll	111,{
 	mes "^3355FFYou've found an";
 	mes "antiquated scroll";
 	mes "that's collected a";
@@ -1517,7 +1529,7 @@ yuno_in04,121,109,1	script	Scroll	HIDDEN_NPC,{
 	}
 }
 
-yuno_in04,118,116,4	script	Paper	HIDDEN_NPC,{
+yuno_in04,118,116,4	script	Paper	111,{
 	mes "^3355FFIt's a piece of";
 	mes "paper that looks";
 	mes "like a personal letter.^000000";
@@ -1529,7 +1541,7 @@ yuno_in04,118,116,4	script	Paper	HIDDEN_NPC,{
 			mes "Please...";
 			mes "Come back to me.";
 			mes " ";
-			mes " ";
+			mes " ";		  
 			mes "Love,";
 			mes "Fayruz^000000";
 			close;
@@ -1570,7 +1582,7 @@ yuno_in04,118,116,4	script	Paper	HIDDEN_NPC,{
 	}
 }
 
-juperos_01,123,92,4	script	Stone Statue	CLEAR_NPC,{
+juperos_01,123,92,4	script	Stone Statue	844,{
 	if (yuno_hist) {
 		mes "^3355FFIt's a stone statue";
 		mes "that looks exactly like";
@@ -1590,7 +1602,7 @@ juperos_01,123,92,4	script	Stone Statue	CLEAR_NPC,{
 	close;
 }
 
-juperos_01,99,71,4	script	Bronze Statue#2	CLEAR_NPC,{
+juperos_01,99,71,4	script	Bronze Statue#2	844,{
 	mes "^3355FFIt's an elaborate";
 	mes "bronze statue that";
 	mes "is twice the height of";
@@ -1598,13 +1610,13 @@ juperos_01,99,71,4	script	Bronze Statue#2	CLEAR_NPC,{
 	close;
 }
 
-juperos_01,79,92,4	script	Sculpture	CLEAR_NPC,{
+juperos_01,79,92,4	script	Sculpture	844,{
 	mes "^3355FFIt's a sculpture that";
 	mes "looks familiar to you.^000000";
 	close;
 }
 
-juperos_01,215,127,4	script	Machine Statue	CLEAR_NPC,{
+juperos_01,215,127,4	script	Machine Statue	844,{
 	mes "^3355FFThis is the bust of a";
 	mes "humanoid machine with";
 	mes "a familiar Crest Piece";
@@ -1627,7 +1639,7 @@ juperos_01,215,127,4	script	Machine Statue	CLEAR_NPC,{
 juperos_01,100,91,0	script	jupe_goto#1	-1,2,2,{
 	end;
 
-OnTouch:
+OnTouch_:
 	initnpctimer "jupe_goto#1",1;
 	mes "^777777["+ strcharinfo(0) +"]^000000";
 	mes "This light...";
@@ -1677,7 +1689,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "juperos_02",128,278;
 	end;
 
@@ -1688,7 +1700,7 @@ OnTimer2000:
 }
 
 //============================================================
-// 2nd Floor
+// 2nd Floor 
 //============================================================
 
 juperos_02,97,70,0	script	3F Gate Switch#jupe	-1,{
@@ -1706,7 +1718,7 @@ OnEnable:
 	end;
 
 OnTimer5000:
-	.MyMobs = 3;
+	set .MyMobs,3;
 	monster "juperos_02",24,275,"1st Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
 	monster "juperos_02",240,29,"2nd Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
 	monster "juperos_02",282,183,"3rd Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
@@ -1714,14 +1726,14 @@ OnTimer5000:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs == 2)
 		mapannounce "juperos_02","Who are you to come here?",bc_map,"0xFF0000";
 	else if (.MyMobs == 1)
 		mapannounce "juperos_02","Have you come seeking Juperos?! It no longer exists...",bc_map,"0xFF0000";
 	else if (.MyMobs == 0) {
 		mapannounce "juperos_02","Have you come to see me? Fine! Find me first!",bc_map,"0xFF0000";
-		specialeffect2 563;
+		specialeffect2 EF_SCREEN_QUAKE;
 		soundeffectall "earth_quake.wav",0;
 		disablenpc "3F Gate Switch#jupe";
 		donpcevent "Restricted Area#jupe::OnEnable";
@@ -1730,7 +1742,7 @@ OnMyMobDead:
 }
 
 
-juperos_02,130,149,0	script	Restricted Area#jupe	HIDDEN_WARP_NPC,2,2,{
+juperos_02,130,149,0	script	Restricted Area#jupe	139,2,2,{
 OnInit:
 	disablenpc "Restricted Area#jupe";
 	end;
@@ -1807,7 +1819,7 @@ OnTimer1200000:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_gate",50,167;
 	end;
 }
@@ -1815,7 +1827,7 @@ OnTouch:
 //============================================================
 // Security Checkpoint 1-1
 //============================================================
-jupe_area1,88,224,0	script	#hole#1-1	CLEAR_NPC,{
+jupe_area1,88,224,0	script	#hole#1-1	844,{
 	cutin "1",2;
 	if ($@JupreArea1InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -1923,7 +1935,7 @@ OnTimer22500:
 	end;
 }
 
-jupe_area1,83,221,0	script	Warp#1-1	HIDDEN_WARP_NPC,2,2,{
+jupe_area1,83,221,0	script	Warp#1-1	139,2,2,{
 OnInit:
 	disablenpc "Warp#1-1";
 	end;
@@ -1935,7 +1947,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area1",47,259;
 	end;
 
@@ -1950,11 +1962,11 @@ OnInit:
 	disablenpc "Red Alarm#1-1";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "Red Alarm On#1-1::OnEnable";
 	disablenpc "Red Alarm#1-1";
 	donpcevent "#hole#1-1::OnStop_Timer";
-	$@JupreArea1InUse = 1;
+	set $@JupreArea1InUse,1;
 	disablenpc "#hole#1-1";
 	end;
 }
@@ -2009,7 +2021,7 @@ OnDisable:
 OnEnable:
 	enablenpc "Monster1#1-1";
 	initnpctimer;
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area1",30,263,"Security Guard",1675,1,"Monster1#1-1::OnMyMobDead";
 	monster "jupe_area1",30,262,"Security Guard",1669,1,"Monster1#1-1::OnMyMobDead";
 	monster "jupe_area1",30,261,"Security Guard",1675,1,"Monster1#1-1::OnMyMobDead";
@@ -2022,7 +2034,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Do you realize this is a hallucination?",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2032,7 +2044,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#1-1::OnEnable";
 		disablenpc "Monster1#1-1";
@@ -2070,7 +2082,7 @@ OnTimer7000:
 	mapannounce "jupe_area1","Just how strong you are!",bc_map,"0xFF0000";
 	soundeffectall "jupe_warning.wav",0,"jupe_area1";
 	soundeffectall "jupe_warning.wav",0,"jupe_area1";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area1",30,238,"Security Guard",1675,1,"Monster2#1-1::OnMyMobDead";
 	monster "jupe_area1",31,238,"Security Guard",1669,1,"Monster2#1-1::OnMyMobDead";
 	monster "jupe_area1",32,238,"Security Guard",1675,1,"Monster2#1-1::OnMyMobDead";
@@ -2083,7 +2095,7 @@ OnTimer7000:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Bwahaha! You're only good at running away!",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2093,12 +2105,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area1","Zzzzt. Zzzzt..... ",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-1";
 		enablenpc "#hole#1-1";
-		$@JupreArea1InUse = 0;
+		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -2107,7 +2119,7 @@ OnMyMobDead:
 //============================================================
 // Security Checkpoint 1-2
 //============================================================
-jupe_area1,25,238,0	script	#hole#1-2	CLEAR_NPC,{
+jupe_area1,25,238,0	script	#hole#1-2	844,{
 	cutin "2",2;
 	if ($@JupreArea1InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -2217,7 +2229,7 @@ OnTimer22500:
 	end;
 }
 
-jupe_area1,21,225,0	script	Warp#1-2	HIDDEN_WARP_NPC,2,2,{
+jupe_area1,21,225,0	script	Warp#1-2	139,2,2,{
 OnInit:
 	disablenpc "Warp#1-2";
 	end;
@@ -2229,7 +2241,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area1",21,191;
 	end;
 
@@ -2243,8 +2255,8 @@ OnInit:
 	disablenpc "Red Alarm#1-2";
 	end;
 
-OnTouch:
-	$@JupreArea1InUse = 1;
+OnTouch_:
+	set $@JupreArea1InUse,1;
 	donpcevent "Red Alarm On#1-2::OnEnable";
 	disablenpc "Red Alarm#1-2";
 	disablenpc "#hole#1-2";
@@ -2297,7 +2309,7 @@ OnDisable:
 OnEnable:
 	initnpctimer;
 	enablenpc "Monster1#1-2";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area1",30,176,"High Guard",1669,1,"Monster1#1-2::OnMyMobDead";
 	monster "jupe_area1",31,176,"High Guard",1675,1,"Monster1#1-2::OnMyMobDead";
 	monster "jupe_area1",32,176,"High Guard",1669,1,"Monster1#1-2::OnMyMobDead";
@@ -2310,7 +2322,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area1","I can't believe how cowardly you really are...",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2320,7 +2332,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#1-2::OnEnable";
 		disablenpc "Monster1#1-2";
@@ -2354,7 +2366,7 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area1","I was called Vesper Newton. Hahah, they called me a mad man back then.",bc_map,"0xFF0000";
-	.MyMobs = 13;
+	set .MyMobs,13;
 	monster "jupe_area1",30,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
 	monster "jupe_area1",31,152,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
 	monster "jupe_area1",32,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
@@ -2372,7 +2384,7 @@ OnTimer6000:
 
 OnTimer300000:
 	mapannounce "jupe_area1","...Not yet.",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2382,12 +2394,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area1","Not yet!",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-2";
 		enablenpc "#hole#1-2";
-		$@JupreArea1InUse = 0;
+		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -2396,7 +2408,7 @@ OnMyMobDead:
 //============================================================
 // Security Checkpoint 1-3
 //============================================================
-jupe_area1,36,146,0	script	#hole#1-3	CLEAR_NPC,{
+jupe_area1,36,146,0	script	#hole#1-3	844,{
 	cutin "3",2;
 	if ($@JupreArea1InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -2504,7 +2516,7 @@ OnTimer22500:
 	end;
 }
 
-jupe_area1,33,137,0	script	Warp#1-3	HIDDEN_WARP_NPC,2,2,{
+jupe_area1,33,137,0	script	Warp#1-3	139,2,2,{
 OnInit:
 	disablenpc "Warp#1-3";
 	end;
@@ -2516,7 +2528,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area1",33,105;
 	end;
 
@@ -2530,8 +2542,8 @@ OnInit:
 	disablenpc "Red Alarm#1-3";
 	end;
 
-OnTouch:
-	$@JupreArea1InUse = 1;
+OnTouch_:
+	set $@JupreArea1InUse,1;
 	donpcevent "Red Alarm On#1-3::OnEnable";
 	disablenpc "Red Alarm#1-3";
 	disablenpc "#hole#1-3";
@@ -2584,7 +2596,7 @@ OnDisable:
 OnEnable:
 	initnpctimer;
 	enablenpc "Monster1#1-3";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area1",30,89,"Security Guard",1675,1,"Monster1#1-3::OnMyMobDead";
 	monster "jupe_area1",31,89,"Security Guard",1669,1,"Monster1#1-3::OnMyMobDead";
 	monster "jupe_area1",32,89,"Security Guard",1675,1,"Monster1#1-3::OnMyMobDead";
@@ -2597,7 +2609,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Zzzzt...Zzzzt....",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2606,7 +2618,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#1-3::OnEnable";
 		disablenpc "Monster1#1-3";
@@ -2640,7 +2652,7 @@ OnTimer5000:
 
 OnTimer8000:
 	mapannounce "jupe_area1","You're wrong! Welcome to Hell!",bc_map,"0xFF0000";
-	.MyMobs = 15;
+	set .MyMobs,15;
 	monster "jupe_area1",42,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
 	monster "jupe_area1",43,64,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
 	monster "jupe_area1",44,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
@@ -2660,7 +2672,7 @@ OnTimer8000:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2670,12 +2682,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area1","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-3";
 		enablenpc "#hole#1-3";
-		$@JupreArea1InUse = 0;
+		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -2684,7 +2696,7 @@ OnMyMobDead:
 //============================================================
 // Security Checkpoint 1-4
 //============================================================
-jupe_area1,50,49,0	script	#hole#1-4	CLEAR_NPC,{
+jupe_area1,50,49,0	script	#hole#1-4	844,{
 	cutin "4",2;
 	if ($@JupreArea1InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -2793,7 +2805,7 @@ OnTimer5000:
 	end;
 }
 
-jupe_area1,57,53,0	script	Warp#1-4	HIDDEN_WARP_NPC,2,2,{
+jupe_area1,57,53,0	script	Warp#1-4	139,2,2,{
 OnInit:
 	disablenpc "Warp#1-4";
 	end;
@@ -2805,7 +2817,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area1",83,157;
 	end;
 
@@ -2823,8 +2835,8 @@ OnEnable:
 	enablenpc "Red Alarm#1-4";
 	end;
 
-OnTouch:
-	$@JupreArea1InUse = 1;
+OnTouch_:
+	set $@JupreArea1InUse,1;
 	donpcevent "Red Alarm On#1-4::OnEnable";
 	disablenpc "Red Alarm#1-4";
 	disablenpc "#hole#1-4";
@@ -2877,7 +2889,7 @@ OnDisable:
 OnEnable:
 	initnpctimer;
 	enablenpc "Monster1#1-4";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area1",92,154,"Security Guard",1669,1,"Monster1#1-4::OnMyMobDead";
 	monster "jupe_area1",96,154,"Security Guard",1675,1,"Monster1#1-4::OnMyMobDead";
 	monster "jupe_area1",100,154,"Security Guard",1669,1,"Monster1#1-4::OnMyMobDead";
@@ -2890,7 +2902,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area1","Zzzzt...Zzzzt....",bc_map,"0xFF0000";
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	end;
 
 OnTimer300002:
@@ -2900,7 +2912,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#1-4::OnEnable";
 		disablenpc "Monster1#1-4";
@@ -2934,7 +2946,7 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area1","I will be waiting for you!",bc_map,"0xFF0000";
-	.MyMobs = 10;
+	set .MyMobs,10;
 	monster "jupe_area1",104,161,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
 	monster "jupe_area1",108,161,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
 	monster "jupe_area1",111,161,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
@@ -2948,7 +2960,7 @@ OnTimer6000:
 	end;
 
 OnTimer300000:
-	$@JupreArea1InUse = 0;
+	set $@JupreArea1InUse,0;
 	mapannounce "jupe_area1","It's funny... Isn't it?",bc_map,"0xFF0000";
 	end;
 
@@ -2958,12 +2970,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area1","It's funny... Isn't it?",bc_map,"0xFF0000";
 		disablenpc "Monster2#1-4";
 		enablenpc "#hole#1-4";
-		$@JupreArea1InUse = 0;
+		set $@JupreArea1InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -2972,7 +2984,7 @@ OnMyMobDead:
 //============================================================
 // Move to Elevator
 //============================================================
-jupe_area1,112,162,0	script	Lever#ufe	CLEAR_NPC,{
+jupe_area1,112,162,0	script	Lever#ufe	844,{
 	mes "^3355FFIt's a lever";
 	mes "whose function";
 	mes "is not known to you.^000000";
@@ -2999,7 +3011,7 @@ OnTimer3000:
 	end;
 }
 
-jupe_area1,117,157,0	script	LeverWarp#ufe	HIDDEN_WARP_NPC,2,2,{
+jupe_area1,117,157,0	script	LeverWarp#ufe	139,2,2,{
 OnInit:
 	disablenpc "LeverWarp#ufe";
 	end;
@@ -3011,7 +3023,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_gate",28,30;
 	end;
 
@@ -3024,7 +3036,7 @@ OnTimer3000:
 //============================================================
 // Security Checkpoint 2-1
 //============================================================
-jupe_area2,74,224,0	script	#hole#2-1	CLEAR_NPC,{
+jupe_area2,74,224,0	script	#hole#2-1	844,{
 	cutin "1",2;
 	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -3132,7 +3144,7 @@ OnTimer22500:
 	end;
 }
 
-jupe_area2,80,221,0	script	Warp#2-1	HIDDEN_WARP_NPC,2,2,{
+jupe_area2,80,221,0	script	Warp#2-1	139,2,2,{
 OnInit:
 	disablenpc "Warp#2-1";
 	end;
@@ -3144,7 +3156,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area2",116,259;
 	end;
 
@@ -3159,11 +3171,11 @@ OnInit:
 	disablenpc "Red Alarm#2-1";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "Red Alarm On#2-1::OnEnable";
 	disablenpc "Red Alarm#2-1";
 	donpcevent "#hole#2-1::OnStop_Timer";
-	$@JupreArea2InUse = 1;
+	set $@JupreArea2InUse,1;
 	disablenpc "#hole#2-1";
 	end;
 }
@@ -3218,7 +3230,7 @@ OnDisable:
 OnEnable:
 	enablenpc "Monster1#2-1";
 	initnpctimer;
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area2",126,252,"Security Guard",1669,1,"Monster1#2-1::OnMyMobDead";
 	monster "jupe_area2",127,252,"Security Guard",1675,1,"Monster1#2-1::OnMyMobDead";
 	monster "jupe_area2",128,252,"Security Guard",1669,1,"Monster1#2-1::OnMyMobDead";
@@ -3231,7 +3243,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Do you realize this is a hallucination?",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -3241,7 +3253,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#2-1::OnEnable";
 		disablenpc "Monster1#2-1";
@@ -3279,7 +3291,7 @@ OnTimer7000:
 	mapannounce "jupe_area2","Just how strong you are!",bc_map,"0xFF0000";
 	soundeffectall "jupe_warning.wav",0,"jupe_area2";
 	soundeffectall "jupe_warning.wav",0,"jupe_area2";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area2",126,236,"Security Guard",1675,1,"Monster2#2-1::OnMyMobDead";
 	monster "jupe_area2",127,236,"Security Guard",1669,1,"Monster2#2-1::OnMyMobDead";
 	monster "jupe_area2",128,236,"Security Guard",1675,1,"Monster2#2-1::OnMyMobDead";
@@ -3292,7 +3304,7 @@ OnTimer7000:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Bwahaha! You're only good at running away!",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -3302,12 +3314,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area2","Zzzzt. Zzzzt..... ",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-1";
 		enablenpc "#hole#2-1";
-		$@JupreArea2InUse = 0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -3316,7 +3328,7 @@ OnMyMobDead:
 //============================================================
 // Security Checkpoint 2-2
 //============================================================
-jupe_area2,138,238,0	script	#hole#2-2	CLEAR_NPC,{
+jupe_area2,138,238,0	script	#hole#2-2	844,{
 	cutin "2",2;
 	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -3426,7 +3438,7 @@ OnTimer22500:
 	end;
 }
 
-jupe_area2,142,225,0	script	Warp#2-2	HIDDEN_WARP_NPC,2,2,{
+jupe_area2,142,225,0	script	Warp#2-2	139,2,2,{
 OnInit:
 	disablenpc "Warp#2-2";
 	end;
@@ -3438,7 +3450,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area2",142,191;
 	end;
 
@@ -3452,8 +3464,8 @@ OnInit:
 	disablenpc "Red Alarm#2-2";
 	end;
 
-OnTouch:
-	$@JupreArea2InUse = 1;
+OnTouch_:
+	set $@JupreArea2InUse,1;
 	donpcevent "Red Alarm On#2-2::OnEnable";
 	disablenpc "Red Alarm#2-2";
 	disablenpc "#hole#2-2";
@@ -3506,7 +3518,7 @@ OnDisable:
 OnEnable:
 	initnpctimer;
 	enablenpc "Monster1#2-2";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area2",126,176,"High Guard",1669,1,"Monster1#2-2::OnMyMobDead";
 	monster "jupe_area2",127,176,"High Guard",1675,1,"Monster1#2-2::OnMyMobDead";
 	monster "jupe_area2",128,176,"High Guard",1669,1,"Monster1#2-2::OnMyMobDead";
@@ -3519,7 +3531,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","I can't believe how cowardly you really are...",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -3529,7 +3541,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#2-2::OnEnable";
 		disablenpc "Monster1#2-2";
@@ -3563,7 +3575,7 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area2","I was called Vesper Newton. Hahah, they called me a mad man back then.",bc_map,"0xFF0000";
-	.MyMobs = 13;
+	set .MyMobs,13;
 	monster "jupe_area2",126,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
 	monster "jupe_area2",127,156,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
 	monster "jupe_area2",128,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
@@ -3581,7 +3593,7 @@ OnTimer6000:
 
 OnTimer300000:
 	mapannounce "jupe_area2","...Not yet.",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -3591,12 +3603,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area2","Not yet!",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-2";
 		enablenpc "#hole#2-2";
-		$@JupreArea2InUse = 0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -3605,7 +3617,7 @@ OnMyMobDead:
 //============================================================
 // Security Checkpoint 2-3
 //============================================================
-jupe_area2,127,146,0	script	#hole#2-3	CLEAR_NPC,{
+jupe_area2,127,146,0	script	#hole#2-3	844,{
 	cutin "3",2;
 	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -3713,7 +3725,7 @@ OnTimer22500:
 	end;
 }
 
-jupe_area2,130,137,0	script	Warp#2-3	HIDDEN_WARP_NPC,2,2,{
+jupe_area2,130,137,0	script	Warp#2-3	139,2,2,{
 OnInit:
 	disablenpc "Warp#2-3";
 	end;
@@ -3725,7 +3737,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area2",130,105;
 	end;
 
@@ -3739,8 +3751,8 @@ OnInit:
 	disablenpc "Red Alarm#2-3";
 	end;
 
-OnTouch:
-	$@JupreArea2InUse = 1;
+OnTouch_:
+	set $@JupreArea2InUse,1;
 	donpcevent "Red Alarm On#2-3::OnEnable";
 	disablenpc "Red Alarm#2-3";
 	disablenpc "#hole#2-3";
@@ -3794,7 +3806,7 @@ OnDisable:
 OnEnable:
 	initnpctimer;
 	enablenpc "Monster1#2-3";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area2",126,89,"Security Guard",1675,1,"Monster1#2-3::OnMyMobDead";
 	monster "jupe_area2",127,89,"Security Guard",1669,1,"Monster1#2-3::OnMyMobDead";
 	monster "jupe_area2",128,89,"Security Guard",1675,1,"Monster1#2-3::OnMyMobDead";
@@ -3807,7 +3819,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Zzzzt...Zzzzt....",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -3816,7 +3828,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#2-3::OnEnable";
 		disablenpc "Monster1#2-3";
@@ -3850,7 +3862,7 @@ OnTimer5000:
 
 OnTimer8000:
 	mapannounce "jupe_area2","You're wrong! Welcome to Hell!",bc_map,"0xFF0000";
-	.MyMobs = 16;
+	set .MyMobs,16;
 	monster "jupe_area2",114,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
 	monster "jupe_area2",115,64,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
 	monster "jupe_area2",116,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
@@ -3871,7 +3883,7 @@ OnTimer8000:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -3881,21 +3893,21 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area2","Do you still have your courage? Come. Prove it.",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-3";
 		enablenpc "#hole#2-3";
-		$@JupreArea2InUse = 0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
 }
-
+	
 //============================================================
 // Security Checkpoint 2-4
 //============================================================
-jupe_area2,113,49,0	script	#hole#2-4	CLEAR_NPC,{
+jupe_area2,113,49,0	script	#hole#2-4	844,{
 	cutin "4",2;
 	if ($@JupreArea2InUse == 1) {
 		mes "^3355FFThis seems like";
@@ -4004,7 +4016,7 @@ OnTimer5000:
 	end;
 }
 
-jupe_area2,106,53,0	script	Warp#2-4	HIDDEN_WARP_NPC,2,2,{
+jupe_area2,106,53,0	script	Warp#2-4	139,2,2,{
 OnInit:
 	disablenpc "Warp#2-4";
 	end;
@@ -4016,7 +4028,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_area2",80,157;
 	end;
 
@@ -4034,8 +4046,8 @@ OnEnable:
 	enablenpc "Red Alarm#2-4";
 	end;
 
-OnTouch:
-	$@JupreArea2InUse = 1;
+OnTouch_:
+	set $@JupreArea2InUse,1;
 	donpcevent "Red Alarm On#2-4::OnEnable";
 	disablenpc "Red Alarm#2-4";
 	disablenpc "#hole#2-4";
@@ -4088,7 +4100,7 @@ OnDisable:
 OnEnable:
 	initnpctimer;
 	enablenpc "Monster1#2-4";
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_area2",75,161,"Security Guard",1675,1,"Monster1#2-4::OnMyMobDead";
 	monster "jupe_area2",72,161,"Security Guard",1669,1,"Monster1#2-4::OnMyMobDead";
 	monster "jupe_area2",71,161,"Security Guard",1675,1,"Monster1#2-4::OnMyMobDead";
@@ -4101,7 +4113,7 @@ OnEnable:
 
 OnTimer300000:
 	mapannounce "jupe_area2","Zzzzt...Zzzzt....",bc_map,"0xFF0000";
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	end;
 
 OnTimer300002:
@@ -4111,7 +4123,7 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Monster2#2-4::OnEnable";
 		disablenpc "Monster1#2-4";
@@ -4145,7 +4157,7 @@ OnTimer4000:
 
 OnTimer6000:
 	mapannounce "jupe_area2","I will be waiting for you!",bc_map,"0xFF0000";
-	.MyMobs = 12;
+	set .MyMobs,12;
 	monster "jupe_area2",63,161,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
 	monster "jupe_area2",61,161,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
 	monster "jupe_area2",59,161,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
@@ -4161,7 +4173,7 @@ OnTimer6000:
 	end;
 
 OnTimer300000:
-	$@JupreArea2InUse = 0;
+	set $@JupreArea2InUse,0;
 	mapannounce "jupe_area2","It's funny... Isn't it?",bc_map,"0xFF0000";
 	end;
 
@@ -4171,12 +4183,12 @@ OnTimer300002:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		mapannounce "jupe_area2","It's funny... Isn't it?",bc_map,"0xFF0000";
 		disablenpc "Monster2#2-4";
 		enablenpc "#hole#2-4";
-		$@JupreArea2InUse = 0;
+		set $@JupreArea2InUse,0;
 		stopnpctimer;
 	}
 	end;
@@ -4185,7 +4197,7 @@ OnMyMobDead:
 //============================================================
 // Move to Elevator
 //============================================================
-jupe_area2,51,162,0	script	Lever#ufe2	CLEAR_NPC,{
+jupe_area2,51,162,0	script	Lever#ufe2	844,{
 	mes "^3355FFIt's a lever";
 	mes "whose function";
 	mes "is not known to you.^000000";
@@ -4212,7 +4224,7 @@ OnTimer3000:
 	end;
 }
 
-jupe_area2,46,157,0	script	LeverWarp#ufe2	HIDDEN_WARP_NPC,2,2,{
+jupe_area2,46,157,0	script	LeverWarp#ufe2	139,2,2,{
 OnInit:
 	disablenpc "LeverWarp#ufe2";
 	end;
@@ -4224,7 +4236,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_gate",71,29;
 	end;
 
@@ -4237,7 +4249,7 @@ OnTimer3000:
 //============================================================
 // Elevator Reception Room
 //============================================================
-jupe_ele_r,51,98,0	script	Switch#ufe	CLEAR_NPC,{
+jupe_ele_r,51,98,0	script	Switch#ufe	844,{
 	if ($@JupeElevatorInUse == 1) {
 		mes "^3355FFIt's some sort of";
 		mes "lever that looks like";
@@ -4309,11 +4321,11 @@ jupe_ele_r,51,98,0	script	Switch#ufe	CLEAR_NPC,{
 							mes "ground begins to shake";
 							mes "violently. This isn't normal!^000000";
 							next;
-							$@JupeElevatorInUse = 1;
+							set $@JupeElevatorInUse,1;
 							disablenpc "Switch#ufe";
 							enablenpc "Switch On#ufe";
 							initnpctimer;
-							specialeffect2 563;
+							specialeffect2 EF_SCREEN_QUAKE;
 							soundeffectall "earth_quake.wav",0;
 							close2;
 							cutin "5-1",255;
@@ -4388,7 +4400,7 @@ OnTimer27000:
 	end;
 }
 
-jupe_ele_r,51,98,0	script	Switch On#ufe	CLEAR_NPC,{
+jupe_ele_r,51,98,0	script	Switch On#ufe	844,{
 	mes "^3355FFIt seems like";
 	mes "someone else is";
 	mes "using this machine...^000000";
@@ -4408,7 +4420,7 @@ OnInit:
 	end;
 
 OnEnable:
-	.MyMobs = 9;
+	set .MyMobs,9;
 	enablenpc "Elevator Guard1#ufe";
 	initnpctimer;
 	end;
@@ -4454,7 +4466,7 @@ OnTimer120000:
 	enablenpc "Switch#ufe";
 	disablenpc "Switch On#ufe";
 	donpcevent "Annihilation#ufe::OnEnable";
-	$@JupeElevatorInUse = 0;
+	set $@JupeElevatorInUse,0;
 	end;
 
 OnTimer120005:
@@ -4463,7 +4475,7 @@ OnTimer120005:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		donpcevent "Elevator Safety#ufe::OnEnable";
 		stopnpctimer;
@@ -4506,7 +4518,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	percentheal -99,-100;
 	end;
 
@@ -4529,7 +4541,7 @@ OnInit:
 	disablenpc "Elevator Escape#ufe";
 	end;
 
-OnTouch:
+OnTouch_:
 	mapwarp "jupe_ele_r", "jupe_gate",49,138;
 	end;
 }
@@ -4546,7 +4558,7 @@ OnEnable:
 
 OnTimer1000:
 	mapwarp "jupe_ele_r", "jupe_ele",42,47;
-	$@JupeElevatorInUse2 = 0;
+	set $@JupeElevatorInUse2,0;
 	donpcevent "TimeOut#ufe::OnEnable";
 	donpcevent "Guard-1#ufe::OnEnable";
 	end;
@@ -4560,7 +4572,7 @@ OnTimer10000:
 //============================================================
 // Elevator NPCs
 //============================================================
-jupe_ele,14,6,1	script	TimeOut#ufe	CLEAR_NPC,{
+jupe_ele,14,6,1	script	TimeOut#ufe	844,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4577,8 +4589,8 @@ OnTimer59000:
 		donpcevent "Guard-3#ufe::OnDisable";
 		donpcevent "Guard-4#ufe::OnDisable";
 		stopnpctimer;
-		$@JupeElevatorInUse2 = 0;
-		$@JupeElevatorInUse = 0;
+		set $@JupeElevatorInUse2,0;
+		set $@JupeElevatorInUse,0;
 		disablenpc "Switch On#ufe";
 		enablenpc "Switch#ufe";
 	}
@@ -4626,15 +4638,15 @@ OnTimer142000:
 	disablenpc "GuardEnd#ufe";
 	disablenpc "4F Enter#ufe";
 	donpcevent "TimeOut#ufe::OnDisable";
-	$@JupeElevatorInUse2 = 0;
-	$@JupeElevatorInUse = 0;
+	set $@JupeElevatorInUse2,0;
+	set $@JupeElevatorInUse,0;
 	disablenpc "Switch On#ufe";
 	enablenpc "Switch#ufe";
 	stopnpctimer;
 	end;
 }
 
-jupe_ele,15,6,1	script	Guard-1#ufe	CLEAR_NPC,{
+jupe_ele,15,6,1	script	Guard-1#ufe	844,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4656,7 +4668,7 @@ OnTimer8000:
 	end;
 
 OnTimer12000:
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_ele",48,44,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
 	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
 	monster "jupe_ele",38,42,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
@@ -4665,7 +4677,7 @@ OnTimer12000:
 	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
-	$@JupeElevatorInUse2 = 1;
+	set $@JupeElevatorInUse2,1;
 	end;
 
 OnTimer30000:
@@ -4676,7 +4688,7 @@ OnTimer30000:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		if ($@JupeElevatorInUse2 == 1) {
 			donpcevent "Guard-2#ufe::OnEnable";
@@ -4689,7 +4701,7 @@ OnMyMobDead:
 	end;
 }
 
-jupe_ele,16,6,1	script	Guard-2#ufe	CLEAR_NPC,{
+jupe_ele,16,6,1	script	Guard-2#ufe	844,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4715,7 +4727,7 @@ OnTimer11000:
 	end;
 
 OnTimer12000:
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_ele",48,44,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
 	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
 	monster "jupe_ele",38,42,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
@@ -4724,7 +4736,7 @@ OnTimer12000:
 	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
-	$@JupeElevatorInUse2 = 2;
+	set $@JupeElevatorInUse2,2;
 	end;
 
 OnTimer30000:
@@ -4735,7 +4747,7 @@ OnTimer30000:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		if ($@JupeElevatorInUse2 == 2) {
 			donpcevent "Guard-3#ufe::OnEnable";
@@ -4748,7 +4760,7 @@ OnMyMobDead:
 	end;
 }
 
-jupe_ele,17,6,1	script	Guard-3#ufe	CLEAR_NPC,{
+jupe_ele,17,6,1	script	Guard-3#ufe	844,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4770,7 +4782,7 @@ OnTimer8000:
 	end;
 
 OnTimer12000:
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_ele",48,44,"Guard",1675,1,"Guard-3#ufe::OnMyMobDead";
 	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-3#ufe::OnMyMobDead";
 	monster "jupe_ele",38,42,"Guard",1683,1,"Guard-3#ufe::OnMyMobDead";
@@ -4779,7 +4791,7 @@ OnTimer12000:
 	monster "jupe_ele",38,53,"Guard",1683,1,"Guard-3#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1675,1,"Guard-3#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-3#ufe::OnMyMobDead";
-	$@JupeElevatorInUse2 = 3;
+	set $@JupeElevatorInUse2,3;
 	end;
 
 OnTimer30000:
@@ -4790,7 +4802,7 @@ OnTimer30000:
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		if ($@JupeElevatorInUse2 == 3) {
 			donpcevent "Guard-4#ufe::OnEnable";
@@ -4804,7 +4816,7 @@ OnMyMobDead:
 	end;
 }
 
-jupe_ele,18,6,1	script	Guard-4#ufe	CLEAR_NPC,{
+jupe_ele,18,6,1	script	Guard-4#ufe	844,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -4822,7 +4834,7 @@ OnTimer5000:
 	end;
 
 OnTimer8000:
-	.MyMobs = 8;
+	set .MyMobs,8;
 	monster "jupe_ele",48,44,"Guard",1684,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",38,42,"Guard",1684,1,"Guard-4#ufe::OnMyMobDead";
@@ -4831,11 +4843,11 @@ OnTimer8000:
 	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",45,53,"Guard",1683,1,"Guard-4#ufe::OnMyMobDead";
 	monster "jupe_ele",48,51,"Guard",1675,1,"Guard-4#ufe::OnMyMobDead";
-	$@JupeElevatorInUse2 = 4;
+	set $@JupeElevatorInUse2,4;
 	end;
 
 OnMyMobDead:
-	--.MyMobs;
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 1) {
 		if (getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1) {
 			donpcevent "GuardEnd#ufe::OnEnable";
@@ -4845,7 +4857,7 @@ OnMyMobDead:
 	end;
 }
 
-jupe_ele,19,6,1	script	GuardEnd#ufe	CLEAR_NPC,{
+jupe_ele,19,6,1	script	GuardEnd#ufe	844,{
 OnInit:
 	disablenpc "GuardEnd#ufe";
 	end;
@@ -4897,19 +4909,19 @@ OnTimer25000:
 	end;
 
 OnTimer26000:
-	$@JupeElevatorInUse2 = 0;
-	$@JupeElevatorInUse = 0;
+	set $@JupeElevatorInUse2,0;
+	set $@JupeElevatorInUse,0;
 	disablenpc "Switch On#ufe";
 	enablenpc "Switch#ufe";
 	donpcevent "GuardEnd#ufe::OnDisable";
 }
 
-jupe_ele,41,33,0	script	4F Enter#ufe	WARPNPC,4,4,{
+jupe_ele,41,33,0	script	4F Enter#ufe	45,4,4,{
 OnInit:
 	disablenpc "4F Enter#ufe";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "jupe_core",rand(149,151),286;
 	end;
 }
@@ -4920,7 +4932,7 @@ OnTouch:
 jupe_gate,50,173,0	script	gate#start	-1,2,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	initnpctimer "gate#start",1;
 	mes "^3355FFIt's a Warp Portal";
 	mes "that will teleport you";
@@ -4956,7 +4968,7 @@ OnInit:
 	disablenpc "gate#start#2";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "juperos_02",130,142;
 	end;
 
@@ -4966,8 +4978,8 @@ OnTimer2000:
 	end;
 }
 
-juperos_02,33,59,0	script	jupe_goto2F	WARPNPC,2,2,{
-OnTouch:
+juperos_02,33,59,0	script	jupe_goto2F	45,2,2,{
+OnTouch_:
 	switch(rand(1,4)) {
 	case 1: warp "juperos_01",120,72; end;
 	case 2: warp "juperos_01",120,112; end;
@@ -4980,7 +4992,7 @@ OnTouch:
 //============================================================
 // GM Management NPC
 //============================================================
-sec_in02,39,167,0	script	Juperos Manager	4_F_OPERATION,{
+sec_in02,39,167,0	script	Juperos Manager	864,{
 	callfunc "F_GM_NPC";
 	mes "[Juperos Manager]";
 	mes "I'm the NPC in";
@@ -5005,20 +5017,20 @@ sec_in02,39,167,0	script	Juperos Manager	4_F_OPERATION,{
 		next;
 		switch(select("jupe_Area1:jupe_Area2:jupe_ele_r:jupe_ele")) {
 		case 1:
-			.@loc$ = "jupe_Area1";
-			.@var$ = "$@JupreArea1InUse";
+			set .@loc$,"jupe_Area1";
+			set .@var$,"$@JupreArea1InUse";
 			break;
 		case 2:
-			.@loc$ = "jupe_Area2";
-			.@var$ = "$@JupreArea2InUse";
+			set .@loc$,"jupe_Area2";
+			set .@var$,"$@JupreArea2InUse";
 			break;
 		case 3:
-			.@loc$ = "jupe_ele_r";
-			.@var$ = "$@JupeElevatorInUse";
+			set .@loc$,"jupe_ele_r";
+			set .@var$,"$@JupeElevatorInUse";
 			break;
 		case 4:
-			.@loc$ = "jupe_ele";
-			.@var$ = "$@JupeElevatorInUse2";
+			set .@loc$,"jupe_ele";
+			set .@var$,"$@JupeElevatorInUse2";
 			break;
 		}
 		mes "[Juperos Manager]";

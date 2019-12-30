@@ -51,7 +51,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 255
+#define MAX_LEVEL 175
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -960,8 +960,6 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 }
 
 extern char motd_txt[];
-extern char help_txt[];
-extern char help2_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
 

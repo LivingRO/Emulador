@@ -1,262 +1,490 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Job Master
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.4
 //===== Description: =========================================
 //= A fully functional job changer.
 //===== Additional Comments: =================================
-//= 1.1 Fixed reset on Baby job change. [Euphy]
-//= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support. [Euphy]
-//= 1.3 Kagerou/Oboro added. [Euphy]
-//= 1.4 Improved legibility (renamed variables, replaced
-//      numbers with constants; Changed syntax to match
-//      Hercules standards; Fixed status point exploit upon
-//      Baby Novice job change. [Haru]
+//= 1.0 Initial script. [Euphy]
+//= 1.1 Fixed reset on Baby job change.
+//= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support.
+//= 1.3 Kagerou/Oboro added.
+//= 1.4 Rebellion added.
+//= 1.5 Added option to disable RebirthClass. [mazvi]
+//= 1.6 Added option to get job related equipment on change. [Braniff]
+//= 1.7 Readability changes. Also added BabyExpanded and BabySummoner classes. [Jey]
+//= 1.8 Added option to disable Baby Novice Only but Baby Class can be Enabled [mazvi]
+//= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,153,193,6	script	Mestra das Classes	2_F_MAGICMASTER,{
-	function Job_Menu; function A_An;
-
-	mes "[Mestra das Classes]";
-	if (Class > Job_Soul_Linker) {
-		mes "Não há mais classes disponíveis.";
+prontera,153,193,6	script	Mestra das Classes	123,{
+function Get_Job_Equip;
+// Checks if the Player has the required level.
+// closes if not, returns if yes
+function	Require_Level	{
+	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
+		.@blvl = getarg(0) - BaseLevel;
+		.@jlvl = getarg(1) - JobLevel;
+		mes "Level requirement:";
+		mes ((getarg(0)>1)? 
+			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
+			getarg(1)+"^000000 (^00bb00Classe^000000)";
+		mes "Voc� precisa " +
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 mais n�veis de base " + 
+				((.@jlvl > 0) ? "e " : "") : "") +
+			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 mais n�veis de classe " : "") +
+			"para continuar.";
 		close;
-	}
-	if (checkfalcon() || checkcart() || checkmount() || hascashmount()) {
-		mes "Por favor remova "+((checkfalcon())?"o seu falcão":"")+((checkcart())?"o seu carrinho":"")+((checkmount() || hascashmount())?"a sua montaria":"")
-		    +" antes de continuar.";
-		close;
-	}
-	if (.skill_point_check && SkillPoint > 0) {
-		mes "Por favor use todos os seus pontos de habilidade antes de continuar.";
-		close;
-	}
-
-	.@eac = eaclass();
-	.@base = .third_classes ? roclass(.@eac&EAJ_UPPERMASK) : Class;
-	if (.@base >= Job_Knight && .@base <= Job_Crusader2) {
-		if (BaseLevel < .rebirth_blevel || JobLevel < .rebirth_jlevel) {
-			.@blvl = .rebirth_blevel - BaseLevel;
-			.@jlvl = .rebirth_jlevel - JobLevel;
-			mes "Você precisa de mais "
-			    + (BaseLevel < .rebirth_blevel ? ((.rebirth_blevel - BaseLevel) +" níveis de base "+ (JobLevel < .rebirth_jlevel ? "e " : "")) : "")
-			    + (JobLevel < .rebirth_jlevel ? (.rebirth_jlevel - JobLevel) +" níveis de classe " : "")
-			    + "para continuar.";
-			close;
-		}
-		if (Class > Job_Crusader2) {
-			mes "Trocar para terceira classe?";
-			next;
-			Job_Menu(roclass(.@eac|EAJL_THIRD));
-			close;
-		}
-		while (true) {
-			mes "Selecione uma opção.";
-			next;
-			.@choice = select(" ~ ^0055FFRenascer^000000:"+(.third_classes ? " ~ ^FF0000Terceira Classe^000000" : "")+": ~ ^777777Cancelar^000000");
-			if (.@choice == 3)
-				close;
-			mes "[Mestra das Classes]";
-			mes "Você tem certeza?";
-			next;
-			if (.@choice == 1)
-				Job_Menu(Job_Novice_High);
-			else
-				Job_Menu(roclass(.@eac|EAJL_THIRD));
-			mes "[Mestra das Classes]";
-		}
-	}
-	.@job1 = roclass(.@eac|EAJL_2_1);
-	.@job2 = roclass(.@eac|EAJL_2_2);
-	if ((.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) {
-		.@newclass = roclass(.@eac|EAJL_THIRD);
-		.@required_jlevel = 99;
-	} else if (Class == Job_Ninja || Class == Job_Gunslinger) {
-		.@newclass = .@job1;
-		.@required_jlevel = 70;
-	}
-	if (.@newclass && .third_classes) {
-		if (BaseLevel < .rebirth_blevel || JobLevel < .@required_jlevel) {
-			mes "Você precisa de mais "
-			    + (BaseLevel < .rebirth_blevel ? ((.rebirth_blevel - BaseLevel) +" níveis de base "+ (JobLevel < .@required_jlevel ? "e " : "")) : "")
-			    + (JobLevel < .@required_jlevel ? (.@required_jlevel - JobLevel) +" níveis de classe " : "")
-			    + "para continuar.";
-			close;
-		}
-		mes "Trocar para "+jobname(.@newclass)+"?";
-		next;
-		Job_Menu(.@newclass);
-		close;
-	}
-	if (.@eac&EAJL_2)
-		if (.@eac&(EAJL_UPPER|EAJL_BABY) || roclass(.@eac|EAJL_UPPER) == -1) {
-			mes "Não há mais classes disponíveis.";
-			close;
-		}
-	if ((.@eac&EAJ_BASEMASK) == EAJ_NOVICE) {
-		if (JobLevel < .jobchange_first) {
-			mes "É necessário ter um nível de classe igual ou maior que "+.jobchange_first+" para mudar para a 1ª Classe.";
-		} else if (Class == Job_Novice_High && .linear_jobchange && lastJob) {
-			mes "Trocar de classe agora?";
-			next;
-			Job_Menu(roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
-		} else if (Class == Job_Novice) {
-			Job_Menu(Job_Swordman, Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
-			         Job_SuperNovice, Job_Taekwon, Job_Gunslinger, Job_Ninja, Job_Baby);
-		} else if (Class == Job_Novice_High) {
-			Job_Menu(Job_Swordman_High, Job_Mage_High, Job_Archer_High, Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
-		} else if (Class == Job_Baby) {
-			Job_Menu(Job_Baby_Swordman, Job_Baby_Mage, Job_Baby_Archer, Job_Baby_Acolyte, Job_Baby_Merchant, Job_Baby_Thief,
-			         Job_Super_Baby);
-		} else {
-			mes "Um erro aconteceu.";
-		}
-		close;
-	}
-	if (roclass(.@eac|EAJL_2_1) == -1 || roclass(.@eac|EAJL_2_2) == -1) {
-		mes "Não há mais classes disponíveis.";
-	} else if (!(.@eac&EAJL_2) && JobLevel < .jobchange_second) {
-		mes "É necessário ter um nível de classe igual ou maior a "+.jobchange_second+" para mudar para a 2ª Classe.";
-	} else if (.linear_jobchange && lastJob && (.@eac&EAJL_UPPER)) {
-		mes "Trocar de classe agora?";
-		next;
-		Job_Menu(lastJob+Job_Novice_High);
-	} else {
-		Job_Menu(.@job1, .@job2);
-	}
-	close;
-
-function Job_Menu {
-	while (true) {
-		if (getargcount() > 1) {
-			mes "Selecione uma classe.";
-			.@menu$ = "";
-			for (.@i = 0; .@i < getargcount(); ++.@i)
-				.@menu$ += " ~ "+jobname(getarg(.@i))+":";
-			.@menu$ += " ~ ^777777Cancel^000000";
-			next;
-			.@newjob = getarg(select(.@menu$)-1, 0);
-			if (!.@newjob) close;
-			if ((.@newjob == Job_SuperNovice || .@newjob == Job_Super_Baby) && BaseLevel < .supernovice_level) {
-				mes "[Mestra das Classes]";
-				mes "É necessário ter um nível de base igual ou maior a "+.supernovice_level+" para virar um "+jobname(.@newjob)+".";
-				close;
-			}
-			mes "[Mestra das Classes]";
-			mes "Você tem certeza?";
-			next;
-		} else {
-			.@newjob = getarg(0);
-		}
-		if (select(" ~ Mudar para a classe ^0055FF"+jobname(.@newjob)+"^000000: ~ ^777777"+(getargcount() > 1 ? "Voltar" : "Cancelar")+"^000000") == 1) {
-			mes "[Mestra das Classes]";
-			mes "Você agora é um "+A_An(jobname(.@newjob))+"!";
-			if (.@newjob == Job_Novice_High && .linear_jobchange)
-				lastJob = Class; // Nota: Isso é incompatível com o script de renascimento da Valquíria
-			jobchange .@newjob;
-			if (.@newjob == Job_Novice_High)
-				resetlvl(1);
-			if (.@newjob == Job_Baby) {
-				resetlvl(4);
-				SkillPoint = 0;
-			}
-			specialeffect2 EF_ANGEL2;
-			specialeffect2 EF_ELECTRIC;
-			if (.platinum)
-				callsub Get_Platinum;
-			close;
-		}
-		if (getargcount() == 1)
-			return;
-		mes "[Mestra das Classes]";
-	}
-	end;
-}
-
-function A_An {
-	setarray .@vowels$, "a", "e", "i", "o", "u";
-	.@firstletter$ = strtolower(charat(getarg(0), 0));
-	for (.@i = 0; .@i < getarraysize(.@vowels); ++.@i) {
-		if (.@vowels$[.@i] == .@firstletter$)
-			return "an "+getarg(0);
-	}
-	return "a "+getarg(0);
-}
-
-Get_Platinum:
-	skill NV_FIRSTAID, 1, 0;
-	if (BaseClass == Job_Novice) {
-		if (Class != Job_SuperNovice)
-			skill NV_TRICKDEAD, 1, 0;
-	} else if (BaseClass == Job_Swordman) {
-		skill SM_MOVINGRECOVERY, 1, 0;
-		skill SM_FATALBLOW, 1, 0;
-		skill SM_AUTOBERSERK, 1, 0;
-	} else if (BaseClass == Job_Mage) {
-		skill MG_ENERGYCOAT, 1, 0;
-	} else if (BaseClass == Job_Archer) {
-		skill AC_MAKINGARROW, 1, 0;
-		skill AC_CHARGEARROW, 1, 0;
-	} else if (BaseClass == Job_Acolyte) {
-		skill AL_HOLYLIGHT, 1, 0;
-	} else if (BaseClass == Job_Merchant) {
-		skill MC_CARTREVOLUTION, 1, 0;
-		skill MC_CHANGECART, 1, 0;
-		skill MC_LOUD, 1, 0;
-	} else if (BaseClass == Job_Thief) {
-		skill TF_SPRINKLESAND, 1, 0;
-		skill TF_BACKSLIDING, 1, 0;
-		skill TF_PICKSTONE, 1, 0;
-		skill TF_THROWSTONE, 1, 0;
-	}
-
-	if (BaseJob == Job_Knight) {
-		skill KN_CHARGEATK, 1, 0;
-	} else if (BaseJob == Job_Priest) {
-		skill PR_REDEMPTIO, 1, 0;
-	} else if (BaseJob == Job_Wizard) {
-		skill WZ_SIGHTBLASTER, 1, 0;
-	} else if (BaseJob == Job_Blacksmith) {
-		skill BS_UNFAIRLYTRICK, 1, 0;
-		skill BS_GREED, 1, 0;
-	} else if (BaseJob == Job_Hunter) {
-		skill HT_PHANTASMIC, 1, 0;
-	} else if (BaseJob == Job_Assassin) {
-		skill AS_SONICACCEL, 1, 0;
-		skill AS_VENOMKNIFE, 1, 0;
-	} else if (BaseJob == Job_Crusader) {
-		skill CR_SHRINK, 1, 0;
-	} else if (BaseJob == Job_Monk) {
-		skill MO_KITRANSLATION, 1, 0;
-		skill MO_BALKYOUNG, 1, 0;
-	} else if (BaseJob == Job_Sage) {
-		skill SA_CREATECON, 1, 0;
-		skill SA_ELEMENTWATER, 1, 0;
-		skill SA_ELEMENTGROUND, 1, 0;
-		skill SA_ELEMENTFIRE, 1, 0;
-		skill SA_ELEMENTWIND, 1, 0;
-	} else if (BaseJob == Job_Rogue) {
-		skill RG_CLOSECONFINE, 1, 0;
-	} else if (BaseJob == Job_Alchemist) {
-		skill AM_BIOETHICS, 1, 0;
-	} else if (BaseJob == Job_Bard) {
-		skill BA_PANGVOICE, 1, 0;
-	} else if (BaseJob == Job_Dancer) {
-		skill DC_WINKCHARM, 1, 0;
 	}
 	return;
+}
+
+// Checks if the given eac is a baby class
+function Is_Baby	{
+	return ((getarg(0, eaclass())&EAJL_BABY)>0);
+}
+
+// Checks if the player can change to third class.
+// Note: This does not include the level checks.
+function	Can_Change_Third	{
+	// To change to third class you either need to be:
+	// * Second Class
+	// * Transcendent Second Class
+	// * Baby Second Class
+	if( !.ThirdClass )
+		return false; // Third job change disabled
+	if( !(eaclass()&EAJL_2) )
+		return false; // Not second Class
+	if( eaclass()&EAJL_THIRD )
+		return false; // Already Third Class
+	if( roclass(eaclass()|EAJL_THIRD) < 0 )
+		return false; // Job has no third Class
+	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
+		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
+	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
+		return false; // No Baby (Third) change allowed
+	return true;
+}
+
+function	Can_Rebirth	{
+	// To rebirth, you need to be:
+	// * Second Class
+	if( !.RebirthClass )
+		return false; // Rebirth disabled
+	if( !(eaclass()&EAJL_2) )
+		return false; // Not second Class
+	if( eaclass()&EAJL_UPPER )
+		return false; // Already Rebirthed
+	if( roclass(eaclass()|EAJL_UPPER) < 0 )
+		return false; // Job has no transcended class
+	if( Is_Baby() && !.BabyClass )
+		return false; // No Baby changes allowed
+	return true;
+}
+
+// Checks if the given eac is a first class
+function	Is_First_Cls	{
+	return (getarg(0) <= EAJ_TAEKWON);
+}
+
+function	Check_Riding	{
+	// Note: Why we should always check for Riding:
+	// Mounts are considered as another class, which
+	// would make this NPC bigger just to handle with
+	// those special cases.
+	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
+		mes "Por favor remova o seu " +
+			((checkfalcon()) ? "Falc�o" : "") +
+			((checkcart()) ? "Carrinho" : "") +
+			((checkriding()) ? "PecoPeco" : "") +
+			((ismounting()) ? "Montaria" : "") +
+			" antes de continuar.";
+		close;
+	}
+	return;
+}
+function	Check_SkillPoints	{
+	if (.SkillPointCheck && SkillPoint) {
+		mes "Por favor, use todos os seus pontos de habilidades antes de prosseguir.";
+		close;
+	}
+	return;
+}
+
+// addJobOptions is essentially the same like
+// setarray .@array[getarraysize(.@array)],opt1,opt2,...;
+// It's just easier to read, since we're using it very often
+function	Job_Options	{
+	.@argcount = getargcount();
+	.@arr_size = getarraysize(getarg(0));
+	for( .@i = 1; .@i < .@argcount; .@i++) {
+		setarray getelementofarray(getarg(0), .@arr_size++),getarg(.@i);
+	}
+}
+
+// Begin of the NPC
+	mes .NPCName$;
+	Check_Riding();
+	Check_SkillPoints();
+
+	// initialisation
+	deletearray .@job_opt[0],getarraysize(.@job_opt);
+	.@eac = eaclass();
+	.@third_possible = Can_Change_Third();
+	.@rebirth_possible = Can_Rebirth();
+	.@first_eac = .@eac&EAJ_BASEMASK;
+	.@second_eac = .@eac&EAJ_UPPERMASK;
+	// Note: These are already set in pc.cpp
+	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
+	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
+		
+	// From here on the jobmaster checks the current class
+	// and fills the the array `.@job_opt` with possible
+	// job options for the player.
+	
+	if( .@rebirth_possible ) {
+		// Rebirth option (displayed on the top of the menu)
+		Require_Level(.Req_Rebirth[0], .Req_Rebirth[1]);
+		Job_Options(.@job_opt, Job_Novice_High);
+	}
+	if( .@third_possible ) {
+		// Third Job change (displayed below rebirth)
+		Require_Level(.Req_Third[0], .Req_Third[1]);
+		Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
+	}
+	 
+	if (.SecondExpanded && 
+	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
+	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
+		// (Baby) Super Novice to Expanded (Baby) Super Novice
+	   	if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
+			// .BabyClass & .BabyExpanded must be enabled if the is a baby
+			Require_Level(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
+			Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
+		}
+	}
+	
+	if (.SecondExpanded && 
+		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		// is (Baby) Ninja
+		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
+		// (Baby) Ninja to (Baby) Kagerou / Oboro
+		// (Baby) Gunslinger to (Baby) Rebellion
+		if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
+			// .BabyClass & .BabyExpanded must be enabled if the is a baby
+			Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
+			// Kagerou, Oboro, Rebellion are considered as a 2-1 class
+			Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
+		}
+	}
+	
+	// Player is Job_Novice, Job_Novice_High or Job_Baby
+	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
+		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
+		Require_Level(.Req_First[0], .Req_First[1]);
+		switch(Class) {
+			case Job_Novice:
+				// First job change
+				Job_Options(.@job_opt,Job_Swordman,
+					Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
+					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja);
+				if( .BabyNovice )
+					Job_Options(.@job_opt, Job_Baby);
+				break;
+			case Job_Novice_High:
+				// Job change after rebirth
+				if( .LastJob && lastJob )
+					Job_Options(.@job_opt,
+						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
+				else
+					Job_Options(.@job_opt, 
+						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
+						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
+				break;
+			case Job_Baby:
+				if( !.BabyClass )
+					break;
+				// First job change as a baby
+				Job_Options(.@job_opt, Job_Baby_Swordman, Job_Baby_Mage,
+					Job_Baby_Archer,Job_Baby_Acolyte, Job_Baby_Merchant,
+					Job_Baby_Thief);
+				if( .BabyExpanded )
+					Job_Options(.@job_opt, Job_Super_Baby, Job_Baby_Taekwon,
+						Job_Baby_Gunslinger, Job_Baby_Ninja);
+				if( .BabySummoner )
+					Job_Options(.@job_opt, Job_Baby_Summoner);
+				break;
+			default:
+				mes "Ocorreu um erro.";
+				close;
+		}
+	} else if( Is_First_Cls(.@eac) || 				// First Class
+			   Is_First_Cls(.@eac&(~EAJL_UPPER)) ||	// Trans. First Cls
+			   (.BabyClass && Is_First_Cls(.@eac&(~EAJL_BABY))) ) {	// Baby First Cls
+		// Player is First Class (not Novice)
+		// most jobs should have two options here  (2-1 and 2-2)
+		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
+		.@class2 = roclass(.@eac|EAJL_2_2); // 2-2
+		// dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
+		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
+			// Player is rebirth Cls and linear class changes are enforced
+			Require_Level(.Req_Second[0], .Req_Second[1]);
+			Job_Options(.@job_opt, lastJob + Job_Novice_High);
+		} else {
+			// Class is not enforced, player can decide.
+			if( .@class1 > 0 ) { // 2-1
+				Require_Level(.Req_Second[0], .Req_Second[1]);
+				Job_Options(.@job_opt, .@class1);
+			}
+			if( .@class2 > 0 ) { // 2-2
+				Require_Level(.Req_Second[0], .Req_Second[1]);
+				Job_Options(.@job_opt, .@class2);
+			}
+		}
+	}
+	
+	// Displaying the Job Menu defined by .@job_opt.
+	// .@job_opt should not be changed below this line.
+	function Job_Menu;
+	Job_Menu(.@job_opt);
+	close;
+
+// Displays the job menu
+function	Job_Menu	{
+	// getarg(0) is the .@job_opt array holding all available job changes.
+	function Confirm_Change;
+	while(true) {
+		.@opt_cnt =  getarraysize(getarg(0));
+		if( .@opt_cnt <= 0 ) {
+			mes "N�o h� mais classes dispon�veis.";
+			close;
+		}
+
+		.@selected = 0; // Just a single job class given, no select needed
+		if (.@opt_cnt > 1) {
+			// Multiple job classes given. Select one and save it to .@class
+			// After that confirm .@class
+			mes "Selecione a classe.";
+			.@menu$ = "";
+			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
+				if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
+					.@jobname$ = "^0055FFRenascer^000000";
+				else
+					.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
+				.@menu$ = .@menu$ + " - " + .@jobname$ + ":";
+			}
+			.@menu$ = .@menu$+" ~ ^777777Cancelar.^000000";
+			.@selected = select(.@menu$) - 1;
+			if( .@selected < 0 || .@selected >= .@opt_cnt )
+				close;
+			next;
+			mes .NPCName$;
+		}
+		.@class = getelementofarray(getarg(0), .@selected);
+		if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) &&
+				BaseLevel < .SNovice) {
+			// Requisito de n�vel especial porque Super Novice e
+			// Super Baby pode ser selecionado em uma das primeira classe
+			// alterar. � por isso que o requisito de n�vel � posterior e n�o anterior
+			// a sele��o.
+			mes "O n�vel de base " + .SNovice +
+				" � necess�rio para se transformar em um " + jobname(.@class) + ".";
+			return;
+		}
+		// Confirm the Class
+		Confirm_Change(.@class, .@opt_cnt > 1);
+		next;
+		mes .NPCName$;
+	}
+	return;
+}
+
+
+// Executes the actual jobchange and closes.
+function	Job_Change	{
+	.@to_cls = getarg(0);
+	next;
+	mes .NPCName$;
+	mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+	if (.@to_cls == Job_Novice_High && .LastJob)
+		lastJob = Class; // Saves the lastJob for rebirth
+	jobchange .@to_cls;
+	if (.@to_cls == Job_Novice_High)
+		resetlvl(1);
+	else if (.@to_cls == Job_Baby) {
+		resetstatus;
+		resetskill;
+		set SkillPoint,0;
+	}
+	specialeffect2 EF_ANGEL2;
+	specialeffect2 EF_ELECTRIC;
+	if (.Platinum)
+		callfunc "F_GetPlatinumSkills";
+	if (.GetJobEquip)
+		Get_Job_Equip();
+	close; // Always closes after the change
+}
+
+function	Confirm_Change	{
+	// Player confirms he want to change into .@class
+	.@class = getarg(0, -1);
+	.@back = getarg(1, false);
+	if( .@class < 0 ) {
+		mes "Erro classe desconhecida.";
+		close;
+	}
+	mes "Voc� quer mudar para classe ^0055FF"+jobname(.@class)+"^000000?";
+	.@job_option$ = "Mudar para a classe^0055FF"+jobname(.@class)+"^000000.";
+	if( .@class == Job_Novice_High)
+		.@job_option$ = " - ^0055FFRenascer.^000000";
+	
+	if (select(.@job_option$+": ~ ^777777" + 
+			((.@back) ?"Voltar." : "Cancelar.") + "^000000") == 1) {
+		Job_Change(.@class);
+	}
+	if (!.@back)
+		close; // "Cancelar." pressed
+	return;
+}
+
+// Function which gives a job related item to the player
+// the items are the rewards from the original job change quests
+function	Get_Job_Equip	{
+	// Note: The item is dropping, when the player can't hold it.
+	// But that's better than not giving the item at all.
+	.@eac = eaclass();
+	if( .@eac&EAJL_THIRD ) {
+		// Itens da Terceira Classe
+		getitem 2795,1;	//	Green Apple Ring for every 3rd Class
+		switch(BaseJob) {
+			// N�vel de Classe das Terceiras Classes
+			// For Normal Third, Baby Third and Transcended Third Cls
+			case Job_Knight:
+				getitem 5746,1;	break;	//	Rune Circlet [1]
+			case Job_Wizard:
+				getitem 5753,1;	break;	//	Magic Stone Hat [1]
+			case Job_Hunter:
+				getitem 5748,1;	break;	//	Sniper Goggle [1]
+			case Job_Priest:
+				getitem 5747,1;	break;	//	Mitra [1]
+			case Job_Blacksmith:
+				getitem 5749,1;	break;	//	Driver Band [1]
+			case Job_Assassin:
+				getitem 5755,1;	break;	//	Silent Executor [1]
+			case Job_Crusader:
+				getitem 5757,1;	break;	//	Dip Schmidt Helm [1]
+			case Job_Sage:
+				getitem 5756,1;	break;	//	Wind Whisper [1]
+			case Job_Bard:
+				getitem 5751,1;	break;	//	Maestro Song's Hat [1]
+			case Job_Dancer:
+				getitem 5758,1;	break;	//	Dying Swan [1]
+			case Job_Monk:
+				getitem 5754,1;	break;	//	Blazing Soul [1]
+			case Job_Alchemist:
+				getitem 5752,1;	break;	//	Midas Whisper[1]
+			case Job_Rogue:
+				getitem 5750,1; 		//	Shadow Handicraft [1]
+				getitem 6121,1;			//	Makeover Brush
+				getitem 6122,1;	break;	//	Paint Brush
+		}
+	} else if (.@eac&EAJL_2) {
+		// Second Class (And not Third Class)
+		switch(BaseJob) {
+			// Second Class
+			case Job_Knight:
+				getitem 1163,1;	break;	//	Claymore [0]
+			case Job_Priest:
+				getitem 1522,1;	break;	//	Stunner [0]
+			case Job_Wizard:
+				getitem 1617,1;	break;	//	Survivor's Rod [0]
+			case Job_Blacksmith:
+				getitem 1360,1;	break;	//	Two-Handed-Axe [1]
+			case Job_Hunter:
+				getitem 1718,1;	break;	//	Hunter Bow [0]
+			case Job_Assassin:
+				getitem 1254,1;	break;	//	Jamadhar [0]
+			case Job_Crusader:
+				getitem 1410,1;	break;	//	Lance [0]
+			case Job_Monk:
+				getitem 1807,1;	break;	//	Fist [0]
+			case Job_Sage:
+				getitem 1550,1;	break;	//	Book [3]
+			case Job_Rogue:
+				getitem 1222,1;	break;	//	Damascus [1]
+			case Job_Alchemist:
+				getitem 1126,1;	break;	//	Saber [2]
+			case Job_Bard:
+				getitem 1907,1;	break;	//	Guitar [0]
+			case Job_Dancer:
+				getitem 1960,1;	break;	//	Whip [1]
+			case Job_Super_Novice:
+				getitem 1208,1;	break;	//	Main Gauche [4]
+			case Job_Star_Gladiator:
+				getitem 1550,1;	break;	//	Book [3]
+			case Job_Soul_Linker:
+				getitem 1617,1;	break;	//	Survivor's Rod [0]
+		}
+	} else {
+		// Neither Second or Third Cls
+		// => First Cls or not covered by the switch
+		switch(BaseClass) {
+			// First Class
+			case Job_Swordman:
+				getitem 1108,1;	break;	//	Blade [4]
+			case Job_Mage:
+				getitem 1602,1;	break;	//	Rod [4]
+			case Job_Archer:
+				getitem 1705,1;	break;	//	Composite Bow [4]
+			case Job_Acolyte:
+				getitem 1505,1;	break;	//	Mace [4]
+			case Job_Merchant:
+				getitem 1302,1;	break;	//	Axe [4]
+			case Job_Thief:
+				getitem 1208,1;	break;	//	Main Gauche [4]
+			case Job_Gunslinger:
+				getitem 13101,1; break;	//	Six Shooter [2]
+			case Job_Ninja:
+				getitem 13010,1; break;	//	Asura [2]
+		}
+	}
+	return;
+}
 
 OnInit:
-	.rebirth_blevel = 99;    // Nível de base mínimo para renascer OU mudar para terceira classe
-	.rebirth_jlevel = 50;    // Nível de classe mínimo para renascer OU mudar para terceira classe
-	.jobchange_first = 10;   // Nível de classe mínimo para mudar para 1ª classe
-	.jobchange_second = 40;  // Nível de classe mínimo para mudar para 2ª classe
-	.third_classes = 1;      // Permitir terceiras classes/classes expandidas? (1: sim / 0: não)
-	.supernovice_level = 45; // Nível de base mínimo para virar um Super Aprendiz
-	.linear_jobchange = 1;   // Forçar a troca linear de classes? (1: sim / 0: não)
-	.skill_point_check = 1;  // Forçar o jogador usar todos os pontos de habilidade? (1: sim / 0: não)
-	.platinum = 1;           // Obter habilidades de platina automaticamente? (1: sim / 0: não)
+	// Initialisation, do not edit these
+	.NPCName$ = "[Mestra das Classes]";
+	
+	// Settings
+	.ThirdClass = true;			// Enable third classes?
+	.RebirthClass = true;			// Enable rebirth classes?
+	.SecondExpanded = true;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
+	.BabyNovice = true;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
+	.BabyClass = true;				// Enable Baby classes?
+	.BabyThird = true;				// Enable Baby third classes?
+	.BabyExpanded = true;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
+	.BabySummoner = true;			// Enable Baby Summoner?
+	.LastJob = true;				// Enforce linear class changes?
+	.SkillPointCheck = true;		// Force player to use up all skill points?
+	.Platinum = true;				// Get platinum skills automatically?
+	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
+
+	// Level Requirements
+	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
+	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
+	setarray .Req_Rebirth[0],99,50;		// Minimum base level, job level to rebirth
+	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class
+	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
+	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
+	.SNovice = 45;						// Minimum base level to turn into Super Novice
+	
+	// Setting adjustments by PACKETVER
+	if( PACKETVER < 20161207 ) {
+		if( .BabyExpanded )
+			debugmes "Mestra das Classes: A expans�o Baby est� desativada por conta da desatualiza��o do PACKETVER.";
+		if( .BabySummoner )
+			debugmes "Mestra das Classes: A expans�o BabySummoner est� desativada por conta da desatualiza��o do PACKETVER.";
+		.BabyExpanded = false;
+		.BabySummoner = false;
+	}
 	end;
 }
+

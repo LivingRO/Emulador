@@ -1,14 +1,18 @@
-//===== Hercules Script ======================================
+//===== rAthena Script =======================================
 //= Mapflag: Party lock.
 //===== By: ==================================================
-//= Hercules Dev Team
+//= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
-//===== Description: =========================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
 //= Blocks all party modifications on a map:
 //=   /organize, /leave, /invite, @changeleader
-//===== Additional Comments: =================================
-//= 1.0 - Initial script.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//= 1.1 Updated. [L0ne_W0lf]
+//= 1.2 Renewal split. [Euphy]
 //============================================================
 
 // Sealed Shrine ==================
@@ -27,31 +31,6 @@
 1@orcs	mapflag	partylock
 2@orcs	mapflag	partylock
 
-// Nidhoggr's Instance ===========
+// Nidhoggr's Instance ============
 1@nyd	mapflag	partylock
 2@nyd	mapflag	partylock
-
-// Misty Forest Labyrinth ===========
-1@mist	mapflag	partylock
-
-// Octopus Cave ===========
-1@cash	mapflag	partylock
-
-// Drain ===========
-1@pump	mapflag	partylock
-2@pump	mapflag	partylock
-
-// Somatology Laboratory ===========
-1@lhz	mapflag	partylock
-
-// Bangungot Hospital F2 ===========
-1@ma_h	mapflag	partylock
-
-// Buwaya Cave ===========
-1@ma_c	mapflag	partylock
-
-// Bakonawa Hideout ===========
-1@ma_b	mapflag	partylock
-
-// Inside Eclage ===========
-1@ecl	mapflag	partylock
